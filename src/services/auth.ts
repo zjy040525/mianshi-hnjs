@@ -1,5 +1,6 @@
 import myAxios from '../lib/myAxios';
-import { ResponseModelType } from '../types/response';
+import type { Permission } from '../types/permission';
+import type { Response } from '../types/response';
 
 /**
  * 身份认证服务
@@ -11,7 +12,7 @@ import { ResponseModelType } from '../types/response';
 export const authService = (
   username: string | null,
   password: string | null
-): Promise<ResponseModelType<{ token: string; permission: number }>> => {
+): Promise<Response<{ token: string; permission: Permission }>> => {
   return myAxios.post('/auth', { username, password });
 };
 
@@ -21,7 +22,7 @@ export const authService = (
  * @author Jia-Yao Zhao
  */
 export const authValidationService = async (): Promise<
-  ResponseModelType<{ permission: string }>
+  Response<{ permission: Permission }>
 > => {
   return await myAxios.post('/auth/validation');
 };

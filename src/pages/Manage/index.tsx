@@ -27,7 +27,7 @@ import {
   studentOverviewService,
   studentStatisticService,
 } from '../../services/student';
-import { InterviewStatus, Student } from '../../types/student';
+import type { InterviewStatus, Student } from '../../types/student';
 
 const renderBadge = (type: InterviewStatus) => {
   switch (type) {

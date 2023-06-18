@@ -1,6 +1,6 @@
 import myAxios from '../lib/myAxios';
-import { ResponseModelType } from '../types/response';
-import { InterviewStatus, Student } from '../types/student';
+import type { Response } from '../types/response';
+import type { InterviewStatus, Student } from '../types/student';
 
 /**
  * 搜索学生服务
@@ -10,7 +10,7 @@ import { InterviewStatus, Student } from '../types/student';
  */
 export const studentSignSearchService = (
   idCard?: string | null
-): Promise<ResponseModelType<Student[]>> => {
+): Promise<Response<Student[]>> => {
   return myAxios.get('/student/sign/search', { params: { idCard } });
 };
 
@@ -22,7 +22,7 @@ export const studentSignSearchService = (
  */
 export const studentSignService = (
   studentId: number
-): Promise<ResponseModelType<Student>> => {
+): Promise<Response<Student>> => {
   return myAxios.patch('/student/sign', { studentId });
 };
 
@@ -44,7 +44,7 @@ export const studentPrintService = (studentId: number): Promise<string> => {
  */
 export const studentInterviewSearchService = (
   studentId: number | string
-): Promise<ResponseModelType<Student[]>> => {
+): Promise<Response<Student[]>> => {
   return myAxios.get('/student/interview/search', { params: { studentId } });
 };
 
@@ -62,7 +62,7 @@ export const studentInterviewService = (
   xq: InterviewStatus,
   ly: InterviewStatus,
   gd: InterviewStatus
-): Promise<ResponseModelType<Student>> => {
+): Promise<Response<Student>> => {
   return myAxios.patch('/student/interview', { studentId, xq, ly, gd });
 };
 
@@ -72,7 +72,7 @@ export const studentInterviewService = (
  * @author Jia-Yao Zhao
  */
 export const studentStatisticService = (): Promise<
-  ResponseModelType<{ signedCount: number; noSignedCount: number }>
+  Response<{ signedCount: number; noSignedCount: number }>
 > => {
   return myAxios.get('/student/statistic');
 };
@@ -82,8 +82,6 @@ export const studentStatisticService = (): Promise<
  *
  * @author Jia-Yao Zhao
  */
-export const studentOverviewService = (): Promise<
-  ResponseModelType<Student[]>
-> => {
+export const studentOverviewService = (): Promise<Response<Student[]>> => {
   return myAxios.get('/student/overview');
 };

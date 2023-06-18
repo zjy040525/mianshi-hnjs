@@ -15,10 +15,13 @@ const Validation = () => {
   const { message } = AntdApp.useApp();
   const token = getAuthToken();
   const tokenState = useRecoilValue(tokenStateAtom);
+  const permissionState = useRecoilValue(permissionStateAtom);
   const setAuth = useSetRecoilState(authStateSelector);
-  const permission = useRecoilValue(permissionStateAtom);
   const resetHandler = () => {
-    setAuth({ token: null, permission: null });
+    setAuth({
+      token: null,
+      permission: null,
+    });
     removeAuthToken();
   };
 
@@ -27,7 +30,7 @@ const Validation = () => {
       authValidationService()
         .then(({ data }) => {
           // 验证成功不做任何操作，验证失败退出当前登录状态，要求重新登录
-          if (data.permission !== permission) {
+          if (data.permission !== permissionState) {
             resetHandler();
           }
         })

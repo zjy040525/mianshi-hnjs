@@ -1,7 +1,7 @@
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Descriptions, Typography } from 'antd';
 import { FC, ReactNode } from 'react';
-import { Student } from '../../types/student';
+import type { Student } from '../../types/student';
 
 const StudentDescriptions: FC<{
   chosenStudent: Student | null;

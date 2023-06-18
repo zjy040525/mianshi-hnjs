@@ -1,7 +1,7 @@
 import { Descriptions, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { FC } from 'react';
-import { Student } from '../../types/student';
+import type { Student } from '../../types/student';
 import classes from './index.module.less';
 
 const BasicPrint: FC<{ chosenStudent: Student | null }> = ({

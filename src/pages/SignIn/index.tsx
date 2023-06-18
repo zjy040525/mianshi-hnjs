@@ -35,7 +35,7 @@ import {
   studentSignSearchService,
   studentSignService,
 } from '../../services/student';
-import { Student } from '../../types/student';
+import type { Student } from '../../types/student';
 import classes from './index.module.less';
 
 /**

@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { Descriptions, Space, Typography } from 'antd';
 import { FC } from 'react';
-import { Student } from '../../types/student';
+import type { Student } from '../../types/student';
 
 const LyPrint: FC<{ chosenStudent: Student | null }> = ({ chosenStudent }) => {
   if (chosenStudent?.ly) {

@@ -28,12 +28,12 @@ import {
   studentInterviewSearchService,
   studentInterviewService,
 } from '../../services/student';
-import { InterviewStatus, Student } from '../../types/student';
+import type { InterviewStatus, Student } from '../../types/student';
 
-const InterviewStatusTag: FC<{ status: InterviewStatus; text: string }> = ({
-  status,
-  text,
-}) => {
+const InterviewStatusTypeTag: FC<{
+  status: InterviewStatus;
+  text: string;
+}> = ({ status, text }) => {
   switch (status) {
     case 'Processing':
       return <Tag color="processing">{text}</Tag>;
@@ -46,7 +46,9 @@ const InterviewStatusTag: FC<{ status: InterviewStatus; text: string }> = ({
   }
 };
 
-const InterviewStatusBadge: FC<{ status: InterviewStatus }> = ({ status }) => {
+const InterviewStatusTypeBadge: FC<{ status: InterviewStatus }> = ({
+  status,
+}) => {
   switch (status) {
     case 'Processing':
       return <Badge status="processing" text="未面试（进行中）" />;
@@ -197,9 +199,18 @@ const Interview: FC = () => {
                           color: 'inherit',
                         }}
                       >
-                        <InterviewStatusTag status={student.xq} text="学前" />
-                        <InterviewStatusTag status={student.ly} text="旅游" />
-                        <InterviewStatusTag status={student.gd} text="轨道" />
+                        <InterviewStatusTypeTag
+                          status={student.xq}
+                          text="学前"
+                        />
+                        <InterviewStatusTypeTag
+                          status={student.ly}
+                          text="旅游"
+                        />
+                        <InterviewStatusTypeTag
+                          status={student.gd}
+                          text="轨道"
+                        />
                         {student.name}（{student.id}）
                       </Typography.Text>
                     ),
@@ -252,7 +263,7 @@ const Interview: FC = () => {
                           {currentStep > STEP_2 ? (
                             <Space size={16}>
                               <Typography.Text>面试结果</Typography.Text>
-                              <InterviewStatusBadge status={status} />
+                              <InterviewStatusTypeBadge status={status} />
                             </Space>
                           ) : (
                             <Radio.Group
