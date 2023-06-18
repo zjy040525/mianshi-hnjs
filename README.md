@@ -21,7 +21,7 @@ $ pnpm install
 
 ## Usage
 
-配置环境变量。在根目录新建 `.env.development` 和 `.env.production` 文件，分别用于开发环境和生产环境。
+配置环境变量。在根目录新建`.env.development`和`.env.production`文件，分别用于开发环境和生产环境。
 
 后端的默认端口为 3000。
 
