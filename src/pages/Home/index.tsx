@@ -8,7 +8,7 @@ import { AUTH_PATHNAME } from '../../constant/path';
 import { authStateSelector } from '../../selectors/auth';
 
 const Home: FC = () => {
-  const [token, setAuth] = useRecoilState(authStateSelector);
+  const [auth, setAuth] = useRecoilState(authStateSelector);
   const navigate = useNavigate();
   const logoutHandler = () => {
     setAuth({ token: null, permission: null });
@@ -20,7 +20,7 @@ const Home: FC = () => {
       <Row gutter={[16, 16]}>
         <Col>
           <Card>
-            {token ? (
+            {auth.token ? (
               <Button
                 type="primary"
                 icon={<LogoutOutlined />}

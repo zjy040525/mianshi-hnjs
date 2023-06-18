@@ -123,14 +123,14 @@ const Auth: FC = () => {
  * @author Jia-Yao Zhao
  */
 const AuthProvider: FC = () => {
-  const token = useRecoilValue(tokenStateAtom);
+  const tokenState = useRecoilValue(tokenStateAtom);
   const { message } = AntdApp.useApp();
   useEffect(() => {
-    if (token) {
+    if (tokenState) {
       message.error('你已登录，请先退出登录！');
     }
   }, []);
-  return token ? <Navigate to="/" /> : <Auth />;
+  return tokenState ? <Navigate to="/" /> : <Auth />;
 };
 
 export default AuthProvider;

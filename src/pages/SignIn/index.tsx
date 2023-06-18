@@ -332,16 +332,20 @@ const SignIn: FC = () => {
 
 const SignInProvider: FC = () => {
   const { message } = AntdApp.useApp();
-  const token = useRecoilValue(tokenStateAtom);
-  const permission = useRecoilValue(permissionStateAtom);
+  const tokenState = useRecoilValue(tokenStateAtom);
+  const permissionState = useRecoilValue(permissionStateAtom);
   useEffect(() => {
-    if (!token) {
+    if (!tokenState) {
       message.error('请先认证！');
-    } else if (permission !== 100) {
+    } else if (permissionState !== 'SIGN') {
       message.error('权限不足！');
     }
   }, []);
-  return token && permission === 100 ? <SignIn /> : <Navigate to="/" />;
+  return tokenState && permissionState === 'SIGN' ? (
+    <SignIn />
+  ) : (
+    <Navigate to="/" />
+  );
 };
 
 export default SignInProvider;

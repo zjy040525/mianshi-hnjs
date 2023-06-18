@@ -22,8 +22,8 @@ const BasicLayout: FC = () => {
   } = theme.useToken();
   const location = useLocation();
   const navigate = useNavigate();
-  const token = useRecoilValue(tokenStateAtom);
-  const permission = useRecoilValue(permissionStateAtom);
+  const tokenState = useRecoilValue(tokenStateAtom);
+  const permissionState = useRecoilValue(permissionStateAtom);
 
   return (
     <Layout className={classes.layout}>
@@ -50,12 +50,12 @@ const BasicLayout: FC = () => {
           mode="horizontal"
           items={[{ icon: <HomeOutlined />, key: '/', label: '主页' }]
             .concat(
-              token
+              tokenState
                 ? []
                 : [{ icon: <LockOutlined />, key: '/auth', label: '认证' }]
             )
             .concat(
-              permission === 100
+              permissionState === 'SIGN'
                 ? [
                     {
                       icon: <SolutionOutlined />,
@@ -66,12 +66,12 @@ const BasicLayout: FC = () => {
                 : []
             )
             .concat(
-              permission === 101
+              permissionState === 'INTERVIEW'
                 ? [{ icon: <UserOutlined />, key: '/interview', label: '面试' }]
                 : []
             )
             .concat(
-              permission === 102
+              permissionState === 'MANAGE'
                 ? [{ icon: <SettingOutlined />, key: '/manage', label: '管理' }]
                 : []
             )}

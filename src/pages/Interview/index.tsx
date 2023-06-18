@@ -339,16 +339,20 @@ const Interview: FC = () => {
 
 const InterviewProvider: FC = () => {
   const { message } = AntdApp.useApp();
-  const token = useRecoilValue(tokenStateAtom);
-  const permission = useRecoilValue(permissionStateAtom);
+  const tokenState = useRecoilValue(tokenStateAtom);
+  const permissionState = useRecoilValue(permissionStateAtom);
   useEffect(() => {
-    if (!token) {
+    if (!tokenState) {
       message.error('请先认证！');
-    } else if (permission !== 101) {
+    } else if (permissionState !== 'INTERVIEW') {
       message.error('权限不足！');
     }
   }, []);
-  return token && permission === 101 ? <Interview /> : <Navigate to="/" />;
+  return tokenState && permissionState === 'INTERVIEW' ? (
+    <Interview />
+  ) : (
+    <Navigate to="/" />
+  );
 };
 
 export default InterviewProvider;

@@ -1,19 +1,25 @@
-import { RecoilState, selector } from 'recoil';
+import { DefaultValue, selector } from 'recoil';
 import { permissionStateAtom, tokenStateAtom } from '../atoms/auth';
 import type { Permission } from '../types/permission';
 import { setAuthToken } from '../utils/storage';
 
-export const authStateSelector: RecoilState<{
+export const authStateSelector = selector<{
   token: string | null;
   permission: Permission | null;
-}> = selector({
+}>({
   key: 'authStateSelector',
-  get: ({ get }) => get(tokenStateAtom),
+  get: ({ get }) => ({
+    token: get(tokenStateAtom),
+    permission: get(permissionStateAtom),
+  }),
   set: ({ set }, newValue) => {
-    if (newValue.token) {
-      setAuthToken(newValue.token);
+    // TODO: DefaultValue
+    if (!(newValue instanceof DefaultValue)) {
+      if (newValue.token) {
+        setAuthToken(newValue.token);
+      }
+      set(tokenStateAtom, newValue.token);
+      set(permissionStateAtom, newValue.permission);
     }
-    set(tokenStateAtom, newValue.token);
-    set(permissionStateAtom, newValue.permission);
   },
 });

@@ -182,17 +182,21 @@ const Manage: FC = () => {
 };
 
 const ManageProvider: FC = () => {
-  const token = useRecoilValue(tokenStateAtom);
-  const permission = useRecoilValue(permissionStateAtom);
+  const tokenState = useRecoilValue(tokenStateAtom);
+  const permissionState = useRecoilValue(permissionStateAtom);
   const { message } = AntdApp.useApp();
   useEffect(() => {
-    if (!token) {
+    if (!tokenState) {
       message.error('请先认证！');
-    } else if (permission !== 102) {
+    } else if (permissionState !== 'MANAGE') {
       message.error('权限不足！');
     }
   }, []);
-  return token && permission === 102 ? <Manage /> : <Navigate to="/" />;
+  return tokenState && permissionState === 'MANAGE' ? (
+    <Manage />
+  ) : (
+    <Navigate to="/" />
+  );
 };
 
 export default ManageProvider;
