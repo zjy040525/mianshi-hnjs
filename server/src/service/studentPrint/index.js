@@ -50,7 +50,7 @@ exports.main = async (req, res) => {
       // 学生信息
       student: student.dataValues,
       // 学生字段更新时间
-      updated_at: Date.parse(student.updated_at).toLocaleString('zh-CN'),
+      updated_at: new Date(student.updated_at).toLocaleString('zh-CN'),
       // 当前时间戳
       timestamp: new Date().getTime(),
       htmlList: [

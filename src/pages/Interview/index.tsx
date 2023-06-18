@@ -237,26 +237,35 @@ const Interview: FC = () => {
               </Col>
               {[
                 chosenStudent?.xq
-                  ? { weight: 3, title: '幼儿教育', state: [xq, setXq] }
-                  : { weight: 0, title: null },
+                  ? {
+                      weight: 3,
+                      title: '幼儿教育',
+                      state: [xq, setXq],
+                    }
+                  : null,
                 chosenStudent?.ly
-                  ? { weight: 2, title: '旅游服务与管理', state: [ly, setLy] }
-                  : { weight: 0, title: null },
+                  ? {
+                      weight: 2,
+                      title: '旅游服务与管理',
+                      state: [ly, setLy],
+                    }
+                  : null,
                 chosenStudent?.gd
                   ? {
                       weight: 1,
                       title: '城市轨道交通运输与管理',
                       state: [gd, setGd],
                     }
-                  : { weight: 0, title: null },
+                  : null,
               ]
-                .sort((a, b) => b.weight - a.weight)
+                .sort((a, b) => (b?.weight ?? 0) - (a?.weight ?? 0))
                 .map((card, index) => {
-                  if (card.title) {
+                  if (card) {
                     const [status, setStatus] = card.state as [
                       InterviewStatus,
                       Dispatch<SetStateAction<InterviewStatus>>
                     ];
+
                     return (
                       <Col key={index} span={8}>
                         <Card type="inner" title={card.title}>
