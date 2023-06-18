@@ -75,7 +75,7 @@ const Interview: FC = () => {
   const steps: StepProps[] = [
     {
       title: '搜索',
-      description: '使用报道序号搜索',
+      description: '使用系统序号搜索',
     },
     {
       title: '打分',
@@ -159,7 +159,7 @@ const Interview: FC = () => {
                 allowClear
                 filterOption={false}
                 showArrow={false}
-                placeholder="输入报道序号进行搜索"
+                placeholder="输入系统序号进行搜索"
                 notFoundContent={
                   searching ? (
                     <Spin style={{ padding: 16 }} />

@@ -27,7 +27,7 @@ const BasicPrint: FC<{ chosenStudent: Student | null }> = ({
               {dayjs(chosenStudent?.updated_at).format('YYYY-MM-DD')}
             </Typography.Title>
             <Typography.Title level={4} style={{ margin: 0 }}>
-              报道序号：{chosenStudent?.id}
+              系统序号：{chosenStudent?.id}
             </Typography.Title>
           </div>
         </>
