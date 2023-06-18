@@ -1,38 +1,15 @@
 const { Sequelize, DataTypes } = require('sequelize');
-const { SHA256 } = require('crypto-js');
 
 const [host, port] = process.env.MYSQL_ADDRESS.split(':');
 
 const app = new Sequelize({
-  database: 'interview_data',
+  database: process.env.MYSQL_DATABASE,
   username: process.env.MYSQL_USERNAME,
   password: process.env.MYSQL_PASSWORD,
   host,
   port,
   dialect: 'mysql',
 });
-
-const initAuth = async () => {
-  try {
-    await Auth.create({
-      username: 'sign01',
-      password: SHA256('cye98tes').toString(),
-      permission: 100,
-    });
-    await Auth.create({
-      username: 'check01',
-      password: SHA256('p982hgg3').toString(),
-      permission: 101,
-    });
-    await Auth.create({
-      username: 'admin01',
-      password: SHA256('ig09r3kr').toString(),
-      permission: 102,
-    });
-  } catch (e) {
-    console.log('Auth already exists, skipping init...');
-  }
-};
 
 // 身份认证模型定义
 const Auth = app.define(
@@ -75,7 +52,6 @@ const initDB = async () => {
     await app.authenticate();
     console.log('Connection has been established successfully.');
     await app.sync();
-    await initAuth();
     console.log('All databases synced.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
