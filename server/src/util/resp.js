@@ -5,7 +5,7 @@
  * @param message 返回执行结果
  * @return {{code, data, message}}
  */
-const result = (code, data, message) => {
+const resp = (code, data, message) => {
   return {
     code,
     data,
@@ -13,4 +13,4 @@ const result = (code, data, message) => {
   };
 };
 
-module.exports = result;
+module.exports = resp;

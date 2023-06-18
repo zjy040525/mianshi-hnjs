@@ -8,7 +8,7 @@ const path = require('path');
 // 服务器日志
 const logger = morgan('combined');
 
-class CloudBaseRunServer {
+class LocalServer {
   constructor() {
     this.express = express();
     this.express.engine(
@@ -44,4 +44,4 @@ class CloudBaseRunServer {
   }
 }
 
-module.exports = CloudBaseRunServer;
+module.exports = LocalServer;

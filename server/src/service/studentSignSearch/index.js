@@ -1,39 +1,51 @@
-const { Student, Auth } = require('@/app');
+const { Student, Operator } = require('@/app');
 const { Op } = require('sequelize');
-const result = require('@/util/result');
+const resp = require('@/util/resp');
 
 exports.main = async (req, res) => {
+  // 单次查询最大数量
   const limit = 25;
+  // 解析token
   const { username, password } = req.auth;
+  // 获取地址栏上传递的参数
   const { idCard } = req.query;
 
   try {
     if (!idCard) {
-      res.status(400).json(result(400, null, '参数无效！'));
+      res.status(400).json(resp(400, null, '参数无效！'));
       return;
     }
-    const auth = await Auth.findOne({
+
+    // 查询操作员
+    const operator = await Operator.findOne({
       where: {
         username,
         password,
       },
     });
-    if (auth.permission !== 100) {
-      res.status(400).json(result(400, null, '权限不足！'));
+
+    // 操作员的权限验证
+    if (operator.permission !== 100) {
+      res.status(400).json(resp(400, null, '权限不足！'));
       return;
     }
+
+    // 根据条件查询学生
     const { rows } = await Student.findAndCountAll({
       limit,
+      // 优先显示未签到的学生
       order: [['sign_status', 'ASC']],
       where: {
+        // 学生身份证模糊查询
         id_card: {
           [Op.like]: `%${idCard}%`,
         },
       },
     });
-    res.status(200).json(result(200, rows, 'ok'));
+
+    res.status(200).json(resp(200, rows, 'ok'));
   } catch (e) {
     console.error(e);
-    res.status(400).json(result(400, null, '服务器错误！'));
+    res.status(400).json(resp(400, null, '服务器错误！'));
   }
 };

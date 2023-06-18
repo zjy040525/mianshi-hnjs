@@ -1,41 +1,51 @@
-const result = require('@/util/result');
-const { Student, Auth } = require('@/app');
+const { Student, Operator } = require('@/app');
+const resp = require('@/util/resp');
 
 exports.main = async (req, res) => {
+  // 解析token
   const { username, password } = req.auth;
   const { studentId } = req.body;
 
   try {
     if (!studentId) {
-      res.status(400).json(result(400, null, '参数无效！'));
+      res.status(400).json(resp(400, null, '参数无效！'));
       return;
     }
 
-    // 判断需要更新信息的学生是否存在
+    // 查询目标学生
     const targetStudent = await Student.findOne({
-      where: { id: studentId },
+      where: {
+        id: studentId,
+      },
     });
+
+    // 目标学生不存在
     if (!targetStudent) {
-      res.status(400).json(result(400, null, '学生不存在！'));
-      return;
-    }
-    if (targetStudent.status) {
-      res.status(400).json(result(400, null, '该学生已经签到过了！'));
+      res.status(400).json(resp(400, null, '学生不存在！'));
       return;
     }
 
-    const auth = await Auth.findOne({
+    // 目标学生未签到
+    if (targetStudent.sign_status) {
+      res.status(400).json(resp(400, null, '该学生已经签到过了！'));
+      return;
+    }
+
+    // 查询操作员
+    const operator = await Operator.findOne({
       where: {
         username,
         password,
       },
     });
-    if (auth.permission !== 100) {
-      res.status(400).json(result(400, null, '权限不足！'));
+
+    // 操作员的权限验证
+    if (operator.permission !== 'SIGN') {
+      res.status(400).json(operator(400, null, '权限不足！'));
       return;
     }
 
-    // 更新学生信息
+    // 更新学生信息（签到）
     await Student.update(
       {
         sign_status: true,
@@ -47,13 +57,17 @@ exports.main = async (req, res) => {
         },
       }
     );
+
     // 获取更新（签到）完成后的学生信息
-    const data = await Student.findOne({
-      where: { id: studentId },
+    const updatedStudent = await Student.findOne({
+      where: {
+        id: studentId,
+      },
     });
-    res.status(200).json(result(200, data, '签到成功！'));
+
+    res.status(200).json(resp(200, updatedStudent, '签到成功！'));
   } catch (e) {
     console.error(e);
-    res.status(400).json(result(400, null, '服务器错误！'));
+    res.status(400).json(resp(400, null, '服务器错误！'));
   }
 };

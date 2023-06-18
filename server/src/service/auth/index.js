@@ -1,36 +1,47 @@
-const jwt = require('@/util/jwt');
-const result = require('@/util/result');
-const { Auth } = require('@/app');
+const { Operator } = require('@/app');
+const token = require('@/util/token');
+const resp = require('@/util/resp');
 
 exports.main = async (req, res) => {
+  // 获取请求携带过来的参数
   const { username, password } = req.body;
 
   try {
     if (!(username && password)) {
-      res.status(400).json(result(400, null, '参数无效！'));
+      res.status(400).json(res(400, null, '参数无效！'));
       return;
     }
 
-    const auth = await Auth.findOne({
-      where: { username, password },
+    const operator = await Operator.findOne({
+      where: {
+        username,
+        password,
+      },
     });
-    if (!auth) {
-      res.status(400).json(result(400, null, '用户名或密码错误！'));
+
+    // 操作员不存在
+    if (!operator) {
+      res.status(400).json(resp(400, null, '用户名称或认证密码错误！'));
       return;
     }
 
+    // 认证成功
     res.status(200).json(
-      result(
+      resp(
         200,
         {
-          token: jwt.createToken(auth.username, auth.password, auth.permission),
-          permission: auth.permission,
+          token: token.make(
+            operator.username,
+            operator.password,
+            operator.permission
+          ),
+          permission: operator.permission,
         },
         '认证成功！'
       )
     );
   } catch (e) {
     console.error(e);
-    res.status(400).json(result(400, null, '服务器错误！'));
+    res.status(400).json(resp(400, null, '服务器错误！'));
   }
 };

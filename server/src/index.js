@@ -1,14 +1,14 @@
 require('module-alias/register');
 require('dotenv').config();
 
-const CloudBaseRunServer = require('./server.js');
+const LocalServer = require('./server');
 const { initDB } = require('./app');
-const result = require('./util/result');
+const result = require('./util/resp');
 const { TokenExpiredError } = require('jsonwebtoken');
-const { credentials } = require('@/util/jwt');
+const token = require('@/util/token');
 
 const port = 3000;
-const server = new CloudBaseRunServer().express;
+const server = new LocalServer().express;
 
 // 注册API服务
 
@@ -17,49 +17,49 @@ server.post('/auth', require('./service/auth').main);
 // 有效性认证
 server.post(
   '/auth/validation',
-  credentials(),
+  token.required(),
   require('./service/authValidation').main
 );
 // 搜索已签到的学生
 server.get(
   '/student/interview/search',
-  credentials(),
+  token.required(),
   require('./service/studentInterviewSearch').main
 );
 // 搜索所有学生
 server.get(
   '/student/sign/search',
-  credentials(),
+  token.required(),
   require('./service/studentSignSearch').main
 );
 // 为学生签到
 server.patch(
   '/student/sign',
-  credentials(),
+  token.required(),
   require('./service/studentSign').main
 );
 // 为学生打印，返回HTML用于打印
 server.post(
   '/student/print',
-  credentials(),
+  token.required(),
   require('./service/studentPrint').main
 );
 // 为学生面试
 server.patch(
   '/student/interview',
-  credentials(),
+  token.required(),
   require('./service/studentInterview').main
 );
 // 学生签到统计信息
 server.get(
   '/student/statistic',
-  credentials(),
+  token.required(),
   require('./service/studentStatistic').main
 );
 // 学生总览
 server.get(
   '/student/overview',
-  credentials(),
+  token.required(),
   require('./service/studentOverview').main
 );
 
