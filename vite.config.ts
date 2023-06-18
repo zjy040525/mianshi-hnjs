@@ -13,11 +13,11 @@ export default defineConfig({
     rollupOptions: {
       output: {
         entryFileNames: 'assets/vendors.[hash].js',
-        chunkFileNames: 'assets/chunk.[hash].js',
+        chunkFileNames: 'assets/app.[hash].js',
         assetFileNames: chunkInfo => {
           let prefix = '[name]';
           if (chunkInfo.name.endsWith('.css')) {
-            prefix = 'chunk';
+            prefix = 'app';
           }
           return `assets/${prefix}.[hash].[ext]`;
         },
