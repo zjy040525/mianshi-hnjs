@@ -25,7 +25,7 @@ exports.main = async (req, res) => {
     });
 
     // 操作员的权限验证
-    if (operator.permission !== 100) {
+    if (operator.permission !== 'SIGN') {
       res.status(400).json(resp(400, null, '权限不足！'));
       return;
     }
