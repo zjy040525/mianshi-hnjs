@@ -1,0 +1,18 @@
+.print-element {
+  border: none;
+  display: none;
+}
+@media print {
+  .print-element {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    z-index: 9999;
+  }
+  :has(.print-element) > :not(.print-element):not(:has(.print-element)) {
+    display: none;
+  }
+}

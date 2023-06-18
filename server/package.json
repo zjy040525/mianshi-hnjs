@@ -1,0 +1,25 @@
+{
+  "name": "interview-sign-server",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7",
+    "express-jwt": "^8.4.1",
+    "jade": "^1.11.0",
+    "jsonwebtoken": "^9.0.0",
+    "module-alias": "^2.2.2",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.2.1",
+    "sequelize": "^6.31.0"
+  },
+  "_moduleAliases": {
+    "@": "src"
+  }
+}

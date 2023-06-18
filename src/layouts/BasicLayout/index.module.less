@@ -1,0 +1,28 @@
+.layout {
+  max-width: 1920px;
+  .header {
+    box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 0.12);
+    display: flex;
+    align-items: center;
+    .navigate {
+      display: flex;
+      height: 100%;
+      align-items: center;
+    }
+    .title {
+      padding-inline-start: 8px;
+      margin-block-end: 0;
+      font-weight: normal;
+    }
+    .menu {
+      width: 50%;
+      user-select: none;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+    }
+  }
+  .content {
+    min-height: calc(100vh - 64px);
+    padding: 24px 50px;
+  }
+}

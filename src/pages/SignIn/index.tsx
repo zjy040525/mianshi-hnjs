@@ -1,0 +1,347 @@
+import { useRequest } from 'ahooks';
+import {
+  App as AntdApp,
+  Badge,
+  Button,
+  Card,
+  Col,
+  Empty,
+  Row,
+  Select,
+  Space,
+  Spin,
+  StepProps,
+  Steps,
+  Tag,
+  Typography,
+} from 'antd';
+import { FC, useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { permissionStateAtom, tokenStateAtom } from '../../atoms/auth';
+import BasicPrint from '../../components/BasicPrint';
+import GdPrint from '../../components/GdPrint';
+import HeadTitle from '../../components/HeadTitle';
+import LyPrint from '../../components/LyPrint';
+import StudentDescriptions from '../../components/StudentDescriptions';
+import XqPrint from '../../components/XqPrint';
+import {
+  PRINT_KEY,
+  SEARCH_STUDENT_KEY,
+  STUDENT_SIGN_KEY,
+} from '../../constant/msg';
+import {
+  studentPrintService,
+  studentSignSearchService,
+  studentSignService,
+} from '../../services/student';
+import { Student } from '../../types/student';
+import classes from './index.module.less';
+
+/**
+ * 学生签到流程组件
+ *
+ * @author Jia-Yao Zhao
+ */
+const SignIn: FC = () => {
+  const { message } = AntdApp.useApp();
+  // 步骤分段
+  const [STEP_1, STEP_2, STEP_3, STEP_4] = [0, 1, 2, 3];
+  // 当前步骤
+  const [currentStep, setCurrentStep] = useState(0);
+  // 搜索学生
+  const [students, setStudents] = useState<Student[]>([]);
+  // 选择的学生
+  const [chosenStudent, setChosenStudent] = useState<Student | null>(null);
+  // 搜索学生服务
+  const { run: runSearch, loading: searching } = useRequest(
+    studentSignSearchService,
+    {
+      manual: true,
+      throttleWait: 500,
+      onSuccess({ data }) {
+        setStudents(data);
+        message.destroy(SEARCH_STUDENT_KEY);
+      },
+      onError(err) {
+        message.open({
+          key: SEARCH_STUDENT_KEY,
+          type: 'error',
+          content: err.message,
+        });
+      },
+    }
+  );
+  // 为指定学生签到
+  const { run: runSign, loading: signing } = useRequest(studentSignService, {
+    manual: true,
+    onBefore() {
+      message.open({
+        key: STUDENT_SIGN_KEY,
+        type: 'loading',
+        content: '签到中…',
+        duration: 0,
+      });
+    },
+    onSuccess(res) {
+      setChosenStudent(res.data);
+      setCurrentStep(currentStep + 1);
+      message.open({
+        key: STUDENT_SIGN_KEY,
+        type: 'success',
+        content: res.message,
+      });
+    },
+    onError(err) {
+      message.open({
+        key: STUDENT_SIGN_KEY,
+        type: 'error',
+        content: err.message,
+      });
+    },
+  });
+  // 解析打印模板
+  const [srcDoc, setSrcDoc] = useState('');
+  // 生成打印模板
+  const { run: runPrint, loading: printing } = useRequest(studentPrintService, {
+    manual: true,
+    onBefore() {
+      message.open({
+        key: PRINT_KEY,
+        type: 'loading',
+        content: '获取打印模板中…',
+      });
+    },
+    onSuccess(res) {
+      message.destroy(PRINT_KEY);
+      setSrcDoc(res);
+      setCurrentStep(currentStep + 1);
+      setTimeout(() => {
+        window.print();
+      }, 250);
+    },
+    onError(err) {
+      message.open({
+        key: PRINT_KEY,
+        type: 'error',
+        content: err.message,
+      });
+    },
+  });
+  // 步骤列表
+  const steps: StepProps[] = [
+    {
+      title: '搜索',
+      description: '使用身份证号码搜索',
+    },
+    {
+      title: '信息',
+      description: '核实身份信息是否正确',
+    },
+    {
+      title: '签到',
+      description: '确认无误后进行签到',
+    },
+    {
+      title: '完成',
+      description: '签到完成后打印资料',
+    },
+  ];
+  return (
+    <>
+      <HeadTitle titles={['签到']} />
+      <iframe className={classes.printElement} srcDoc={srcDoc} />
+      <Card>
+        <Steps
+          current={currentStep}
+          items={steps}
+          style={{ marginBlockEnd: 50 }}
+        />
+        <Row gutter={[16, 24]} justify="center">
+          {currentStep === STEP_1 ? (
+            <Col span={8}>
+              <Select
+                style={{ width: '100%' }}
+                disabled={signing}
+                autoFocus
+                showSearch
+                allowClear
+                filterOption={false}
+                showArrow={false}
+                placeholder="输入身份证号码进行搜索"
+                notFoundContent={
+                  searching ? (
+                    <Spin style={{ padding: 16 }} />
+                  ) : (
+                    <Empty
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                      description=""
+                    />
+                  )
+                }
+                value={chosenStudent?.id}
+                onClear={() => {
+                  // 清除已选择的学生
+                  setChosenStudent(null);
+                }}
+                onSelect={(_value, { student }) => {
+                  // 设置当前选择的学生
+                  setChosenStudent(student);
+                }}
+                onSearch={idCard => {
+                  // 当关键字不为空时进行搜索服务
+                  if (idCard) {
+                    runSearch(idCard);
+                  }
+                }}
+                options={students.map(student => {
+                  return {
+                    value: student.id,
+                    label: (
+                      <Typography.Text
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          color: 'inherit',
+                        }}
+                      >
+                        {student.sign_status ? (
+                          <Tag color="success">已签到</Tag>
+                        ) : (
+                          <Tag color="error">未签到</Tag>
+                        )}
+                        {student.name}（{student.id_card}）
+                      </Typography.Text>
+                    ),
+                    student,
+                  };
+                })}
+              />
+            </Col>
+          ) : null}
+          {chosenStudent && currentStep > STEP_3 ? (
+            <Col>
+              <BasicPrint chosenStudent={chosenStudent} />
+              <GdPrint chosenStudent={chosenStudent} />
+              <LyPrint chosenStudent={chosenStudent} />
+              <XqPrint chosenStudent={chosenStudent} />
+            </Col>
+          ) : null}
+          {chosenStudent &&
+          (currentStep === STEP_2 || currentStep === STEP_3) ? (
+            <Col>
+              <StudentDescriptions
+                chosenStudent={chosenStudent}
+                signStatus={
+                  <Badge
+                    status={currentStep > STEP_2 ? 'processing' : 'default'}
+                    text="未签到"
+                  />
+                }
+              />
+            </Col>
+          ) : null}
+          <Col span={24} style={{ textAlign: 'center' }}>
+            <Space size={16}>
+              {chosenStudent && currentStep > STEP_1 && currentStep < STEP_4 ? (
+                <Button
+                  disabled={signing}
+                  onClick={() => setCurrentStep(currentStep - 1)}
+                >
+                  上一步
+                </Button>
+              ) : null}
+              {currentStep < STEP_4 ? (
+                currentStep === STEP_3 ? (
+                  <Button
+                    type="primary"
+                    danger
+                    loading={signing}
+                    onClick={() => {
+                      if (chosenStudent) {
+                        runSign(chosenStudent.id);
+                      }
+                    }}
+                  >
+                    签到
+                  </Button>
+                ) : (
+                  <Button
+                    type="primary"
+                    disabled={signing || !chosenStudent}
+                    onClick={() => {
+                      // 如果选择的是一个已签到的同学，那么直接到打印步骤
+                      if (chosenStudent?.sign_status) {
+                        setCurrentStep(STEP_4);
+                      } else {
+                        setCurrentStep(currentStep + 1);
+                      }
+                    }}
+                  >
+                    下一步
+                  </Button>
+                )
+              ) : null}
+              {currentStep === STEP_4 ? (
+                <Button
+                  type="primary"
+                  disabled={signing}
+                  loading={printing}
+                  onClick={() => {
+                    if (chosenStudent) {
+                      runPrint(chosenStudent.id);
+                    }
+                  }}
+                >
+                  打印
+                </Button>
+              ) : null}
+              {currentStep > STEP_4 ? (
+                <>
+                  <Button
+                    disabled={signing}
+                    loading={printing}
+                    onClick={() => {
+                      if (chosenStudent) {
+                        runPrint(chosenStudent.id);
+                      }
+                    }}
+                  >
+                    重新打印
+                  </Button>
+                  <Button
+                    type="primary"
+                    disabled={signing || printing}
+                    onClick={() => {
+                      setCurrentStep(0);
+                      setStudents([]);
+                      setChosenStudent(null);
+                    }}
+                  >
+                    继续
+                  </Button>
+                </>
+              ) : null}
+            </Space>
+          </Col>
+        </Row>
+      </Card>
+    </>
+  );
+};
+
+const SignInProvider: FC = () => {
+  const { message } = AntdApp.useApp();
+  const token = useRecoilValue(tokenStateAtom);
+  const permission = useRecoilValue(permissionStateAtom);
+  useEffect(() => {
+    if (!token) {
+      message.error('请先认证！');
+    } else if (permission !== 100) {
+      message.error('权限不足！');
+    }
+  }, []);
+  return token && permission === 100 ? <SignIn /> : <Navigate to="/" />;
+};
+
+export default SignInProvider;
