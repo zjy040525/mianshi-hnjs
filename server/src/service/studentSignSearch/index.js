@@ -3,8 +3,6 @@ const { Op } = require('sequelize');
 const resp = require('@/util/resp');
 
 exports.main = async (req, res) => {
-  // 单次查询最大数量
-  const limit = 25;
   // 解析token
   const { username, password } = req.auth;
   // 获取地址栏上传递的参数
@@ -24,6 +22,12 @@ exports.main = async (req, res) => {
       },
     });
 
+    // 操作员不存在
+    if (!operator) {
+      res.status(400).json(resp(400, null, '操作员不存在！'));
+      return;
+    }
+
     // 操作员的权限验证
     if (operator.permission !== 'SIGN') {
       res.status(400).json(resp(400, null, '权限不足！'));
@@ -31,19 +35,19 @@ exports.main = async (req, res) => {
     }
 
     // 根据条件查询学生
-    const { rows } = await Student.findAndCountAll({
-      limit,
-      // 优先显示未签到的学生
-      order: [['sign_status', 'ASC']],
+    const students = await Student.findAll({
       where: {
         // 学生身份证模糊查询
         id_card: {
           [Op.like]: `%${idCard}%`,
         },
       },
+      // 优先显示未签到的学生
+      order: [['sign_status', 'ASC']],
+      limit: 25,
     });
 
-    res.status(200).json(resp(200, rows, 'ok'));
+    res.status(200).json(resp(200, students, 'ok'));
   } catch (e) {
     console.error(e);
     res.status(400).json(resp(400, null, '服务器错误！'));

@@ -32,22 +32,26 @@ const initOperators = async () => {
 
   for (const [permission, permissionOperators] of operators) {
     for (const permissionOperator of permissionOperators) {
+      const [username, nickname] = permissionOperator.split(':');
+
       try {
         const pwd = shufflePassword();
 
         await Operator.create({
-          username: permissionOperator,
+          username,
+          nickname,
           password: SHA256(pwd).toString(),
-          permission: permission,
+          permission,
         });
         authentications.push([
-          permissionOperator,
+          username,
+          nickname,
           pwd,
           `${permission} PERMISSION`,
         ]);
       } catch (e) {
         authentications.push(
-          `Cannot add operator ${permissionOperator}, because it already exists!`
+          `Cannot add operator ${username}, because it already exists!`
         );
       }
     }
@@ -60,6 +64,7 @@ const Operator = app.define(
   'operator',
   {
     username: { type: DataTypes.STRING, unique: true, allowNull: false },
+    nickname: DataTypes.STRING,
     password: { type: DataTypes.STRING, allowNull: false },
     permission: {
       type: DataTypes.ENUM('SIGN', 'INTERVIEW', 'MANAGE'),
@@ -73,27 +78,33 @@ const Operator = app.define(
 const Student = app.define(
   'student',
   {
-    name: { type: DataTypes.STRING },
-    gender: { type: DataTypes.STRING },
-    id_card: { type: DataTypes.STRING },
-    graduated_school: { type: DataTypes.STRING },
-    telephone_number: { type: DataTypes.STRING },
-    registration_number: { type: DataTypes.STRING },
-    xq: { type: DataTypes.ENUM('Processing', 'Success', 'Failed') },
-    ly: { type: DataTypes.ENUM('Processing', 'Success', 'Failed') },
-    gd: { type: DataTypes.ENUM('Processing', 'Success', 'Failed') },
+    name: DataTypes.STRING,
+    gender: DataTypes.STRING,
+    id_card: DataTypes.STRING,
+    graduated_school: DataTypes.STRING,
+    telephone_number: DataTypes.STRING,
+    registration_number: DataTypes.STRING,
+    // 签到状态
     sign_status: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
-    created_at: { type: DataTypes.DATE, defaultValue: Sequelize.fn('now') },
-    updated_at: { type: DataTypes.DATE, defaultValue: Sequelize.fn('now') },
+    // 签到时间
+    signed_date: DataTypes.DATE,
+    // 签到操作员
+    signed_operator: DataTypes.INTEGER,
+    // 面试专业
+    interview_xq: DataTypes.ENUM('Processing', 'Success', 'Failed'),
+    interview_ly: DataTypes.ENUM('Processing', 'Success', 'Failed'),
+    interview_gd: DataTypes.ENUM('Processing', 'Success', 'Failed'),
+    // 面试时间
+    interviewed_date: DataTypes.DATE,
+    // 面试操作员
+    interviewed_operator: DataTypes.INTEGER,
   },
   {
-    timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at',
+    timestamps: false,
   }
 );
 

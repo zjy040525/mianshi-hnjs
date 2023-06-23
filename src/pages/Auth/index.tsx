@@ -44,6 +44,7 @@ const Auth: FC = () => {
       setAuth({
         token: res.data.token,
         permission: res.data.permission,
+        nickname: res.data.nickname,
       });
       message.open({
         key: AUTH_MESSAGE_KEY,
@@ -53,7 +54,7 @@ const Auth: FC = () => {
       navigate('/');
     },
     onError(err) {
-      setAuth({ token: null, permission: null });
+      setAuth({ token: null, permission: null, nickname: null });
       message.open({
         key: AUTH_MESSAGE_KEY,
         type: 'error',

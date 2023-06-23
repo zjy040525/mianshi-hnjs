@@ -12,16 +12,27 @@ export interface Student {
   telephone_number: string;
   // 中考报名序号
   registration_number: string;
-  // 学前
-  xq: InterviewStatus;
-  // 旅游
-  ly: InterviewStatus;
-  // 轨道
-  gd: InterviewStatus;
   // 签到状态
   sign_status: boolean;
-  created_at: string;
-  updated_at: string;
+  // 签到时间
+  signed_date: string;
+  // 签到操作员
+  signed_operator: Operator;
+  // 学前专业
+  interview_xq: InterviewStatus;
+  // 旅游专业
+  interview_ly: InterviewStatus;
+  // 轨道专业
+  interview_gd: InterviewStatus;
+  // 面试时间
+  interviewed_date: string;
+  // 面试操作员
+  interviewed_operator: Operator;
 }
 
 export type InterviewStatus = 'Processing' | 'Success' | 'Failed' | null;
+
+export interface Operator {
+  username: string;
+  nickname: string | null;
+}

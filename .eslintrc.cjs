@@ -19,8 +19,8 @@ module.exports = defineConfig({
   },
   plugins: ['@typescript-eslint', 'react'],
   rules: {
-    'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/no-var-requires': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
   settings: {
     react: {

@@ -24,7 +24,7 @@ const BasicPrint: FC<{ chosenStudent: Student | null }> = ({
           >
             <Typography.Title level={4} style={{ margin: 0 }}>
               报到时间：
-              {dayjs(chosenStudent?.updated_at).format('YYYY-MM-DD')}
+              {dayjs(chosenStudent?.signed_date).format('YYYY-MM-DD HH:mm:ss')}
             </Typography.Title>
             <Typography.Title level={4} style={{ margin: 0 }}>
               系统序号：{chosenStudent?.id}
@@ -34,20 +34,19 @@ const BasicPrint: FC<{ chosenStudent: Student | null }> = ({
       }
       bordered
     >
-      <Descriptions.Item label="考生姓名" span={3}>
+      <Descriptions.Item label="考生姓名">
         {chosenStudent?.name}
       </Descriptions.Item>
-      <Descriptions.Item label="身份证号" span={3}>
+      <Descriptions.Item label="身份证号">
         {chosenStudent?.id_card}
       </Descriptions.Item>
-      <Descriptions.Item label="性别" span={3}>
+      <Descriptions.Item label="性别">
         {chosenStudent?.gender}
       </Descriptions.Item>
-      <Descriptions.Item label="初中就读学校" span={3}>
+      <Descriptions.Item label="初中就读学校">
         {chosenStudent?.graduated_school}
       </Descriptions.Item>
       <Descriptions.Item
-        span={1}
         label={
           <>
             <div className={classes.space}>面试专业一</div>
@@ -57,13 +56,13 @@ const BasicPrint: FC<{ chosenStudent: Student | null }> = ({
         }
       >
         {[
-          chosenStudent?.gd
+          chosenStudent?.interview_gd
             ? { weight: 3, element: '城市轨道交通运输与管理' }
             : { weight: 0, element: '-' },
-          chosenStudent?.ly
+          chosenStudent?.interview_ly
             ? { weight: 2, element: '旅游服务与管理' }
             : { weight: 0, element: '-' },
-          chosenStudent?.xq
+          chosenStudent?.interview_xq
             ? { weight: 1, element: '幼儿教育' }
             : { weight: 0, element: '-' },
         ]
@@ -79,7 +78,7 @@ const BasicPrint: FC<{ chosenStudent: Student | null }> = ({
             );
           })}
       </Descriptions.Item>
-      <Descriptions.Item label="面试盖章" span={1}>
+      <Descriptions.Item label="面试盖章">
         <div className={classes.signPlaced}></div>
       </Descriptions.Item>
     </Descriptions>

@@ -1,15 +1,20 @@
 import {
   HomeOutlined,
   LockOutlined,
+  LogoutOutlined,
   SettingOutlined,
   SolutionOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Typography, theme } from 'antd';
+import { Avatar, Dropdown, Layout, Menu, Typography, theme } from 'antd';
 import { FC, Suspense } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { permissionStateAtom, tokenStateAtom } from '../../atoms/auth';
+import {
+  nicknameStateAtom,
+  permissionStateAtom,
+  tokenStateAtom,
+} from '../../atoms/auth';
 import ChunkLoading from '../../components/ChunkLoading';
 import classes from './index.module.less';
 
@@ -24,6 +29,7 @@ const BasicLayout: FC = () => {
   const navigate = useNavigate();
   const tokenState = useRecoilValue(tokenStateAtom);
   const permissionState = useRecoilValue(permissionStateAtom);
+  const nickname = useRecoilValue(nicknameStateAtom);
 
   return (
     <Layout className={classes.layout}>
@@ -31,7 +37,7 @@ const BasicLayout: FC = () => {
         className={classes.header}
         style={{ background: colorBgContainer }}
       >
-        <div style={{ marginInlineEnd: 50 }}>
+        <div style={{ marginInlineEnd: 50, flexShrink: 0 }}>
           <span className={classes.navigate}>
             <img
               src="/vite.svg"
@@ -78,6 +84,41 @@ const BasicLayout: FC = () => {
           onSelect={selectInfo => navigate(selectInfo.key)}
           selectedKeys={[location.pathname]}
         />
+        {tokenState ? (
+          <Dropdown
+            destroyPopupOnHide
+            placement="bottom"
+            menu={{
+              items: [
+                {
+                  key: 'operator',
+                  label: (
+                    <>
+                      当前身份
+                      <strong style={{ paddingInlineStart: 8 }}>
+                        {nickname}
+                      </strong>
+                    </>
+                  ),
+                  icon: <UserOutlined />,
+                },
+                { type: 'divider' },
+                {
+                  key: 'logout',
+                  label: '退出登录',
+                  icon: <LogoutOutlined />,
+                  danger: true,
+                },
+              ],
+            }}
+          >
+            <Avatar
+              className={classes.avatar}
+              icon={<UserOutlined />}
+              draggable={false}
+            />
+          </Dropdown>
+        ) : null}
       </Header>
       <Content className={classes.content}>
         <Suspense key={location.key} fallback={<ChunkLoading />}>

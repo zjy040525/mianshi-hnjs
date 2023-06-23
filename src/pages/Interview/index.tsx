@@ -178,9 +178,9 @@ const Interview: FC = () => {
                   setChosenStudent(null);
                 }}
                 onSelect={(_value, { student }) => {
-                  setXq(student.xq);
-                  setLy(student.ly);
-                  setGd(student.gd);
+                  setXq(student.interview_xq);
+                  setLy(student.interview_ly);
+                  setGd(student.interview_gd);
                   setChosenStudent(student);
                 }}
                 onSearch={studentId => {
@@ -200,15 +200,15 @@ const Interview: FC = () => {
                         }}
                       >
                         <InterviewStatusTypeTag
-                          status={student.xq}
+                          status={student.interview_xq}
                           text="学前"
                         />
                         <InterviewStatusTypeTag
-                          status={student.ly}
+                          status={student.interview_ly}
                           text="旅游"
                         />
                         <InterviewStatusTypeTag
-                          status={student.gd}
+                          status={student.interview_gd}
                           text="轨道"
                         />
                         {student.name}（{student.id}）
@@ -228,7 +228,7 @@ const Interview: FC = () => {
                   signStatus={
                     <Badge
                       status="success"
-                      text={`已签到（${dayjs(chosenStudent?.updated_at).format(
+                      text={`已签到（${dayjs(chosenStudent?.signed_date).format(
                         'YYYY-MM-DD HH:mm:ss'
                       )}）`}
                     />
@@ -236,21 +236,21 @@ const Interview: FC = () => {
                 />
               </Col>
               {[
-                chosenStudent?.xq
+                chosenStudent?.interview_xq
                   ? {
                       weight: 3,
                       title: '幼儿教育',
                       state: [xq, setXq],
                     }
                   : null,
-                chosenStudent?.ly
+                chosenStudent?.interview_ly
                   ? {
                       weight: 2,
                       title: '旅游服务与管理',
                       state: [ly, setLy],
                     }
                   : null,
-                chosenStudent?.gd
+                chosenStudent?.interview_gd
                   ? {
                       weight: 1,
                       title: '城市轨道交通运输与管理',

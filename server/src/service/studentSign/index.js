@@ -1,5 +1,6 @@
 const { Student, Operator } = require('@/app');
 const resp = require('@/util/resp');
+const { Sequelize } = require('sequelize');
 
 exports.main = async (req, res) => {
   // 解析token
@@ -39,6 +40,12 @@ exports.main = async (req, res) => {
       },
     });
 
+    // 操作员不存在
+    if (!operator) {
+      res.status(400).json(resp(400, null, '操作员不存在！'));
+      return;
+    }
+
     // 操作员的权限验证
     if (operator.permission !== 'SIGN') {
       res.status(400).json(operator(400, null, '权限不足！'));
@@ -49,7 +56,8 @@ exports.main = async (req, res) => {
     await Student.update(
       {
         sign_status: true,
-        sign_number: 'DEFAULT',
+        signed_date: Sequelize.fn('now'),
+        signed_operator: operator.id,
       },
       {
         where: {

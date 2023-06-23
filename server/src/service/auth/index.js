@@ -35,6 +35,7 @@ exports.main = async (req, res) => {
             operator.password,
             operator.permission
           ),
+          nickname: operator.nickname,
           permission: operator.permission,
         },
         '认证成功！'

@@ -15,3 +15,9 @@ export const permissionStateAtom = atom<Permission | null>({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const nicknameStateAtom = atom<string | null>({
+  key: 'nicknameStateAtom',
+  default: null,
+  effects_UNSTABLE: [persistAtom],
+});

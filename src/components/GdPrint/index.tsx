@@ -8,7 +8,7 @@ import { FC } from 'react';
 import type { Student } from '../../types/student';
 
 const GdPrint: FC<{ chosenStudent: Student | null }> = ({ chosenStudent }) => {
-  if (chosenStudent?.gd) {
+  if (chosenStudent?.interview_gd) {
     return (
       <Descriptions
         style={{ marginBlockEnd: 50 }}
@@ -19,19 +19,19 @@ const GdPrint: FC<{ chosenStudent: Student | null }> = ({ chosenStudent }) => {
         }
         bordered
       >
-        <Descriptions.Item label="考生姓名" span={1}>
+        <Descriptions.Item label="考生姓名">
           {chosenStudent?.name}
         </Descriptions.Item>
-        <Descriptions.Item label="性别" span={2}>
+        <Descriptions.Item label="性别">
           {chosenStudent?.gender}
         </Descriptions.Item>
-        <Descriptions.Item label="身份证号码" span={3}>
+        <Descriptions.Item label="身份证号码">
           {chosenStudent?.id_card}
         </Descriptions.Item>
-        <Descriptions.Item label="初中就读学校" span={3}>
+        <Descriptions.Item label="初中就读学校">
           {chosenStudent?.graduated_school}
         </Descriptions.Item>
-        <Descriptions.Item label="备注" span={3}>
+        <Descriptions.Item label="备注">
           <Space size={16}>
             <Space>
               <BorderOutlined />
@@ -56,7 +56,6 @@ const GdPrint: FC<{ chosenStudent: Student | null }> = ({ chosenStudent }) => {
           </Space>
         </Descriptions.Item>
         <Descriptions.Item
-          span={1}
           label={
             <div style={{ textAlign: 'center' }}>
               <div>面试结果</div>
@@ -71,7 +70,7 @@ const GdPrint: FC<{ chosenStudent: Student | null }> = ({ chosenStudent }) => {
         >
           {''}
         </Descriptions.Item>
-        <Descriptions.Item span={2} label="教师签名">
+        <Descriptions.Item label="教师签名">
           <div style={{ paddingInlineEnd: 60 }}></div>
         </Descriptions.Item>
       </Descriptions>

@@ -12,7 +12,13 @@ import type { Response } from '../types/response';
 export const authService = (
   username: string | null,
   password: string | null
-): Promise<Response<{ token: string; permission: Permission }>> => {
+): Promise<
+  Response<{
+    token: string;
+    nickname: string;
+    permission: Permission;
+  }>
+> => {
   return myAxios.post('/auth', { username, password });
 };
 
@@ -22,7 +28,10 @@ export const authService = (
  * @author Jia-Yao Zhao
  */
 export const authValidationService = async (): Promise<
-  Response<{ permission: Permission }>
+  Response<{
+    nickname: string;
+    permission: Permission;
+  }>
 > => {
   return await myAxios.post('/auth/validation');
 };

@@ -21,6 +21,12 @@ exports.main = async (req, res) => {
       },
     });
 
+    // 操作员不存在
+    if (!operator) {
+      res.status(400).json(resp(400, null, '操作员不存在！'));
+      return;
+    }
+
     // 操作员的权限验证
     if (operator.permission !== 'SIGN') {
       res.status(400).send('Error');
@@ -50,17 +56,17 @@ exports.main = async (req, res) => {
       // 学生信息
       student: student.dataValues,
       // 学生字段更新时间
-      updated_at: new Date(student.updated_at).toLocaleString('zh-CN'),
+      signed_date: new Date(student.signed_date).toLocaleString('zh-CN'),
       // 当前时间戳
       timestamp: new Date().getTime(),
       htmlList: [
-        student?.gd
+        student?.interview_gd
           ? { weight: 3, element: '城市轨道交通运输与管理' }
           : { weight: 0, element: null },
-        student?.ly
+        student?.interview_ly
           ? { weight: 2, element: '旅游服务与管理' }
           : { weight: 0, element: null },
-        student?.xq
+        student?.interview_xq
           ? { weight: 1, element: '幼儿教育' }
           : { weight: 0, element: null },
       ]
@@ -74,13 +80,13 @@ exports.main = async (req, res) => {
         })
         .join(''),
       textList: [
-        student?.gd
+        student?.interview_gd
           ? { weight: 3, element: '城市轨道交通运输与管理' }
           : { weight: 0, element: null },
-        student?.ly
+        student?.interview_ly
           ? { weight: 2, element: '旅游服务与管理' }
           : { weight: 0, element: null },
-        student?.xq
+        student?.interview_xq
           ? { weight: 1, element: '幼儿教育' }
           : { weight: 0, element: null },
       ]

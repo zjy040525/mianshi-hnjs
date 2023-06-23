@@ -1,7 +1,11 @@
 import { App as AntdApp } from 'antd';
 import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { permissionStateAtom, tokenStateAtom } from '../../atoms/auth';
+import {
+  nicknameStateAtom,
+  permissionStateAtom,
+  tokenStateAtom,
+} from '../../atoms/auth';
 import { authStateSelector } from '../../selectors/auth';
 import { authValidationService } from '../../services/auth';
 import { getAuthToken, removeAuthToken } from '../../utils/storage';
@@ -16,11 +20,13 @@ const Validation = () => {
   const token = getAuthToken();
   const tokenState = useRecoilValue(tokenStateAtom);
   const permissionState = useRecoilValue(permissionStateAtom);
+  const setNickname = useSetRecoilState(nicknameStateAtom);
   const setAuth = useSetRecoilState(authStateSelector);
   const resetHandler = () => {
     setAuth({
       token: null,
       permission: null,
+      nickname: null,
     });
     removeAuthToken();
   };
@@ -29,8 +35,11 @@ const Validation = () => {
     if (token && token === tokenState) {
       authValidationService()
         .then(({ data }) => {
-          // 验证成功不做任何操作，验证失败退出当前登录状态，要求重新登录
-          if (data.permission !== permissionState) {
+          if (data.permission === permissionState) {
+            // 设置用户昵称
+            setNickname(data.nickname);
+          } else {
+            // 验证失败退出当前登录状态，要求重新登录
             resetHandler();
           }
         })

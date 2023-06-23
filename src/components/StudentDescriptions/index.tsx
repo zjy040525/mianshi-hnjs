@@ -28,7 +28,7 @@ const StudentDescriptions: FC<{
         {chosenStudent?.registration_number}
       </Descriptions.Item>
       <Descriptions.Item label="面试学前">
-        {chosenStudent?.xq ? (
+        {chosenStudent?.interview_xq ? (
           <Typography.Text type="success">
             <CheckOutlined />
           </Typography.Text>
@@ -39,7 +39,7 @@ const StudentDescriptions: FC<{
         )}
       </Descriptions.Item>
       <Descriptions.Item label="面试旅游">
-        {chosenStudent?.ly ? (
+        {chosenStudent?.interview_ly ? (
           <Typography.Text type="success">
             <CheckOutlined />
           </Typography.Text>
@@ -50,7 +50,7 @@ const StudentDescriptions: FC<{
         )}
       </Descriptions.Item>
       <Descriptions.Item label="面试轨道">
-        {chosenStudent?.gd ? (
+        {chosenStudent?.interview_gd ? (
           <Typography.Text type="success">
             <CheckOutlined />
           </Typography.Text>
@@ -60,9 +60,7 @@ const StudentDescriptions: FC<{
           </Typography.Text>
         )}
       </Descriptions.Item>
-      <Descriptions.Item label="签到状态" span={3}>
-        {signStatus}
-      </Descriptions.Item>
+      <Descriptions.Item label="签到状态">{signStatus}</Descriptions.Item>
     </Descriptions>
   );
 };

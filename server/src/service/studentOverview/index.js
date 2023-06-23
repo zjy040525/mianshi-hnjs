@@ -14,6 +14,12 @@ exports.main = async (req, res) => {
       },
     });
 
+    // 操作员不存在
+    if (!operator) {
+      res.status(400).json(resp(400, null, '操作员不存在！'));
+      return;
+    }
+
     // 操作员的权限验证
     if (operator.permission !== 'MANAGE') {
       res.status(400).json(resp(400, null, '权限不足！'));

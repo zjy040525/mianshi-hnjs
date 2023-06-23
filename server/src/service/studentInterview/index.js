@@ -1,5 +1,6 @@
 const { Student, Operator } = require('@/app');
 const resp = require('@/util/resp');
+const { Sequelize } = require('sequelize');
 
 exports.main = async (req, res) => {
   // 解析token
@@ -34,6 +35,12 @@ exports.main = async (req, res) => {
       },
     });
 
+    // 操作员不存在
+    if (!operator) {
+      res.status(400).json(resp(400, null, '操作员不存在！'));
+      return;
+    }
+
     // 操作员的权限验证
     if (operator.permission !== 'INTERVIEW') {
       res.status(400).json(resp(400, null, '权限不足！'));
@@ -44,9 +51,11 @@ exports.main = async (req, res) => {
     // 修改只对非NULL的字段才有效
     await Student.update(
       {
-        xq: originalStudent.xq ? xq : null,
-        ly: originalStudent.ly ? ly : null,
-        gd: originalStudent.gd ? gd : null,
+        interview_xq: originalStudent.interview_xq ? xq : null,
+        interview_ly: originalStudent.interview_ly ? ly : null,
+        interview_gd: originalStudent.interview_gd ? gd : null,
+        interviewed_date: Sequelize.fn('now'),
+        interviewed_operator: operator.id,
       },
       {
         where: {
