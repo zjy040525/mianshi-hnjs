@@ -29,9 +29,12 @@ MYSQL_USERNAME=用户名
 MYSQL_PASSWORD=密码
 MYSQL_DATABASE=要使用的数据库的名称
 JWT_SECRET=身份认证私钥
-SIGN_OPERATORS=签到操作员的用户名，多个用,分割，例如：SIGN_OPERATORS=sign1,sign2,sign3,sign4,sign5
-INTERVIEW_OPERATORS=面试操作员的用户名，多个用,分割，例如：INTERVIEW_OPERATORS=score1,score2,score3,score4,score5
-MANAGE_OPERATORS=管理员的用户名，多个用,分割，例如：MANAGE_OPERATORS=admin1,admin2
+# 签到操作员的用户名，多个用`,`分隔；别名用`:`分隔
+SIGN_OPERATORS=sign1:一号签到员,sign2:二号签到员,sign3:三号签到员,sign4:四号签到员,sign5:五号签到员
+# 面试操作员的用户名，多个用`,`分隔；别名用`:`分隔
+INTERVIEW_OPERATORS=score1:一号面试员,score2:二号面试员,score3:三号面试员,score4:四号面试员,score5:五号面试员
+# 管理员的用户名，多个用`,`分隔；别名用`:`分隔
+MANAGE_OPERATORS=admin1:管理员
 ```
 
 启动服务。
