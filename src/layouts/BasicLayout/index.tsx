@@ -9,13 +9,9 @@ import {
 import { Avatar, Dropdown, Layout, Menu, Typography, theme } from 'antd';
 import { FC, Suspense } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import {
-  nicknameStateAtom,
-  permissionStateAtom,
-  tokenStateAtom,
-} from '../../atoms/auth';
+import { useRecoilState } from 'recoil';
 import ChunkLoading from '../../components/ChunkLoading';
+import { authStateSelector } from '../../selectors/auth.ts';
 import classes from './index.module.less';
 
 const { Content, Header } = Layout;
@@ -27,9 +23,7 @@ const BasicLayout: FC = () => {
   } = theme.useToken();
   const location = useLocation();
   const navigate = useNavigate();
-  const tokenState = useRecoilValue(tokenStateAtom);
-  const permissionState = useRecoilValue(permissionStateAtom);
-  const nickname = useRecoilValue(nicknameStateAtom);
+  const [auth, setAuth] = useRecoilState(authStateSelector);
 
   return (
     <Layout className={classes.layout}>
@@ -56,12 +50,12 @@ const BasicLayout: FC = () => {
           mode="horizontal"
           items={[{ icon: <HomeOutlined />, key: '/', label: '主页' }]
             .concat(
-              tokenState
+              auth.token
                 ? []
                 : [{ icon: <LockOutlined />, key: '/auth', label: '认证' }]
             )
             .concat(
-              permissionState === 'SIGN'
+              auth.permission === 'SIGN'
                 ? [
                     {
                       icon: <SolutionOutlined />,
@@ -72,19 +66,19 @@ const BasicLayout: FC = () => {
                 : []
             )
             .concat(
-              permissionState === 'INTERVIEW'
+              auth.permission === 'INTERVIEW'
                 ? [{ icon: <UserOutlined />, key: '/interview', label: '面试' }]
                 : []
             )
             .concat(
-              permissionState === 'MANAGE'
+              auth.permission === 'MANAGE'
                 ? [{ icon: <SettingOutlined />, key: '/manage', label: '管理' }]
                 : []
             )}
           onSelect={selectInfo => navigate(selectInfo.key)}
           selectedKeys={[location.pathname]}
         />
-        {tokenState ? (
+        {auth.token ? (
           <Dropdown
             destroyPopupOnHide
             placement="bottom"
@@ -96,10 +90,13 @@ const BasicLayout: FC = () => {
                     <>
                       当前身份
                       <strong style={{ paddingInlineStart: 8 }}>
-                        {nickname}
+                        {auth.nickname}
                       </strong>
                     </>
                   ),
+                  onClick() {
+                    navigate('/');
+                  },
                   icon: <UserOutlined />,
                 },
                 { type: 'divider' },
@@ -107,6 +104,15 @@ const BasicLayout: FC = () => {
                   key: 'logout',
                   label: '退出登录',
                   icon: <LogoutOutlined />,
+                  onClick() {
+                    setAuth({
+                      id: null,
+                      token: null,
+                      username: null,
+                      nickname: null,
+                      permission: null,
+                    });
+                  },
                   danger: true,
                 },
               ],
