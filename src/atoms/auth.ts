@@ -21,3 +21,15 @@ export const nicknameStateAtom = atom<string | null>({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const usernameStateAtom = atom<string | null>({
+  key: 'usernameStateAtom',
+  default: null,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const idStateAtom = atom<number | null>({
+  key: 'idStateAtom',
+  default: null,
+  effects_UNSTABLE: [persistAtom],
+});

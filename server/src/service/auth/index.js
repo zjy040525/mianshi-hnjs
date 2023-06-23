@@ -30,11 +30,13 @@ exports.main = async (req, res) => {
       resp(
         200,
         {
+          id: operator.id,
           token: token.make(
             operator.username,
             operator.password,
             operator.permission
           ),
+          username: operator.username,
           nickname: operator.nickname,
           permission: operator.permission,
         },

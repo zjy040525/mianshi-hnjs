@@ -34,6 +34,8 @@ exports.main = async (req, res) => {
       resp(
         200,
         {
+          id: operator.id,
+          username: operator.username,
           nickname: operator.nickname,
           permission: operator.permission,
         },

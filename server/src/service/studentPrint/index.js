@@ -49,6 +49,21 @@ exports.main = async (req, res) => {
     // 签到后才能打印
     if (!student.sign_status) {
       res.status(404).json(resp(400, null, '该学生未签到，请先签到！'));
+      return;
+    }
+
+    // 操作越权，不能对其他操作员处签到的学生进行处理
+    if (student.signed_operator && student.signed_operator !== operator.id) {
+      res
+        .status(404)
+        .json(
+          resp(
+            400,
+            null,
+            `操作越权，请到${operator.nickname ?? operator.username}处操作！`
+          )
+        );
+      return;
     }
 
     // 返回HTML打印模板

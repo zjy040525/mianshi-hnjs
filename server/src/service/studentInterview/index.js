@@ -47,6 +47,23 @@ exports.main = async (req, res) => {
       return;
     }
 
+    // 操作越权，不能对其他操作员处签到的学生进行处理
+    if (
+      originalStudent.interviewed_operator &&
+      originalStudent.interviewed_operator !== operator.id
+    ) {
+      res
+        .status(404)
+        .json(
+          resp(
+            400,
+            null,
+            `操作越权，请到${operator.nickname ?? operator.username}处操作！`
+          )
+        );
+      return;
+    }
+
     // 更新学生信息
     // 修改只对非NULL的字段才有效
     await Student.update(

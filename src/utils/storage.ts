@@ -6,8 +6,12 @@ import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from '../constant/storage';
  * @param token
  * @author Jia-Yao Zhao
  */
-export const setAuthToken = (token: string) => {
-  localStorage.setItem(AUTH_TOKEN_LOCAL_STORAGE_KEY, token);
+export const setAuthToken = (token?: string | null) => {
+  if (token) {
+    localStorage.setItem(AUTH_TOKEN_LOCAL_STORAGE_KEY, token);
+  } else {
+    removeAuthToken();
+  }
 };
 
 /**

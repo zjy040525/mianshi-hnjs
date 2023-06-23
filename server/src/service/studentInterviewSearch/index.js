@@ -1,10 +1,9 @@
 const { Student, Operator } = require('@/app');
-const { Op } = require('sequelize');
+const { Op, Sequelize } = require('sequelize');
 const resp = require('@/util/resp');
+const relation = require('@/util/relation');
 
 exports.main = async (req, res) => {
-  // 单次查询最大数量
-  const limit = 25;
   // 解析token
   const { username, password } = req.auth;
   // 获取地址栏上传递的参数
@@ -37,7 +36,7 @@ exports.main = async (req, res) => {
     }
 
     // 根据条件查询学生
-    const { rows } = await Student.findAndCountAll({
+    const rawStudents = await Student.findAll({
       where: {
         // 已完成签到
         sign_status: true,
@@ -46,10 +45,16 @@ exports.main = async (req, res) => {
           [Op.like]: `%${studentId}%`,
         },
       },
-      limit,
+      order: [
+        ['interviewed_operator', 'ASC'],
+        Sequelize.literal(`interviewed_operator=${operator.id} DESC`),
+        ['signed_date', 'DESC'],
+      ],
+      limit: 25,
     });
+    const students = await relation(rawStudents);
 
-    res.status(200).json(resp(200, rows, 'ok'));
+    res.status(200).json(resp(200, students, 'ok'));
   } catch (e) {
     console.error(e);
     res.status(400).json(resp(400, null, '服务器错误！'));

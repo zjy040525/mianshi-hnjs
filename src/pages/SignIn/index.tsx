@@ -18,7 +18,11 @@ import {
 import { FC, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { permissionStateAtom, tokenStateAtom } from '../../atoms/auth';
+import {
+  idStateAtom,
+  permissionStateAtom,
+  tokenStateAtom,
+} from '../../atoms/auth';
 import BasicPrint from '../../components/BasicPrint';
 import GdPrint from '../../components/GdPrint';
 import HeadTitle from '../../components/HeadTitle';
@@ -45,6 +49,7 @@ import classes from './index.module.less';
  */
 const SignIn: FC = () => {
   const { message } = AntdApp.useApp();
+  const idState = useRecoilValue(idStateAtom);
   // 步骤分段
   const [STEP_1, STEP_2, STEP_3, STEP_4] = [0, 1, 2, 3];
   // 当前步骤
@@ -161,7 +166,7 @@ const SignIn: FC = () => {
           {currentStep === STEP_1 ? (
             <Col span={8}>
               <Select
-                style={{ width: '100%' }}
+                style={{ minWidth: 550, width: '100%' }}
                 disabled={signing}
                 autoFocus
                 showSearch
@@ -197,6 +202,9 @@ const SignIn: FC = () => {
                 options={students.map(student => {
                   return {
                     value: student.id,
+                    disabled: student.signed_operator
+                      ? student.signed_operator.id !== idState
+                      : false,
                     label: (
                       <Typography.Text
                         style={{
@@ -205,12 +213,33 @@ const SignIn: FC = () => {
                           color: 'inherit',
                         }}
                       >
+                        <span style={{ marginInlineEnd: 8 }}>
+                          {student.name}（{student.id_card}）
+                        </span>
                         {student.sign_status ? (
-                          <Tag color="success">已签到</Tag>
+                          <>
+                            <Tag color="success">已签到</Tag>
+                            {student.signed_operator ? (
+                              <Tag
+                                color={
+                                  student.signed_operator.id === idState
+                                    ? 'success'
+                                    : 'warning'
+                                }
+                              >
+                                隶属于
+                                <span style={{ paddingInlineStart: 8 }}>
+                                  {student.signed_operator.nickname +
+                                    (student.signed_operator.id === idState
+                                      ? '（我）'
+                                      : '')}
+                                </span>
+                              </Tag>
+                            ) : null}
+                          </>
                         ) : (
                           <Tag color="error">未签到</Tag>
                         )}
-                        {student.name}（{student.id_card}）
                       </Typography.Text>
                     ),
                     student,

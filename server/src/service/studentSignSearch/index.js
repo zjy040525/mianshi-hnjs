@@ -1,6 +1,8 @@
 const { Student, Operator } = require('@/app');
+const { Sequelize } = require('sequelize');
 const { Op } = require('sequelize');
 const resp = require('@/util/resp');
+const relation = require('@/util/relation');
 
 exports.main = async (req, res) => {
   // 解析token
@@ -35,7 +37,7 @@ exports.main = async (req, res) => {
     }
 
     // 根据条件查询学生
-    const students = await Student.findAll({
+    const rawStudents = await Student.findAll({
       where: {
         // 学生身份证模糊查询
         id_card: {
@@ -43,9 +45,14 @@ exports.main = async (req, res) => {
         },
       },
       // 优先显示未签到的学生
-      order: [['sign_status', 'ASC']],
+      order: [
+        ['sign_status', 'ASC'],
+        Sequelize.literal(`signed_operator=${operator.id} DESC`),
+        ['signed_date', 'DESC'],
+      ],
       limit: 25,
     });
+    const students = await relation(rawStudents);
 
     res.status(200).json(resp(200, students, 'ok'));
   } catch (e) {

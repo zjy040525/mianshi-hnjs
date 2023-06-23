@@ -1,11 +1,6 @@
 import { App as AntdApp } from 'antd';
 import { useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import {
-  nicknameStateAtom,
-  permissionStateAtom,
-  tokenStateAtom,
-} from '../../atoms/auth';
+import { useRecoilState } from 'recoil';
 import { authStateSelector } from '../../selectors/auth';
 import { authValidationService } from '../../services/auth';
 import { getAuthToken, removeAuthToken } from '../../utils/storage';
@@ -17,27 +12,26 @@ import { getAuthToken, removeAuthToken } from '../../utils/storage';
  */
 const Validation = () => {
   const { message } = AntdApp.useApp();
-  const token = getAuthToken();
-  const tokenState = useRecoilValue(tokenStateAtom);
-  const permissionState = useRecoilValue(permissionStateAtom);
-  const setNickname = useSetRecoilState(nicknameStateAtom);
-  const setAuth = useSetRecoilState(authStateSelector);
+  const localToken = getAuthToken();
+  const [auth, setAuth] = useRecoilState(authStateSelector);
   const resetHandler = () => {
     setAuth({
+      id: null,
       token: null,
-      permission: null,
+      username: null,
       nickname: null,
+      permission: null,
     });
     removeAuthToken();
   };
 
   useEffect(() => {
-    if (token && token === tokenState) {
+    if (localToken && localToken === auth.token) {
       authValidationService()
         .then(({ data }) => {
-          if (data.permission === permissionState) {
-            // 设置用户昵称
-            setNickname(data.nickname);
+          if (data.permission === auth.permission) {
+            // 保存用户信息
+            setAuth({ ...data, token: auth.token });
           } else {
             // 验证失败退出当前登录状态，要求重新登录
             resetHandler();

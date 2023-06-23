@@ -20,7 +20,11 @@ import dayjs from 'dayjs';
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { permissionStateAtom, tokenStateAtom } from '../../atoms/auth';
+import {
+  idStateAtom,
+  permissionStateAtom,
+  tokenStateAtom,
+} from '../../atoms/auth';
 import HeadTitle from '../../components/HeadTitle';
 import StudentDescriptions from '../../components/StudentDescriptions';
 import { SEARCH_STUDENT_KEY, STUDENT_INTERVIEW_KEY } from '../../constant/msg';
@@ -63,6 +67,7 @@ const InterviewStatusTypeBadge: FC<{ status: InterviewStatus }> = ({
 
 const Interview: FC = () => {
   const { message } = AntdApp.useApp();
+  const idState = useRecoilValue(idStateAtom);
   // 步骤分段
   const [STEP_1, STEP_2, STEP_3, STEP_4] = [0, 1, 2, 3];
   // 当前步骤
@@ -191,6 +196,9 @@ const Interview: FC = () => {
                 options={students.map(student => {
                   return {
                     value: student.id,
+                    disabled: student.interviewed_operator
+                      ? student.interviewed_operator.id !== idState
+                      : false,
                     label: (
                       <Typography.Text
                         style={{
@@ -199,6 +207,9 @@ const Interview: FC = () => {
                           color: 'inherit',
                         }}
                       >
+                        <span style={{ marginInlineEnd: 8 }}>
+                          {student.name}（{student.id}）
+                        </span>
                         <InterviewStatusTypeTag
                           status={student.interview_xq}
                           text="学前"
@@ -211,7 +222,23 @@ const Interview: FC = () => {
                           status={student.interview_gd}
                           text="轨道"
                         />
-                        {student.name}（{student.id}）
+                        {student.interviewed_operator ? (
+                          <Tag
+                            color={
+                              student.interviewed_operator.id === idState
+                                ? 'success'
+                                : 'warning'
+                            }
+                          >
+                            隶属于
+                            <span style={{ paddingInlineStart: 8 }}>
+                              {student.interviewed_operator.nickname +
+                                (student.interviewed_operator.id === idState
+                                  ? '（我）'
+                                  : '')}
+                            </span>
+                          </Tag>
+                        ) : null}
                       </Typography.Text>
                     ),
                     student,

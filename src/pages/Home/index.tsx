@@ -11,7 +11,13 @@ const Home: FC = () => {
   const [auth, setAuth] = useRecoilState(authStateSelector);
   const navigate = useNavigate();
   const logoutHandler = () => {
-    setAuth({ token: null, permission: null, nickname: null });
+    setAuth({
+      id: null,
+      token: null,
+      username: null,
+      nickname: null,
+      permission: null,
+    });
   };
 
   return (
