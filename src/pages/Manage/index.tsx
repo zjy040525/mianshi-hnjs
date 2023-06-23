@@ -1,10 +1,4 @@
-import {
-  CheckOutlined,
-  CloseOutlined,
-  TeamOutlined,
-  UserAddOutlined,
-  UserDeleteOutlined,
-} from '@ant-design/icons';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 import {
   App as AntdApp,
@@ -29,19 +23,23 @@ import {
 } from '../../services/student';
 import type { InterviewStatus, Student } from '../../types/student';
 
-const renderBadge = (type: InterviewStatus) => {
+const badge = (type: InterviewStatus) => {
   switch (type) {
     case 'Processing':
       return <Badge status="processing" text="进行中" />;
     case 'Failed':
-      return <Badge status="error" text="面试未通过" />;
+      return <Badge status="error" text="未通过" />;
     case 'Success':
-      return <Badge status="success" text="面试已通过" />;
+      return <Badge status="success" text="已通过" />;
   }
-  return '-';
+  return <Badge status="default" text="未报名" />;
 };
 
 const studentSignColumns: ColumnsType<Student> = [
+  {
+    title: '系统序号',
+    dataIndex: 'id',
+  },
   {
     title: '姓名',
     dataIndex: 'name',
@@ -67,21 +65,6 @@ const studentSignColumns: ColumnsType<Student> = [
     dataIndex: 'registration_number',
   },
   {
-    title: '学前',
-    dataIndex: 'xq',
-    render: value => renderBadge(value),
-  },
-  {
-    title: '旅游',
-    dataIndex: 'ly',
-    render: value => renderBadge(value),
-  },
-  {
-    title: '轨道',
-    dataIndex: 'gd',
-    render: value => renderBadge(value),
-  },
-  {
     title: '签到状态',
     dataIndex: 'sign_status',
     render(status) {
@@ -97,26 +80,76 @@ const studentSignColumns: ColumnsType<Student> = [
     },
   },
   {
-    title: '更新时间',
-    dataIndex: 'updated_at',
+    title: '签到时间',
+    dataIndex: 'signed_date',
     render(dateTime) {
-      return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
+      if (dateTime) {
+        return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
+      }
+      return '-';
+    },
+  },
+  {
+    title: '签到操作员',
+    dataIndex: 'signed_operator',
+    render(signedOperator) {
+      if (signedOperator) {
+        return signedOperator.nickname;
+      }
+      return '-';
+    },
+  },
+  {
+    title: '学前面试进度',
+    dataIndex: 'interview_xq',
+    render: value => badge(value),
+  },
+  {
+    title: '旅游面试进度',
+    dataIndex: 'interview_ly',
+    render: value => badge(value),
+  },
+  {
+    title: '轨道面试进度',
+    dataIndex: 'interview_gd',
+    render: value => badge(value),
+  },
+  {
+    title: '面试时间',
+    dataIndex: 'interviewed_date',
+    render(dateTime) {
+      if (dateTime) {
+        return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
+      }
+      return '-';
+    },
+  },
+  {
+    title: '面试操作员',
+    dataIndex: 'interviewed_operator',
+    render(interviewedOperator) {
+      if (interviewedOperator) {
+        return interviewedOperator.nickname;
+      }
+      return '-';
     },
   },
 ];
 
 const Manage: FC = () => {
-  // 签到人数
-  const [signedCount, setSignedCount] = useState(0);
-  // 未签到人数
-  const [noSignedCount, setNoSignedCount] = useState(0);
+  // 统计人数
+  const [count, setCount] = useState({
+    signedCount: 0,
+    noSignedCount: 0,
+    interviewedCount: 0,
+    noInterviewedCount: 0,
+  });
   // 获取统计信息
   const { loading: statisticLoading } = useRequest(studentStatisticService, {
     pollingInterval: 5000,
     loadingDelay: 300,
-    onSuccess(res) {
-      setSignedCount(res.data.signedCount);
-      setNoSignedCount(res.data.noSignedCount);
+    onSuccess({ data }) {
+      setCount({ ...data });
     },
   });
   // 获取同学信息总览
@@ -134,34 +167,104 @@ const Manage: FC = () => {
       <Row gutter={[16, 16]}>
         <Col span={12}>
           <Row gutter={[16, 16]}>
-            <Col span={7}>
+            <Col span={6}>
               <Card>
                 <Statistic
                   title="已签到人数"
-                  loading={statisticLoading}
-                  value={signedCount}
-                  valueStyle={{ color: '#3f8600' }}
-                  prefix={<UserAddOutlined />}
+                  loading={
+                    count.signedCount + count.noSignedCount < 1 ||
+                    statisticLoading
+                  }
+                  value={count.signedCount}
                 />
               </Card>
             </Col>
-            <Col span={7}>
+            <Col span={6}>
               <Card>
                 <Statistic
                   title="未签到人数"
-                  loading={statisticLoading}
-                  value={noSignedCount}
-                  valueStyle={{ color: '#cf1322' }}
-                  prefix={<UserDeleteOutlined />}
+                  loading={
+                    count.signedCount + count.noSignedCount < 1 ||
+                    statisticLoading
+                  }
+                  value={count.noSignedCount}
                 />
               </Card>
             </Col>
-            <Col span={10}>
+            <Col span={6}>
               <Card>
                 <Statistic
                   title="总人数"
-                  value={noSignedCount + signedCount}
-                  prefix={<TeamOutlined />}
+                  loading={
+                    count.signedCount + count.noSignedCount < 1 ||
+                    statisticLoading
+                  }
+                  value={count.noSignedCount + count.signedCount}
+                />
+              </Card>
+            </Col>
+            <Col span={6}>
+              <Card>
+                <Statistic
+                  title="签到进度"
+                  loading={
+                    count.signedCount + count.noSignedCount < 1 ||
+                    statisticLoading
+                  }
+                  value={
+                    (count.signedCount /
+                      (count.signedCount + count.noSignedCount)) *
+                    100
+                  }
+                  precision={3}
+                  suffix="%"
+                />
+              </Card>
+            </Col>
+          </Row>
+        </Col>
+        <Col span={12}>
+          <Row gutter={[16, 16]}>
+            <Col span={6}></Col>
+            <Col span={6}>
+              <Card>
+                <Statistic
+                  title="已面试人数"
+                  loading={
+                    count.signedCount + count.noSignedCount < 1 ||
+                    statisticLoading
+                  }
+                  value={count.interviewedCount}
+                />
+              </Card>
+            </Col>
+            <Col span={6}>
+              <Card>
+                <Statistic
+                  title="未面试人数"
+                  loading={
+                    count.signedCount + count.noSignedCount < 1 ||
+                    statisticLoading
+                  }
+                  value={count.noInterviewedCount}
+                />
+              </Card>
+            </Col>
+            <Col span={6}>
+              <Card>
+                <Statistic
+                  title="面试进度"
+                  loading={
+                    count.signedCount + count.noSignedCount < 1 ||
+                    statisticLoading
+                  }
+                  value={
+                    (count.interviewedCount /
+                      (count.interviewedCount + count.noInterviewedCount)) *
+                    100
+                  }
+                  precision={3}
+                  suffix="%"
                 />
               </Card>
             </Col>
@@ -172,7 +275,7 @@ const Manage: FC = () => {
             bordered
             columns={studentSignColumns}
             rowKey={record => record.id_card}
-            loading={overviewLoading}
+            loading={!students.length || overviewLoading}
             dataSource={students}
           />
         </Col>

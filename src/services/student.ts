@@ -72,7 +72,12 @@ export const studentInterviewService = (
  * @author Jia-Yao Zhao
  */
 export const studentStatisticService = (): Promise<
-  Response<{ signedCount: number; noSignedCount: number }>
+  Response<{
+    signedCount: number;
+    noSignedCount: number;
+    interviewedCount: number;
+    noInterviewedCount: number;
+  }>
 > => {
   return myAxios.get('/student/statistic');
 };

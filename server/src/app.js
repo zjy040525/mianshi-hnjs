@@ -11,6 +11,7 @@ const app = new Sequelize({
   host,
   port,
   dialect: 'mysql',
+  logging: false,
 });
 
 // 初始化身份认证记录

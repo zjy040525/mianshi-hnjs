@@ -1,5 +1,6 @@
 const { Student, Operator } = require('@/app');
 const resp = require('@/util/resp');
+const relation = require('@/util/relation');
 
 exports.main = async (req, res) => {
   // 解析token
@@ -27,9 +28,10 @@ exports.main = async (req, res) => {
     }
 
     // 学生总览
-    const { rows } = await Student.findAndCountAll();
+    const rawStudents = await Student.findAll();
+    const students = await relation(rawStudents);
 
-    res.status(200).json(resp(200, rows, 'ok'));
+    res.status(200).json(resp(200, students, 'ok'));
   } catch (e) {
     console.error(e);
     res.status(400).json(resp(400, null, '服务器错误！'));
