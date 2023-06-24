@@ -20,14 +20,11 @@ import dayjs from 'dayjs';
 import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import {
-  idStateAtom,
-  permissionStateAtom,
-  tokenStateAtom,
-} from '../../atoms/auth';
+import { idStateAtom } from '../../atoms/auth';
 import HeadTitle from '../../components/HeadTitle';
 import StudentDescriptions from '../../components/StudentDescriptions';
 import { SEARCH_STUDENT_KEY, STUDENT_INTERVIEW_KEY } from '../../constant/msg';
+import { authStateSelector } from '../../selectors/auth';
 import {
   studentInterviewSearchService,
   studentInterviewService,
@@ -196,9 +193,9 @@ const Interview: FC = () => {
                 options={students.map(student => {
                   return {
                     value: student.id,
-                    disabled: student.interviewed_operator
-                      ? student.interviewed_operator.id !== idState
-                      : false,
+                    disabled:
+                      !!student.interviewed_operator &&
+                      student.interviewed_operator.id !== idState,
                     label: (
                       <Typography.Text
                         style={{
@@ -375,16 +372,15 @@ const Interview: FC = () => {
 
 const InterviewProvider: FC = () => {
   const { message } = AntdApp.useApp();
-  const tokenState = useRecoilValue(tokenStateAtom);
-  const permissionState = useRecoilValue(permissionStateAtom);
+  const auth = useRecoilValue(authStateSelector);
   useEffect(() => {
-    if (!tokenState) {
+    if (!auth.token) {
       message.error('请先认证！');
-    } else if (permissionState !== 'INTERVIEW') {
+    } else if (auth.permission !== 'INTERVIEW') {
       message.error('权限不足！');
     }
   }, []);
-  return tokenState && permissionState === 'INTERVIEW' ? (
+  return auth.token && auth.permission === 'INTERVIEW' ? (
     <Interview />
   ) : (
     <Navigate to="/" />

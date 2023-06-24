@@ -15,8 +15,8 @@ import dayjs from 'dayjs';
 import { FC, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { permissionStateAtom, tokenStateAtom } from '../../atoms/auth';
 import HeadTitle from '../../components/HeadTitle';
+import { authStateSelector } from '../../selectors/auth';
 import {
   studentOverviewService,
   studentStatisticService,
@@ -285,17 +285,16 @@ const Manage: FC = () => {
 };
 
 const ManageProvider: FC = () => {
-  const tokenState = useRecoilValue(tokenStateAtom);
-  const permissionState = useRecoilValue(permissionStateAtom);
+  const auth = useRecoilValue(authStateSelector);
   const { message } = AntdApp.useApp();
   useEffect(() => {
-    if (!tokenState) {
+    if (!auth.token) {
       message.error('请先认证！');
-    } else if (permissionState !== 'MANAGE') {
+    } else if (auth.permission !== 'MANAGE') {
       message.error('权限不足！');
     }
   }, []);
-  return tokenState && permissionState === 'MANAGE' ? (
+  return auth.token && auth.permission === 'MANAGE' ? (
     <Manage />
   ) : (
     <Navigate to="/" />

@@ -11,7 +11,7 @@ import { FC, Suspense } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import ChunkLoading from '../../components/ChunkLoading';
-import { authStateSelector } from '../../selectors/auth.ts';
+import { authStateSelector } from '../../selectors/auth';
 import classes from './index.module.less';
 
 const { Content, Header } = Layout;

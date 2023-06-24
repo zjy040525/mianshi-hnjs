@@ -15,9 +15,9 @@ export interface Student {
   // 签到状态
   sign_status: boolean;
   // 签到时间
-  signed_date: string;
+  signed_date: string | null;
   // 签到操作员
-  signed_operator: Operator;
+  signed_operator: Operator | null;
   // 学前专业
   interview_xq: InterviewStatus;
   // 旅游专业
@@ -25,9 +25,9 @@ export interface Student {
   // 轨道专业
   interview_gd: InterviewStatus;
   // 面试时间
-  interviewed_date: string;
+  interviewed_date: string | null;
   // 面试操作员
-  interviewed_operator: Operator;
+  interviewed_operator: Operator | null;
 }
 
 export type InterviewStatus = 'Processing' | 'Success' | 'Failed' | null;

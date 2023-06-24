@@ -18,11 +18,7 @@ import {
 import { FC, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import {
-  idStateAtom,
-  permissionStateAtom,
-  tokenStateAtom,
-} from '../../atoms/auth';
+import { idStateAtom } from '../../atoms/auth';
 import BasicPrint from '../../components/BasicPrint';
 import GdPrint from '../../components/GdPrint';
 import HeadTitle from '../../components/HeadTitle';
@@ -34,6 +30,7 @@ import {
   SEARCH_STUDENT_KEY,
   STUDENT_SIGN_KEY,
 } from '../../constant/msg';
+import { authStateSelector } from '../../selectors/auth';
 import {
   studentPrintService,
   studentSignSearchService,
@@ -202,9 +199,9 @@ const SignIn: FC = () => {
                 options={students.map(student => {
                   return {
                     value: student.id,
-                    disabled: student.signed_operator
-                      ? student.signed_operator.id !== idState
-                      : false,
+                    disabled:
+                      !!student.signed_operator &&
+                      student.signed_operator.id !== idState,
                     label: (
                       <Typography.Text
                         style={{
@@ -361,16 +358,15 @@ const SignIn: FC = () => {
 
 const SignInProvider: FC = () => {
   const { message } = AntdApp.useApp();
-  const tokenState = useRecoilValue(tokenStateAtom);
-  const permissionState = useRecoilValue(permissionStateAtom);
+  const auth = useRecoilValue(authStateSelector);
   useEffect(() => {
-    if (!tokenState) {
+    if (!auth.token) {
       message.error('请先认证！');
-    } else if (permissionState !== 'SIGN') {
+    } else if (auth.permission !== 'SIGN') {
       message.error('权限不足！');
     }
   }, []);
-  return tokenState && permissionState === 'SIGN' ? (
+  return auth.token && auth.permission === 'SIGN' ? (
     <SignIn />
   ) : (
     <Navigate to="/" />
