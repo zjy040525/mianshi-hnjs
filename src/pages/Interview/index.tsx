@@ -31,7 +31,7 @@ import {
 } from '../../services/student';
 import type { InterviewStatus, Student } from '../../types/student';
 
-const InterviewStatusTypeTag: FC<{
+const InterviewStatusTag: FC<{
   status: InterviewStatus;
   text: string;
 }> = ({ status, text }) => {
@@ -47,9 +47,7 @@ const InterviewStatusTypeTag: FC<{
   }
 };
 
-const InterviewStatusTypeBadge: FC<{ status: InterviewStatus }> = ({
-  status,
-}) => {
+const InterviewStatusBadge: FC<{ status: InterviewStatus }> = ({ status }) => {
   switch (status) {
     case 'Processing':
       return <Badge status="processing" text="未面试（进行中）" />;
@@ -88,7 +86,7 @@ const Interview: FC = () => {
       description: '确认无误后提交结果',
     },
   ];
-  // 打分，默认状态为：面试进行中
+  // 打分，首次打分的默认状态为 进行中
   const [xq, setXq] = useState<InterviewStatus>(null);
   const [ly, setLy] = useState<InterviewStatus>(null);
   const [gd, setGd] = useState<InterviewStatus>(null);
@@ -207,15 +205,15 @@ const Interview: FC = () => {
                         <span style={{ marginInlineEnd: 8 }}>
                           {student.name}（{student.id}）
                         </span>
-                        <InterviewStatusTypeTag
+                        <InterviewStatusTag
                           status={student.interview_xq}
                           text="学前"
                         />
-                        <InterviewStatusTypeTag
+                        <InterviewStatusTag
                           status={student.interview_ly}
                           text="旅游"
                         />
-                        <InterviewStatusTypeTag
+                        <InterviewStatusTag
                           status={student.interview_gd}
                           text="轨道"
                         />
@@ -265,18 +263,10 @@ const Interview: FC = () => {
               </Col>
               {[
                 chosenStudent?.interview_xq
-                  ? {
-                      weight: 3,
-                      title: '幼儿教育',
-                      state: [xq, setXq],
-                    }
+                  ? { weight: 3, title: '幼儿教育', state: [xq, setXq] }
                   : null,
                 chosenStudent?.interview_ly
-                  ? {
-                      weight: 2,
-                      title: '旅游服务与管理',
-                      state: [ly, setLy],
-                    }
+                  ? { weight: 2, title: '旅游服务与管理', state: [ly, setLy] }
                   : null,
                 chosenStudent?.interview_gd
                   ? {
@@ -300,7 +290,7 @@ const Interview: FC = () => {
                           {currentStep > STEP_2 ? (
                             <Space size={16}>
                               <Typography.Text>面试结果</Typography.Text>
-                              <InterviewStatusTypeBadge status={status} />
+                              <InterviewStatusBadge status={status} />
                             </Space>
                           ) : (
                             <Radio.Group

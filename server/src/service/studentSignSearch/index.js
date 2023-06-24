@@ -46,7 +46,7 @@ exports.main = async (req, res) => {
       },
       // 优先显示未签到的学生
       order: [
-        ['sign_status', 'ASC'],
+        Sequelize.literal(`sign_status=false DESC`),
         Sequelize.literal(`signed_operator=${operator.id} DESC`),
         ['signed_date', 'DESC'],
       ],

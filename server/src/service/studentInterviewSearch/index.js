@@ -46,9 +46,9 @@ exports.main = async (req, res) => {
         },
       },
       order: [
-        ['interviewed_operator', 'ASC'],
+        Sequelize.literal(`interviewed_operator IS NULL DESC`),
         Sequelize.literal(`interviewed_operator=${operator.id} DESC`),
-        ['signed_date', 'DESC'],
+        ['interviewed_date', 'DESC'],
       ],
       limit: 25,
     });
