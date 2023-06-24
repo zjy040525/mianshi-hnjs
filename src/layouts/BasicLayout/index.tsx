@@ -55,7 +55,7 @@ const BasicLayout: FC = () => {
                 : [{ icon: <LockOutlined />, key: '/auth', label: '认证' }]
             )
             .concat(
-              auth.permission === 'SIGN'
+              auth.token && auth.permission === 'SIGN'
                 ? [
                     {
                       icon: <SolutionOutlined />,
@@ -66,12 +66,12 @@ const BasicLayout: FC = () => {
                 : []
             )
             .concat(
-              auth.permission === 'INTERVIEW'
+              auth.token && auth.permission === 'INTERVIEW'
                 ? [{ icon: <UserOutlined />, key: '/interview', label: '面试' }]
                 : []
             )
             .concat(
-              auth.permission === 'MANAGE'
+              auth.token && auth.permission === 'MANAGE'
                 ? [{ icon: <SettingOutlined />, key: '/manage', label: '管理' }]
                 : []
             )}
