@@ -52,7 +52,7 @@ const initOperators = async () => {
         ]);
       } catch (e) {
         authentications.push(
-          `Cannot add operator ${username}, because it already exists!`
+          `CANNOT ADD OPERATOR \`${username}\`, BECAUSE IT ALREADY EXISTS!`
         );
       }
     }

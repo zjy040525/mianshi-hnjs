@@ -226,10 +226,13 @@ const SignIn: FC = () => {
                               >
                                 隶属于
                                 <span style={{ paddingInlineStart: 8 }}>
-                                  {student.signed_operator.nickname +
-                                    (student.signed_operator.id === idState
-                                      ? '（我）'
-                                      : '')}
+                                  {`${
+                                    student.signed_operator.nickname ??
+                                    student.signed_operator.username
+                                  }${
+                                    student.signed_operator.id === idState ||
+                                    '（我）'
+                                  }`}
                                 </span>
                               </Tag>
                             ) : null}

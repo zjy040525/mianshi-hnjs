@@ -94,7 +94,7 @@ const studentSignColumns: ColumnsType<Student> = [
     dataIndex: 'signed_operator',
     render(signedOperator) {
       if (signedOperator) {
-        return signedOperator.nickname;
+        return signedOperator.nickname ?? signedOperator.username;
       }
       return '-';
     },
@@ -129,7 +129,7 @@ const studentSignColumns: ColumnsType<Student> = [
     dataIndex: 'interviewed_operator',
     render(interviewedOperator) {
       if (interviewedOperator) {
-        return interviewedOperator.nickname;
+        return interviewedOperator.nickname ?? interviewedOperator.username;
       }
       return '-';
     },

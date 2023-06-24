@@ -229,10 +229,14 @@ const Interview: FC = () => {
                           >
                             隶属于
                             <span style={{ paddingInlineStart: 8 }}>
-                              {student.interviewed_operator.nickname +
-                                (student.interviewed_operator.id === idState
+                              {`${
+                                student.interviewed_operator.nickname ??
+                                student.interviewed_operator.username
+                              }${
+                                student.interviewed_operator.id === idState
                                   ? '（我）'
-                                  : '')}
+                                  : ''
+                              }`}
                             </span>
                           </Tag>
                         ) : null}

@@ -90,7 +90,7 @@ const BasicLayout: FC = () => {
                     <>
                       当前身份
                       <strong style={{ paddingInlineStart: 8 }}>
-                        {auth.nickname}
+                        {auth.nickname ?? auth.username}
                       </strong>
                     </>
                   ),
