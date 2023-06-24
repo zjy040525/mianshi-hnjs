@@ -214,7 +214,7 @@ const Manage: FC = () => {
                   value={
                     (count.signedCount /
                       (count.signedCount + count.noSignedCount)) *
-                    100
+                      100 || 0
                   }
                   precision={3}
                   suffix="%"
@@ -261,7 +261,7 @@ const Manage: FC = () => {
                   value={
                     (count.interviewedCount /
                       (count.interviewedCount + count.noInterviewedCount)) *
-                    100
+                      100 || 0
                   }
                   precision={3}
                   suffix="%"
