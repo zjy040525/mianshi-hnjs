@@ -8,34 +8,34 @@ const path = require('path');
 // 服务器日志
 const logger = morgan('combined');
 
-class LocalServer {
+class Server {
   constructor() {
-    this.express = express();
-    this.express.engine(
+    this.app = express();
+    this.app.engine(
       'handlebars',
       engine({
         defaultLayout: false,
       })
     );
-    this.express.set('view engine', 'handlebars');
-    this.express.set('views', path.join(__dirname, '/views'));
-    this.express.use(
+    this.app.set('view engine', 'handlebars');
+    this.app.set('views', path.join(__dirname, '/views'));
+    this.app.use(
       express.json({
         // number类型的默认单位是bytes
         // 字符串需要带上数据单位
         limit: '500kb',
       })
     );
-    this.express.use(
+    this.app.use(
       express.urlencoded({
         extended: true,
         limit: '500kb',
       })
     );
-    this.express.use(cors());
-    this.express.use(logger);
+    this.app.use(cors());
+    this.app.use(logger);
     // 用于加密用户密码的中间件
-    this.express.use((req, res, next) => {
+    this.app.use((req, res, next) => {
       if (req.body.password) {
         req.body.password = SHA256(req.body.password).toString();
       }
@@ -44,4 +44,4 @@ class LocalServer {
   }
 }
 
-module.exports = LocalServer;
+module.exports = Server;

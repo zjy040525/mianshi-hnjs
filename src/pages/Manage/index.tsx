@@ -152,7 +152,7 @@ const Manage: FC = () => {
       setCount({ ...data });
     },
   });
-  // 获取同学信息总览
+  // 获取学生总览
   const { loading: overviewLoading } = useRequest(studentOverviewService, {
     pollingInterval: 5000,
     loadingDelay: 300,
