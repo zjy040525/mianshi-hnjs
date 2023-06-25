@@ -32,7 +32,7 @@ const badge = (type: InterviewStatus) => {
     case 'Success':
       return <Badge status="success" text="已通过" />;
   }
-  return <Badge status="default" text="未报名" />;
+  return '-';
 };
 
 const studentSignColumns: ColumnsType<Student> = [
