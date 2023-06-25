@@ -2,23 +2,15 @@ import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Row } from 'antd';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import HeadTitle from '../../components/HeadTitle';
 import { AUTH_PATHNAME } from '../../constant/path';
 import { authStateSelector } from '../../selectors/auth';
 
 const Home: FC = () => {
-  const [auth, setAuth] = useRecoilState(authStateSelector);
+  const auth = useRecoilValue(authStateSelector);
   const navigate = useNavigate();
-  const logoutHandler = () => {
-    setAuth({
-      id: null,
-      token: null,
-      username: null,
-      nickname: null,
-      permission: null,
-    });
-  };
+  const resetRecoilState = useResetRecoilState(authStateSelector);
 
   return (
     <>
@@ -31,7 +23,7 @@ const Home: FC = () => {
                 type="primary"
                 icon={<LogoutOutlined />}
                 danger
-                onClick={logoutHandler}
+                onClick={resetRecoilState}
               >
                 退出登录
               </Button>

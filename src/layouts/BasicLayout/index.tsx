@@ -9,7 +9,7 @@ import {
 import { Avatar, Dropdown, Layout, Menu, Typography, theme } from 'antd';
 import { FC, Suspense } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
 import ChunkLoading from '../../components/ChunkLoading';
 import { authStateSelector } from '../../selectors/auth';
 import classes from './index.module.less';
@@ -23,7 +23,8 @@ const BasicLayout: FC = () => {
   } = theme.useToken();
   const location = useLocation();
   const navigate = useNavigate();
-  const [auth, setAuth] = useRecoilState(authStateSelector);
+  const auth = useRecoilValue(authStateSelector);
+  const resetRecoilState = useResetRecoilState(authStateSelector);
 
   return (
     <Layout className={classes.layout}>
@@ -105,13 +106,7 @@ const BasicLayout: FC = () => {
                   label: '退出登录',
                   icon: <LogoutOutlined />,
                   onClick() {
-                    setAuth({
-                      id: null,
-                      token: null,
-                      username: null,
-                      nickname: null,
-                      permission: null,
-                    });
+                    resetRecoilState();
                   },
                   danger: true,
                 },

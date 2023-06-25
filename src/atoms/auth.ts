@@ -4,32 +4,31 @@ import type { Permission } from '../types/permission';
 
 const { persistAtom } = recoilPersist();
 
+export const idStateAtom = atom<number | null>({
+  key: 'idStateAtom',
+  effects_UNSTABLE: [persistAtom],
+  default: undefined,
+});
+
 export const tokenStateAtom = atom<string | null>({
   key: 'tokenStateAtom',
-  default: null,
   effects_UNSTABLE: [persistAtom],
-});
-
-export const permissionStateAtom = atom<Permission | null>({
-  key: 'permissionStateAtom',
-  default: null,
-  effects_UNSTABLE: [persistAtom],
-});
-
-export const nicknameStateAtom = atom<string | null>({
-  key: 'nicknameStateAtom',
-  default: null,
-  effects_UNSTABLE: [persistAtom],
+  default: undefined,
 });
 
 export const usernameStateAtom = atom<string | null>({
   key: 'usernameStateAtom',
-  default: null,
   effects_UNSTABLE: [persistAtom],
+  default: undefined,
 });
 
-export const idStateAtom = atom<number | null>({
-  key: 'idStateAtom',
-  default: null,
+export const nicknameStateAtom = atom<string | null>({
+  key: 'nicknameStateAtom',
   effects_UNSTABLE: [persistAtom],
+  default: undefined,
+});
+
+export const permissionStateAtom = atom<Permission | null>({
+  key: 'permissionStateAtom',
+  default: undefined,
 });

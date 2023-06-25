@@ -6,16 +6,9 @@ import {
   tokenStateAtom,
   usernameStateAtom,
 } from '../atoms/auth';
-import type { Permission } from '../types/permission';
 import { setAuthToken } from '../utils/storage';
 
-export const authStateSelector = selector<{
-  id: number | null;
-  token: string | null;
-  username: string | null;
-  nickname: string | null;
-  permission: Permission | null;
-}>({
+export const authStateSelector = selector({
   key: 'authStateSelector',
   get: ({ get }) => ({
     id: get(idStateAtom),
@@ -25,14 +18,13 @@ export const authStateSelector = selector<{
     permission: get(permissionStateAtom),
   }),
   set: ({ set }, newValue) => {
-    // TODO: DefaultValue
-    if (!(newValue instanceof DefaultValue)) {
-      set(idStateAtom, newValue.id);
-      setAuthToken(newValue.token);
-      set(tokenStateAtom, newValue.token);
-      set(usernameStateAtom, newValue.username);
-      set(nicknameStateAtom, newValue.nickname);
-      set(permissionStateAtom, newValue.permission);
-    }
+    const defaultValue = newValue instanceof DefaultValue;
+
+    set(idStateAtom, defaultValue ? null : newValue.id);
+    setAuthToken(defaultValue ? null : newValue.token);
+    set(tokenStateAtom, defaultValue ? null : newValue.token);
+    set(usernameStateAtom, defaultValue ? null : newValue.username);
+    set(nicknameStateAtom, defaultValue ? null : newValue.nickname);
+    set(permissionStateAtom, defaultValue ? null : newValue.permission);
   },
 });

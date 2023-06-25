@@ -10,7 +10,7 @@ import {
 } from 'antd';
 import { FC, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { tokenStateAtom } from '../../atoms/auth';
 import HeadTitle from '../../components/HeadTitle';
 import { AUTH_MESSAGE_KEY } from '../../constant/msg';
@@ -27,6 +27,7 @@ const { Title, Paragraph } = Typography;
  */
 const Auth: FC = () => {
   const setAuth = useSetRecoilState(authStateSelector);
+  const resetRecoilState = useResetRecoilState(authStateSelector);
   const { message } = AntdApp.useApp();
   const navigate = useNavigate();
   // 身份认证服务
@@ -50,13 +51,7 @@ const Auth: FC = () => {
       navigate('/');
     },
     onError(err) {
-      setAuth({
-        id: null,
-        token: null,
-        username: null,
-        nickname: null,
-        permission: null,
-      });
+      resetRecoilState();
       message.open({
         key: AUTH_MESSAGE_KEY,
         type: 'error',
