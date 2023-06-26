@@ -1,5 +1,5 @@
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { useRequest } from 'ahooks';
+import { useRequest, useWebSocket } from 'ahooks';
 import {
   App as AntdApp,
   Badge,
@@ -10,13 +10,17 @@ import {
   Table,
   Typography,
 } from 'antd';
+import { IconType } from 'antd/es/notification/interface';
 import { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
-import { FC, useEffect, useState } from 'react';
+import { FC, Key, ReactNode, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import { tokenStateAtom } from '../../atoms/auth';
 import HeadTitle from '../../components/HeadTitle';
+import { SOCKET_CONNECTION_KEY } from '../../constant/socket';
 import { authStateSelector } from '../../selectors/auth';
+import { operationSocket } from '../../services/socket';
 import {
   studentOverviewService,
   studentStatisticService,
@@ -160,6 +164,67 @@ const Manage: FC = () => {
       setStudents(res.data);
     },
   });
+  const { notification } = AntdApp.useApp();
+  const openNotification = ({
+    key,
+    type,
+    message,
+    description,
+  }: {
+    key?: Key;
+    type: IconType;
+    message: ReactNode;
+    description?: ReactNode;
+  }) => {
+    notification.open({
+      key,
+      type,
+      message,
+      description,
+      placement: 'bottomRight',
+    });
+  };
+  const token = useRecoilValue(tokenStateAtom);
+  const { disconnect } = useWebSocket(operationSocket(), {
+    protocols: token ?? undefined,
+    onMessage(ev) {
+      const { key, type, message, description } = JSON.parse(ev.data);
+      openNotification({
+        key,
+        type,
+        message,
+        description,
+      });
+    },
+    onOpen() {
+      openNotification({
+        key: SOCKET_CONNECTION_KEY,
+        type: 'success',
+        message: '海宁技师学院面试管理系统',
+        description: '实时通讯已连接',
+      });
+    },
+    onError() {
+      openNotification({
+        type: 'error',
+        message: '海宁技师学院面试管理系统',
+        description: '实时通讯连接错误',
+      });
+    },
+    onClose() {
+      openNotification({
+        key: SOCKET_CONNECTION_KEY,
+        type: 'error',
+        message: '海宁技师学院面试管理系统',
+        description: '实时通讯已断开',
+      });
+    },
+  });
+  useEffect(() => {
+    return () => {
+      disconnect && disconnect();
+    };
+  }, []);
   const [students, setStudents] = useState<Student[]>([]);
   return (
     <>

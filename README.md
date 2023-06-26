@@ -29,12 +29,16 @@ $ pnpm install
 
 ```dotenv
 # .env.development
+
 VITE_API_URL=http://localhost:3000
+VITE_WS_URL=ws://localhost:3000
 ```
 
 ```dotenv
 # .env.production
+
 VITE_API_URL=https://生产环境地址
+VITE_WS_URL=wss://生产环境地址
 ```
 
 启动本地服务。

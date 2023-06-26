@@ -2,11 +2,15 @@ const { Student, Operator } = require('@/app');
 const resp = require('@/util/resp');
 const { Sequelize } = require('sequelize');
 const relation = require('@/util/relation');
+const Server = require('@/server');
+const dayjs = require('dayjs');
+const { WS_MANAGE_OPERATION } = require('@/constant/socket');
 
 exports.main = async (req, res) => {
   // 解析token
   const { username, password } = req.auth;
   const { studentId } = req.body;
+  const { appWs } = Server;
 
   try {
     if (!studentId) {
@@ -74,6 +78,23 @@ exports.main = async (req, res) => {
       },
     });
     const student = await relation(updatedStudent);
+    // 给所有的连接设备发送消息
+    for (const client of appWs.getWss().clients) {
+      if (client._url.includes(WS_MANAGE_OPERATION)) {
+        client.send(
+          JSON.stringify({
+            key: student.id_card,
+            type: 'info',
+            message: `有新的签到信息（${
+              operator.nickname ?? operator.username
+            }）`,
+            description: `${student.name}（${student.id_card}）在${dayjs(
+              student.signed_date
+            ).format(' HH:mm:ss ')}完成了签到。`,
+          })
+        );
+      }
+    }
 
     res.status(200).json(resp(200, student, '签到成功！'));
   } catch (e) {

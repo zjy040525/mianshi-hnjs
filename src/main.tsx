@@ -20,7 +20,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <RecoilRoot>
       <HelmetProvider>
         <ConfigProvider locale={locale}>
-          <AppProvider>
+          <AppProvider
+            notification={{
+              maxCount: 5,
+            }}
+          >
             <Validation />
             <React.Suspense fallback={<GlobalLoading />}>
               <RouterProvider router={createBrowserRouter(routes)} />

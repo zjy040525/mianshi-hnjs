@@ -6,6 +6,7 @@ const { initDB } = require('./app');
 const result = require('./util/resp');
 const { TokenExpiredError } = require('jsonwebtoken');
 const token = require('@/util/token');
+const { WS_MANAGE_OPERATION } = require('@/constant/socket');
 
 const port = 3000;
 const { app } = new Server();
@@ -62,6 +63,8 @@ app.get(
   token.required(),
   require('./service/studentOverview').main
 );
+// 操作员的操作信息套接字
+app.ws(WS_MANAGE_OPERATION, require('./socket/manageOperation').main);
 
 async function main() {
   // 初始化数据库

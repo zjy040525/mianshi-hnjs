@@ -2,12 +2,16 @@ const { Student, Operator } = require('@/app');
 const resp = require('@/util/resp');
 const { Sequelize } = require('sequelize');
 const relation = require('@/util/relation');
+const dayjs = require('dayjs');
+const Server = require('@/server');
+const { WS_MANAGE_OPERATION } = require('@/constant/socket');
 
 exports.main = async (req, res) => {
   // 解析token
   const { username, password } = req.auth;
   // 获取请求携带过来的参数
   const { studentId, xq, gd, ly } = req.body;
+  const { appWs } = Server;
 
   try {
     if (!studentId) {
@@ -89,6 +93,23 @@ exports.main = async (req, res) => {
       },
     });
     const student = await relation(updatedStudent);
+    // 给所有的连接设备发送消息
+    for (const client of appWs.getWss().clients) {
+      if (client._url.includes(WS_MANAGE_OPERATION)) {
+        client.send(
+          JSON.stringify({
+            key: student.id_card,
+            type: 'info',
+            message: `有新的面试信息（${
+              operator.nickname ?? operator.username
+            }）`,
+            description: `${student.name}（${student.id_card}）在${dayjs(
+              student.interviewed_date
+            ).format(' HH:mm:ss ')}完成了面试。`,
+          })
+        );
+      }
+    }
 
     // 返回更新完成后的学生信息
     res.status(200).json(resp(200, student, '操作成功！'));
