@@ -86,6 +86,8 @@ const SignIn: FC = () => {
       });
     },
     onSuccess(res) {
+      // 更新指定学生签到信息的状态
+      setChosenStudent(res.data);
       setCurrentStep(currentStep + 1);
       message.open({
         key: STUDENT_SIGN_KEY,

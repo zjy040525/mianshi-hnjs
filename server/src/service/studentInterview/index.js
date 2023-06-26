@@ -1,6 +1,7 @@
 const { Student, Operator } = require('@/app');
 const resp = require('@/util/resp');
 const { Sequelize } = require('sequelize');
+const relation = require('@/util/relation');
 
 exports.main = async (req, res) => {
   // 解析token
@@ -87,9 +88,10 @@ exports.main = async (req, res) => {
         id: studentId,
       },
     });
+    const student = await relation(updatedStudent);
 
     // 返回更新完成后的学生信息
-    res.status(200).json(resp(200, updatedStudent, '操作成功！'));
+    res.status(200).json(resp(200, student, '操作成功！'));
   } catch (e) {
     console.error(e);
     res.status(400).json(resp(400, null, '服务器错误！'));
