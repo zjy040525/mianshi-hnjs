@@ -13,7 +13,6 @@ import {
   StepProps,
   Steps,
   Tag,
-  Typography,
 } from 'antd';
 import { FC, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -210,7 +209,7 @@ const SignIn: FC = () => {
                       !!student.signed_operator &&
                       student.signed_operator.id !== idState,
                     label: (
-                      <Typography.Text className={classes.selectItem}>
+                      <span className={classes.selectItem}>
                         <span style={{ marginInlineEnd: 8 }}>
                           {student.name}（{student.id_card}）
                         </span>
@@ -242,7 +241,7 @@ const SignIn: FC = () => {
                         ) : (
                           <Tag color="error">未签到</Tag>
                         )}
-                      </Typography.Text>
+                      </span>
                     ),
                     student,
                   };

@@ -74,7 +74,7 @@ exports.main = async (req, res) => {
       signed_date: new Date(student.signed_date).toLocaleString('zh-CN'),
       // 当前时间戳
       timestamp: new Date().getTime(),
-      htmlList: [
+      interviewHtmlList: [
         student?.interview_gd
           ? { weight: 3, element: '城市轨道交通运输与管理' }
           : { weight: 0, element: null },
@@ -94,7 +94,7 @@ exports.main = async (req, res) => {
           return '&nbsp; &nbsp; ' + value.element + '<br/><br/>';
         })
         .join(''),
-      textList: [
+      interviewTextList: [
         student?.interview_gd
           ? { weight: 3, element: '城市轨道交通运输与管理' }
           : { weight: 0, element: null },

@@ -196,7 +196,7 @@ const Interview: FC = () => {
                       !!student.interviewed_operator &&
                       student.interviewed_operator.id !== idState,
                     label: (
-                      <Typography.Text className={classes.selectItem}>
+                      <span className={classes.selectItem}>
                         <span style={{ marginInlineEnd: 8 }}>
                           {student.name}（{student.id}）
                         </span>
@@ -233,7 +233,7 @@ const Interview: FC = () => {
                             </span>
                           </Tag>
                         ) : null}
-                      </Typography.Text>
+                      </span>
                     ),
                     student,
                   };
