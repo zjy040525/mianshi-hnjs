@@ -86,7 +86,6 @@ const SignIn: FC = () => {
       });
     },
     onSuccess(res) {
-      setChosenStudent(res.data);
       setCurrentStep(currentStep + 1);
       message.open({
         key: STUDENT_SIGN_KEY,
@@ -102,9 +101,9 @@ const SignIn: FC = () => {
       });
     },
   });
-  // 解析打印模板
-  const [srcDoc, setSrcDoc] = useState('');
-  // 生成打印模板
+  // 打印模板的字符串结构
+  const [printDoc, setPrintDoc] = useState('');
+  // 获取打印模板
   const { run: runPrint, loading: printing } = useRequest(studentPrintService, {
     manual: true,
     onBefore() {
@@ -116,11 +115,8 @@ const SignIn: FC = () => {
     },
     onSuccess(res) {
       message.destroy(PRINT_KEY);
-      setSrcDoc(res);
+      setPrintDoc(res);
       setCurrentStep(currentStep + 1);
-      setTimeout(() => {
-        window.print();
-      }, 250);
     },
     onError(err) {
       message.open({
@@ -152,7 +148,16 @@ const SignIn: FC = () => {
   return (
     <>
       <HeadTitle titles={['签到']} />
-      <iframe className={classes.printElement} srcDoc={srcDoc} />
+      <iframe
+        className={classes.printElement}
+        srcDoc={printDoc}
+        onLoad={() => {
+          // 模板解析完成后打开系统打印窗口
+          if (printDoc) {
+            window.print();
+          }
+        }}
+      />
       <Card>
         <Steps
           current={currentStep}
