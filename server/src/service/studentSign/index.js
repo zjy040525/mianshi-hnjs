@@ -4,7 +4,11 @@ const { Sequelize } = require('sequelize');
 const relation = require('@/util/relation');
 const Server = require('@/server');
 const dayjs = require('dayjs');
-const { WS_MANAGE_OPERATION } = require('@/constant/socket');
+const {
+  WS_MANAGE_OPERATION,
+  WS_MANAGE_STATISTIC,
+} = require('@/constant/socket');
+const studentCount = require('@/util/studentCount');
 
 exports.main = async (req, res) => {
   // 解析token
@@ -78,7 +82,7 @@ exports.main = async (req, res) => {
       },
     });
     const student = await relation(updatedStudent);
-    // 给所有的连接设备发送消息
+    // 给所有的连接设备发送不同的消息
     for (const client of appWs.getWss().clients) {
       if (client._url.includes(WS_MANAGE_OPERATION)) {
         client.send(
@@ -91,6 +95,16 @@ exports.main = async (req, res) => {
             description: `${student.name}（${student.id_card}）在${dayjs(
               student.signed_date
             ).format(' HH:mm:ss ')}完成了签到。`,
+          })
+        );
+      } else if (client._url.includes(WS_MANAGE_STATISTIC)) {
+        const counts = await studentCount();
+        const rawStudents = await Student.findAll();
+        const students = await relation(rawStudents);
+        client.send(
+          JSON.stringify({
+            counts,
+            students,
           })
         );
       }

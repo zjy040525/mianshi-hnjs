@@ -1,6 +1,8 @@
 const jsonwebtoken = require('jsonwebtoken');
-const { Operator } = require('@/app');
+const { Operator, Student } = require('@/app');
 const { WS_OPERATOR_NOT_FOUND_KEY } = require('@/constant/socket');
+const studentCount = require('@/util/studentCount');
+const relation = require('@/util/relation');
 
 exports.main = async (socket, req) => {
   try {
@@ -40,6 +42,16 @@ exports.main = async (socket, req) => {
     }
     // 添加自定义属性，用于推送不同的内容
     socket._url = req.url;
+    // 首次连接成功后发送指定消息
+    const counts = await studentCount();
+    const rawStudents = await Student.findAll();
+    const students = await relation(rawStudents);
+    socket.send(
+      JSON.stringify({
+        counts,
+        students,
+      })
+    );
   } catch (err) {
     // token验证失败
     socket.close();

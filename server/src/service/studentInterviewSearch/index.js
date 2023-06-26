@@ -40,9 +40,9 @@ exports.main = async (req, res) => {
       where: {
         // 已完成签到
         sign_status: true,
-        // 学生Id模糊查询
+        // 根据学生Id的范围查询
         id: {
-          [Op.like]: `%${studentId}%`,
+          [Op.between]: [parseInt(studentId), parseInt(studentId) + 24],
         },
       },
       order: [

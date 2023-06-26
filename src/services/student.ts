@@ -65,28 +65,3 @@ export const studentInterviewService = (
 ): Promise<Response<Student>> => {
   return myAxios.patch('/student/interview', { studentId, xq, ly, gd });
 };
-
-/**
- * 学生签到统计信息
- *
- * @author Jia-Yao Zhao
- */
-export const studentStatisticService = (): Promise<
-  Response<{
-    signedCount: number;
-    noSignedCount: number;
-    interviewedCount: number;
-    noInterviewedCount: number;
-  }>
-> => {
-  return myAxios.get('/student/statistic');
-};
-
-/**
- * 学生总览
- *
- * @author Jia-Yao Zhao
- */
-export const studentOverviewService = (): Promise<Response<Student[]>> => {
-  return myAxios.get('/student/overview');
-};

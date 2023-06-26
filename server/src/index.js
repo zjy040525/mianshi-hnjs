@@ -6,7 +6,10 @@ const { initDB } = require('./app');
 const result = require('./util/resp');
 const { TokenExpiredError } = require('jsonwebtoken');
 const token = require('@/util/token');
-const { WS_MANAGE_OPERATION } = require('@/constant/socket');
+const {
+  WS_MANAGE_OPERATION,
+  WS_MANAGE_STATISTIC,
+} = require('@/constant/socket');
 
 const port = 3000;
 const { app } = new Server();
@@ -51,20 +54,11 @@ app.patch(
   token.required(),
   require('./service/studentInterview').main
 );
-// TODO: 学生签到统计信息
-app.get(
-  '/student/statistic',
-  token.required(),
-  require('./service/studentStatistic').main
-);
-// TODO: 学生总览
-app.get(
-  '/student/overview',
-  token.required(),
-  require('./service/studentOverview').main
-);
+
 // 操作员的操作信息套接字
 app.ws(WS_MANAGE_OPERATION, require('./socket/manageOperation').main);
+// 统计信息套接字
+app.ws(WS_MANAGE_STATISTIC, require('./socket/manageStatistic').main);
 
 async function main() {
   // 初始化数据库
