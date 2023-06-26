@@ -1,4 +1,4 @@
-import { useRequest } from 'ahooks';
+import { useMount, useRequest } from 'ahooks';
 import {
   App as AntdApp,
   Badge,
@@ -17,7 +17,7 @@ import {
   Typography,
 } from 'antd';
 import dayjs from 'dayjs';
-import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { idStateAtom } from '../../atoms/auth';
@@ -362,13 +362,13 @@ const Interview: FC = () => {
 const InterviewProvider: FC = () => {
   const { message } = AntdApp.useApp();
   const auth = useRecoilValue(authStateSelector);
-  useEffect(() => {
+  useMount(() => {
     if (!auth.token) {
       message.error('请先认证！');
     } else if (auth.permission !== 'INTERVIEW') {
       message.error('权限不足！');
     }
-  }, []);
+  });
   return auth.token && auth.permission === 'INTERVIEW' ? (
     <Interview />
   ) : (

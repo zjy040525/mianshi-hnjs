@@ -1,5 +1,5 @@
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-import { useWebSocket } from 'ahooks';
+import { useMount, useUnmount, useWebSocket } from 'ahooks';
 import {
   App as AntdApp,
   Badge,
@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { tokenStateAtom } from '../../atoms/auth';
@@ -170,14 +170,11 @@ const Manage: FC = () => {
       protocols: token ?? undefined,
     });
 
-  // 组件销毁断开socket连接
-  useEffect(
-    () => () => {
-      operationDisconnect && operationDisconnect();
-      statisticDisconnect && statisticDisconnect();
-    },
-    []
-  );
+  // 组件卸载，需要断开WebSocket的连接
+  useUnmount(() => {
+    operationDisconnect();
+    statisticDisconnect();
+  });
   return (
     <>
       <HeadTitle titles={['管理']} />
@@ -304,13 +301,13 @@ const Manage: FC = () => {
 const ManageProvider: FC = () => {
   const auth = useRecoilValue(authStateSelector);
   const { message } = AntdApp.useApp();
-  useEffect(() => {
+  useMount(() => {
     if (!auth.token) {
       message.error('请先认证！');
     } else if (auth.permission !== 'MANAGE') {
       message.error('权限不足！');
     }
-  }, []);
+  });
   return auth.token && auth.permission === 'MANAGE' ? (
     <Manage />
   ) : (

@@ -1,4 +1,4 @@
-import { useRequest } from 'ahooks';
+import { useMount, useRequest } from 'ahooks';
 import {
   App as AntdApp,
   Button,
@@ -8,7 +8,7 @@ import {
   Input,
   Typography,
 } from 'antd';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { tokenStateAtom } from '../../atoms/auth';
@@ -123,11 +123,11 @@ const Auth: FC = () => {
 const AuthProvider: FC = () => {
   const tokenState = useRecoilValue(tokenStateAtom);
   const { message } = AntdApp.useApp();
-  useEffect(() => {
+  useMount(() => {
     if (tokenState) {
       message.error('你已登录，请先退出登录！');
     }
-  }, []);
+  });
   return tokenState ? <Navigate to="/" /> : <Auth />;
 };
 

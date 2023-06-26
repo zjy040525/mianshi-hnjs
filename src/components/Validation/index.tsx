@@ -1,6 +1,5 @@
-import { useRequest } from 'ahooks';
+import { useMount, useRequest } from 'ahooks';
 import { App as AntdApp } from 'antd';
-import { useEffect } from 'react';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { authStateSelector } from '../../selectors/auth';
 import { authValidationService } from '../../services/auth';
@@ -28,13 +27,13 @@ const Validation = () => {
       message.error(err.message);
     },
   });
-  useEffect(() => {
+  useMount(() => {
     if (token) {
       runAuth();
     } else {
       resetRecoilState();
     }
-  }, []);
+  });
   return null;
 };
 

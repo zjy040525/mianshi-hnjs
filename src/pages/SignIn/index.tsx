@@ -1,4 +1,4 @@
-import { useRequest } from 'ahooks';
+import { useMount, useRequest } from 'ahooks';
 import {
   App as AntdApp,
   Badge,
@@ -14,7 +14,7 @@ import {
   Steps,
   Tag,
 } from 'antd';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { idStateAtom } from '../../atoms/auth';
@@ -364,13 +364,13 @@ const SignIn: FC = () => {
 const SignInProvider: FC = () => {
   const { message } = AntdApp.useApp();
   const auth = useRecoilValue(authStateSelector);
-  useEffect(() => {
+  useMount(() => {
     if (!auth.token) {
       message.error('请先认证！');
     } else if (auth.permission !== 'SIGN') {
       message.error('权限不足！');
     }
-  }, []);
+  });
   return auth.token && auth.permission === 'SIGN' ? (
     <SignIn />
   ) : (
