@@ -203,13 +203,7 @@ const SignIn: FC = () => {
                       !!student.signed_operator &&
                       student.signed_operator.id !== idState,
                     label: (
-                      <Typography.Text
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          color: 'inherit',
-                        }}
-                      >
+                      <Typography.Text className={classes.selectItem}>
                         <span style={{ marginInlineEnd: 8 }}>
                           {student.name}（{student.id_card}）
                         </span>

@@ -30,6 +30,7 @@ import {
   studentInterviewService,
 } from '../../services/student';
 import type { InterviewStatus, Student } from '../../types/student';
+import classes from './index.module.less';
 
 const InterviewStatusTag: FC<{
   status: InterviewStatus;
@@ -195,13 +196,7 @@ const Interview: FC = () => {
                       !!student.interviewed_operator &&
                       student.interviewed_operator.id !== idState,
                     label: (
-                      <Typography.Text
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          color: 'inherit',
-                        }}
-                      >
+                      <Typography.Text className={classes.selectItem}>
                         <span style={{ marginInlineEnd: 8 }}>
                           {student.name}（{student.id}）
                         </span>
