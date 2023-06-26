@@ -104,7 +104,7 @@ const SignIn: FC = () => {
     },
   });
   // 打印模板的字符串结构
-  const [printDoc, setPrintDoc] = useState('');
+  const [printDoc, setPrintDoc] = useState<string | null>(null);
   // 获取打印模板
   const { run: runPrint, loading: printing } = useRequest(studentPrintService, {
     manual: true,
@@ -143,7 +143,7 @@ const SignIn: FC = () => {
       description: '确认无误后进行签到',
     },
     {
-      title: '完成',
+      title: '打印',
       description: '签到完成后打印资料',
     },
   ];
@@ -152,9 +152,9 @@ const SignIn: FC = () => {
       <HeadTitle titles={['签到']} />
       <iframe
         className={classes.printElement}
-        srcDoc={printDoc}
+        srcDoc={printDoc ?? '请在打印步骤（步骤4）中点击下方按钮获取打印模板！'}
         onLoad={() => {
-          // 模板解析完成后打开系统打印窗口
+          // 模板载入完成后打开系统打印窗口
           if (printDoc) {
             window.print();
           }
@@ -347,6 +347,7 @@ const SignIn: FC = () => {
                       setCurrentStep(0);
                       setStudents([]);
                       setChosenStudent(null);
+                      setPrintDoc(null);
                     }}
                   >
                     继续
