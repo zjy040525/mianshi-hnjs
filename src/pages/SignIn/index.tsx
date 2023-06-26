@@ -166,11 +166,11 @@ const SignIn: FC = () => {
           items={steps}
           style={{ marginBlockEnd: 50 }}
         />
-        <Row gutter={[16, 24]} justify="center">
+        <Row gutter={[0, 24]} justify="center">
           {currentStep === STEP_1 ? (
-            <Col span={8}>
+            <Col xxl={8} xl={12} lg={16} md={20} sm={24} xs={24}>
               <Select
-                style={{ minWidth: 550, width: '100%' }}
+                style={{ width: '100%' }}
                 disabled={signing}
                 autoFocus
                 showSearch

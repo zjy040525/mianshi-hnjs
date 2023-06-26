@@ -150,9 +150,9 @@ const Interview: FC = () => {
           current={currentStep}
           style={{ marginBlockEnd: 50 }}
         />
-        <Row gutter={[16, 24]} justify="center">
+        <Row gutter={[0, 24]} justify="center">
           {currentStep === STEP_1 ? (
-            <Col span={8}>
+            <Col xxl={8} xl={12} lg={16} md={20} sm={24} xs={24}>
               <Select
                 style={{ width: '100%' }}
                 autoFocus
