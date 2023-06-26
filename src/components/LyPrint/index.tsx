@@ -7,8 +7,8 @@ import { Descriptions, Space, Typography } from 'antd';
 import { FC } from 'react';
 import type { Student } from '../../types/student';
 
-const LyPrint: FC<{ chosenStudent: Student | null }> = ({ chosenStudent }) => {
-  if (chosenStudent?.interview_ly) {
+const LyPrint: FC<{ chosenStudent: Student }> = ({ chosenStudent }) => {
+  if (chosenStudent.interview_ly) {
     return (
       <Descriptions
         style={{ marginBlockEnd: 50 }}
@@ -20,16 +20,16 @@ const LyPrint: FC<{ chosenStudent: Student | null }> = ({ chosenStudent }) => {
         bordered
       >
         <Descriptions.Item label="考生姓名">
-          {chosenStudent?.name}
+          {chosenStudent.name}
         </Descriptions.Item>
         <Descriptions.Item label="性别">
-          {chosenStudent?.gender}
+          {chosenStudent.gender}
         </Descriptions.Item>
         <Descriptions.Item label="身份证号码">
-          {chosenStudent?.id_card}
+          {chosenStudent.id_card}
         </Descriptions.Item>
         <Descriptions.Item label="初中就读学校">
-          {chosenStudent?.graduated_school}
+          {chosenStudent.graduated_school}
         </Descriptions.Item>
         <Descriptions.Item label="备注">
           <Space size={16}>

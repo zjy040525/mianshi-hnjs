@@ -241,7 +241,7 @@ const Interview: FC = () => {
               />
             </Col>
           ) : null}
-          {currentStep > STEP_1 ? (
+          {chosenStudent && currentStep > STEP_1 ? (
             <>
               <Col span={24}>
                 <StudentDescriptions
@@ -249,7 +249,7 @@ const Interview: FC = () => {
                   signStatus={
                     <Badge
                       status="success"
-                      text={`已签到（${dayjs(chosenStudent?.signed_date).format(
+                      text={`已签到（${dayjs(chosenStudent.signed_date).format(
                         'YYYY-MM-DD HH:mm:ss'
                       )}）`}
                     />
@@ -257,13 +257,13 @@ const Interview: FC = () => {
                 />
               </Col>
               {[
-                chosenStudent?.interview_xq
+                chosenStudent.interview_xq
                   ? { weight: 3, title: '幼儿教育', state: [xq, setXq] }
                   : null,
-                chosenStudent?.interview_ly
+                chosenStudent.interview_ly
                   ? { weight: 2, title: '旅游服务与管理', state: [ly, setLy] }
                   : null,
-                chosenStudent?.interview_gd
+                chosenStudent.interview_gd
                   ? {
                       weight: 1,
                       title: '城市轨道交通运输与管理',

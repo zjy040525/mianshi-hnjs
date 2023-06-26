@@ -4,9 +4,7 @@ import { FC } from 'react';
 import type { Student } from '../../types/student';
 import classes from './index.module.less';
 
-const BasicPrint: FC<{ chosenStudent: Student | null }> = ({
-  chosenStudent,
-}) => {
+const BasicPrint: FC<{ chosenStudent: Student }> = ({ chosenStudent }) => {
   return (
     <Descriptions
       style={{ marginBlockEnd: 50 }}
@@ -24,10 +22,10 @@ const BasicPrint: FC<{ chosenStudent: Student | null }> = ({
           >
             <Typography.Title level={4} style={{ margin: 0 }}>
               报到时间：
-              {dayjs(chosenStudent?.signed_date).format('YYYY-MM-DD HH:mm:ss')}
+              {dayjs(chosenStudent.signed_date).format('YYYY-MM-DD HH:mm:ss')}
             </Typography.Title>
             <Typography.Title level={4} style={{ margin: 0 }}>
-              系统序号：{chosenStudent?.id}
+              系统序号：{chosenStudent.id}
             </Typography.Title>
           </div>
         </>
@@ -35,16 +33,14 @@ const BasicPrint: FC<{ chosenStudent: Student | null }> = ({
       bordered
     >
       <Descriptions.Item label="考生姓名">
-        {chosenStudent?.name}
+        {chosenStudent.name}
       </Descriptions.Item>
       <Descriptions.Item label="身份证号">
-        {chosenStudent?.id_card}
+        {chosenStudent.id_card}
       </Descriptions.Item>
-      <Descriptions.Item label="性别">
-        {chosenStudent?.gender}
-      </Descriptions.Item>
+      <Descriptions.Item label="性别">{chosenStudent.gender}</Descriptions.Item>
       <Descriptions.Item label="初中就读学校">
-        {chosenStudent?.graduated_school}
+        {chosenStudent.graduated_school}
       </Descriptions.Item>
       <Descriptions.Item
         label={
@@ -56,13 +52,13 @@ const BasicPrint: FC<{ chosenStudent: Student | null }> = ({
         }
       >
         {[
-          chosenStudent?.interview_gd
+          chosenStudent.interview_gd
             ? { weight: 3, element: '城市轨道交通运输与管理' }
             : { weight: 0, element: '-' },
-          chosenStudent?.interview_ly
+          chosenStudent.interview_ly
             ? { weight: 2, element: '旅游服务与管理' }
             : { weight: 0, element: '-' },
-          chosenStudent?.interview_xq
+          chosenStudent.interview_xq
             ? { weight: 1, element: '幼儿教育' }
             : { weight: 0, element: '-' },
         ]
