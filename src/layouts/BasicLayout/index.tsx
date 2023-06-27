@@ -15,7 +15,6 @@ import { authStateSelector } from '../../selectors/auth';
 import classes from './index.module.less';
 
 const { Content, Header } = Layout;
-const { Title } = Typography;
 
 const BasicLayout: FC = () => {
   const {
@@ -41,9 +40,9 @@ const BasicLayout: FC = () => {
               width={32}
               height={32}
             />
-            <Title className={classes.title} level={5}>
+            <Typography.Title className={classes.title} level={5}>
               海宁技师学院面试管理系统
-            </Title>
+            </Typography.Title>
           </span>
         </div>
         <Menu

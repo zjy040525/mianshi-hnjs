@@ -1,4 +1,4 @@
-import { useMount, useRequest } from 'ahooks';
+import { useMount, useRequest, useUnmount } from 'ahooks';
 import {
   App as AntdApp,
   Badge,
@@ -37,6 +37,26 @@ import {
 } from '../../services/student';
 import type { Student } from '../../types/student';
 import classes from './index.module.less';
+
+// 步骤列表
+const steps: StepProps[] = [
+  {
+    title: '搜索',
+    description: '使用身份证号码搜索',
+  },
+  {
+    title: '信息',
+    description: '核实身份信息是否正确',
+  },
+  {
+    title: '签到',
+    description: '确认无误后进行签到',
+  },
+  {
+    title: '打印',
+    description: '签到完成后打印资料',
+  },
+];
 
 /**
  * 学生签到流程组件
@@ -127,25 +147,11 @@ const SignIn: FC = () => {
       });
     },
   });
-  // 步骤列表
-  const steps: StepProps[] = [
-    {
-      title: '搜索',
-      description: '使用身份证号码搜索',
-    },
-    {
-      title: '信息',
-      description: '核实身份信息是否正确',
-    },
-    {
-      title: '签到',
-      description: '确认无误后进行签到',
-    },
-    {
-      title: '打印',
-      description: '签到完成后打印资料',
-    },
-  ];
+  useUnmount(() => {
+    message.destroy(SEARCH_STUDENT_KEY);
+    message.destroy(STUDENT_SIGN_KEY);
+    message.destroy(PRINT_KEY);
+  });
   return (
     <>
       <HeadTitle titles={['签到']} />

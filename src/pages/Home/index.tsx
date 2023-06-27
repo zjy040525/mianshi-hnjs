@@ -11,7 +11,6 @@ const Home: FC = () => {
   const auth = useRecoilValue(authStateSelector);
   const navigate = useNavigate();
   const resetRecoilState = useResetRecoilState(authStateSelector);
-
   return (
     <>
       <HeadTitle />

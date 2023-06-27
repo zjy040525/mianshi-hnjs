@@ -13,13 +13,13 @@ import BasicLayout from '../layouts/BasicLayout';
 // 主页
 const Home = lazy(() => import('../pages/Home'));
 // 认证
-const Auth = lazy(() => import('../pages/Auth'));
+const AuthProvider = lazy(() => import('../pages/Auth'));
 // 签到
-const SignIn = lazy(() => import('../pages/SignIn'));
+const SignInProvider = lazy(() => import('../pages/SignIn'));
 // 面试
-const Interview = lazy(() => import('../pages/Interview'));
+const InterviewProvider = lazy(() => import('../pages/Interview'));
 // 管理
-const Manage = lazy(() => import('../pages/Manage'));
+const ManageProvider = lazy(() => import('../pages/Manage'));
 
 export default [
   {
@@ -35,22 +35,22 @@ export default [
       // 认证页面
       {
         path: AUTH_PATHNAME,
-        element: <Auth />,
+        element: <AuthProvider />,
       },
       // 签到页面
       {
         path: SIGN_IN_PATHNAME,
-        element: <SignIn />,
+        element: <SignInProvider />,
       },
       // 面试页面
       {
         path: INTERVIEW_PATHNAME,
-        element: <Interview />,
+        element: <InterviewProvider />,
       },
       // 管理页面
       {
         path: MANAGE_PATHNAME,
-        element: <Manage />,
+        element: <ManageProvider />,
       },
     ],
   },

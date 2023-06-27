@@ -1,4 +1,4 @@
-import { useMount, useRequest } from 'ahooks';
+import { useMount, useRequest, useUnmount } from 'ahooks';
 import {
   App as AntdApp,
   Button,
@@ -17,8 +17,6 @@ import { AUTH_MESSAGE_KEY } from '../../constant/msg';
 import { authStateSelector } from '../../selectors/auth';
 import { authService } from '../../services/auth';
 import classes from './index.module.less';
-
-const { Title, Paragraph } = Typography;
 
 /**
  * 用户身份认证
@@ -59,16 +57,15 @@ const Auth: FC = () => {
       });
     },
   });
-
+  useUnmount(() => {
+    message.destroy(AUTH_MESSAGE_KEY);
+  });
   return (
     <>
       <HeadTitle titles={['身份认证']} />
       <Card className={classes.card}>
-        <Title level={3}>身份认证</Title>
+        <Typography.Title level={3}>身份认证</Typography.Title>
         <Divider />
-        <Paragraph type="warning">
-          使用提供的用户名称和认证密码进行身份认证
-        </Paragraph>
         <Form
           scrollToFirstError
           autoComplete="off"
@@ -106,7 +103,7 @@ const Auth: FC = () => {
           </Form.Item>
           <Form.Item className={classes.submit}>
             <Button htmlType="submit" type="primary">
-              {loading ? '认证中…' : '认证'}
+              {loading ? '登录中…' : '登录'}
             </Button>
           </Form.Item>
         </Form>

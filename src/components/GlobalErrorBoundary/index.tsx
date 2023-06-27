@@ -3,8 +3,6 @@ import { FC } from 'react';
 import { useRouteError } from 'react-router-dom';
 import classes from './index.module.less';
 
-const { Paragraph } = Typography;
-
 /**
  * 全局错误捕获
  *
@@ -36,7 +34,9 @@ const GlobalErrorBoundary: FC = () => {
         </Button>,
       ]}
     >
-      <Paragraph style={{ marginBlockEnd: 0 }}>{error.toString()}</Paragraph>
+      <Typography.Paragraph style={{ marginBlockEnd: 0 }}>
+        {error.toString()}
+      </Typography.Paragraph>
     </Result>
   );
 };
