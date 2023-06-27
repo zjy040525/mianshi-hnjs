@@ -103,7 +103,7 @@ const Auth: FC = () => {
           </Form.Item>
           <Form.Item className={classes.submit}>
             <Button htmlType="submit" type="primary">
-              {loading ? '登录中…' : '登录'}
+              {loading ? '认证中…' : '认证'}
             </Button>
           </Form.Item>
         </Form>
