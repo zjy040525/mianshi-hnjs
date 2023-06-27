@@ -26,6 +26,7 @@ exports.main = async (socket, req) => {
           description: '操作员不存在！',
         })
       );
+      socket.close();
     }
     // 操作员的权限验证
     if (operator.permission !== 'MANAGE') {
@@ -37,6 +38,7 @@ exports.main = async (socket, req) => {
           description: '权限不足！',
         })
       );
+      socket.close();
     }
     // 添加自定义属性，用于推送不同的内容
     socket._url = req.url;
