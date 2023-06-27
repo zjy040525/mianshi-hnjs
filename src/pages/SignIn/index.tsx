@@ -148,9 +148,12 @@ const SignIn: FC = () => {
     },
   });
   useUnmount(() => {
-    message.destroy(SEARCH_STUDENT_KEY);
-    message.destroy(STUDENT_SIGN_KEY);
-    message.destroy(PRINT_KEY);
+    if (signing) {
+      message.destroy(STUDENT_SIGN_KEY);
+    }
+    if (printing) {
+      message.destroy(PRINT_KEY);
+    }
   });
   return (
     <>

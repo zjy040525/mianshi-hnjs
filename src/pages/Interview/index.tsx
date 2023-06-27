@@ -142,8 +142,9 @@ const Interview: FC = () => {
     }
   );
   useUnmount(() => {
-    message.destroy(SEARCH_STUDENT_KEY);
-    message.destroy(STUDENT_INTERVIEW_KEY);
+    if (interviewing) {
+      message.destroy(STUDENT_INTERVIEW_KEY);
+    }
   });
   return (
     <>

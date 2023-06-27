@@ -58,7 +58,9 @@ const Auth: FC = () => {
     },
   });
   useUnmount(() => {
-    message.destroy(AUTH_MESSAGE_KEY);
+    if (loading) {
+      message.destroy(AUTH_MESSAGE_KEY);
+    }
   });
   return (
     <>
