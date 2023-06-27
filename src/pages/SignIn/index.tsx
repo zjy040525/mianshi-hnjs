@@ -1,4 +1,4 @@
-import { useMount, useRequest, useUnmount } from 'ahooks';
+import { useMount, useRequest } from 'ahooks';
 import {
   App as AntdApp,
   Badge,
@@ -146,14 +146,6 @@ const SignIn: FC = () => {
         content: err.message,
       });
     },
-  });
-  useUnmount(() => {
-    if (signing) {
-      message.destroy(STUDENT_SIGN_KEY);
-    }
-    if (printing) {
-      message.destroy(PRINT_KEY);
-    }
   });
   return (
     <>

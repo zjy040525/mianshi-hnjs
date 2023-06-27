@@ -1,4 +1,4 @@
-import { useMount, useRequest, useUnmount } from 'ahooks';
+import { useMount, useRequest } from 'ahooks';
 import {
   App as AntdApp,
   Badge,
@@ -141,11 +141,6 @@ const Interview: FC = () => {
       },
     }
   );
-  useUnmount(() => {
-    if (interviewing) {
-      message.destroy(STUDENT_INTERVIEW_KEY);
-    }
-  });
   return (
     <>
       <HeadTitle titles={['面试']} />

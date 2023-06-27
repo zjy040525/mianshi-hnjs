@@ -1,4 +1,4 @@
-import { useMount, useRequest, useUnmount } from 'ahooks';
+import { useMount, useRequest } from 'ahooks';
 import {
   App as AntdApp,
   Button,
@@ -56,11 +56,6 @@ const Auth: FC = () => {
         content: `认证失败，${err.message}`,
       });
     },
-  });
-  useUnmount(() => {
-    if (loading) {
-      message.destroy(AUTH_MESSAGE_KEY);
-    }
   });
   return (
     <>
