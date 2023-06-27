@@ -291,6 +291,10 @@ const Manage: FC = () => {
             rowKey={record => record.id_card}
             loading={!students.length || statisticReadyState !== 1}
             dataSource={students}
+            pagination={{
+              defaultPageSize: 20,
+              showQuickJumper: true,
+            }}
           />
         </Col>
       </Row>
