@@ -10,7 +10,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import GlobalLoading from './components/GlobalLoading';
-import Validation from './components/Validation';
+import Verification from './components/Verification';
 import routes from './routes';
 
 dayjs.extend(relativeTime);
@@ -25,7 +25,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
               maxCount: 5,
             }}
           >
-            <Validation />
+            <Verification />
             <React.Suspense fallback={<GlobalLoading />}>
               <RouterProvider router={createBrowserRouter(routes)} />
             </React.Suspense>

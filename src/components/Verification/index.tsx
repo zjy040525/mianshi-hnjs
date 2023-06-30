@@ -10,7 +10,7 @@ import { getAuthToken } from '../../utils/storage';
  *
  * @author Jia-Yao Zhao
  */
-const Validation = () => {
+const Verification = () => {
   const { message } = AntdApp.useApp();
   const setAuth = useSetRecoilState(authStateSelector);
   const resetRecoilState = useResetRecoilState(authStateSelector);
@@ -37,4 +37,4 @@ const Validation = () => {
   return null;
 };
 
-export default Validation;
+export default Verification;

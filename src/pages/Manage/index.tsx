@@ -1,4 +1,4 @@
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { useMount, useUnmount, useWebSocket } from 'ahooks';
 import {
   App as AntdApp,
@@ -68,11 +68,11 @@ const studentSignColumns: ColumnsType<Student> = [
     render(status) {
       return status ? (
         <Typography.Text type="success">
-          <CheckOutlined />
+          <CheckCircleFilled />
         </Typography.Text>
       ) : (
         <Typography.Text type="danger">
-          <CloseOutlined />
+          <CloseCircleFilled />
         </Typography.Text>
       );
     },

@@ -22,7 +22,7 @@ import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { idStateAtom } from '../../atoms/auth';
 import HeadTitle from '../../components/HeadTitle';
-import StudentDescriptions from '../../components/StudentDescriptions';
+import StudentCredential from '../../components/StudentCredential';
 import { SEARCH_STUDENT_KEY, STUDENT_INTERVIEW_KEY } from '../../constant/msg';
 import { authStateSelector } from '../../selectors/auth';
 import {
@@ -244,8 +244,8 @@ const Interview: FC = () => {
           {chosenStudent && currentStep > STEP_1 ? (
             <>
               <Col span={24}>
-                <StudentDescriptions
-                  chosenStudent={chosenStudent}
+                <StudentCredential
+                  student={chosenStudent}
                   signStatus={
                     <Badge
                       status="success"

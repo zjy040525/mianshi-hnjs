@@ -18,12 +18,9 @@ import { FC, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { idStateAtom } from '../../atoms/auth';
-import BasicPrint from '../../components/BasicPrint';
-import GdPrint from '../../components/GdPrint';
 import HeadTitle from '../../components/HeadTitle';
-import LyPrint from '../../components/LyPrint';
-import StudentDescriptions from '../../components/StudentDescriptions';
-import XqPrint from '../../components/XqPrint';
+import StudentCredential from '../../components/StudentCredential';
+import PrintPreview from '../../components/StudentPrintPreview';
 import {
   PRINT_KEY,
   SEARCH_STUDENT_KEY,
@@ -252,17 +249,14 @@ const StudentSignIn: FC = () => {
           ) : null}
           {chosenStudent && currentStep > STEP_3 ? (
             <Col>
-              <BasicPrint chosenStudent={chosenStudent} />
-              <GdPrint chosenStudent={chosenStudent} />
-              <LyPrint chosenStudent={chosenStudent} />
-              <XqPrint chosenStudent={chosenStudent} />
+              <PrintPreview student={chosenStudent} />
             </Col>
           ) : null}
           {chosenStudent &&
           (currentStep === STEP_2 || currentStep === STEP_3) ? (
             <Col>
-              <StudentDescriptions
-                chosenStudent={chosenStudent}
+              <StudentCredential
+                student={chosenStudent}
                 signStatus={
                   <Badge
                     status={currentStep > STEP_2 ? 'processing' : 'default'}

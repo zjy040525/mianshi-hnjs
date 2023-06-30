@@ -11,6 +11,12 @@ import { FC, Suspense } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import ChunkLoading from '../../components/ChunkLoading';
+import {
+  AUTH_PATHNAME,
+  INTERVIEW_PATHNAME,
+  MANAGE_PATHNAME,
+  STUDENT_SIGN_IN_PATHNAME,
+} from '../../constant/path';
 import { authStateSelector } from '../../selectors/auth';
 import classes from './index.module.less';
 
@@ -52,14 +58,20 @@ const BasicLayout: FC = () => {
             .concat(
               auth.token
                 ? []
-                : [{ icon: <LockOutlined />, key: '/auth', label: '认证' }]
+                : [
+                    {
+                      icon: <LockOutlined />,
+                      key: AUTH_PATHNAME,
+                      label: '认证',
+                    },
+                  ]
             )
             .concat(
               auth.token && auth.permission === 'SIGN'
                 ? [
                     {
                       icon: <SolutionOutlined />,
-                      key: '/sign-in',
+                      key: STUDENT_SIGN_IN_PATHNAME,
                       label: '签到',
                     },
                   ]
@@ -67,12 +79,24 @@ const BasicLayout: FC = () => {
             )
             .concat(
               auth.token && auth.permission === 'INTERVIEW'
-                ? [{ icon: <UserOutlined />, key: '/interview', label: '面试' }]
+                ? [
+                    {
+                      icon: <UserOutlined />,
+                      key: INTERVIEW_PATHNAME,
+                      label: '面试',
+                    },
+                  ]
                 : []
             )
             .concat(
               auth.token && auth.permission === 'MANAGE'
-                ? [{ icon: <SettingOutlined />, key: '/manage', label: '管理' }]
+                ? [
+                    {
+                      icon: <SettingOutlined />,
+                      key: MANAGE_PATHNAME,
+                      label: '管理',
+                    },
+                  ]
                 : []
             )}
           onSelect={selectInfo => navigate(selectInfo.key)}
