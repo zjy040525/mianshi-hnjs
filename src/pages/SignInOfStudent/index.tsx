@@ -60,7 +60,7 @@ const steps: StepProps[] = [
  *
  * @author Jia-Yao Zhao
  */
-const StudentSignIn: FC = () => {
+const SignInOfStudent: FC = () => {
   const { message } = AntdApp.useApp();
   const idState = useRecoilValue(idStateAtom);
   // 步骤分段
@@ -361,7 +361,7 @@ const StudentSignIn: FC = () => {
  *
  * @author Jia-Yao Zhao
  */
-const CheckStudentSignIn: FC = () => {
+const CheckSignInOfStudent: FC = () => {
   const { message } = AntdApp.useApp();
   const authorization = useRecoilValue(authorizationStateSelector);
   useMount(() => {
@@ -372,10 +372,10 @@ const CheckStudentSignIn: FC = () => {
     }
   });
   return authorization.token && authorization.permission === 'SIGN' ? (
-    <StudentSignIn />
+    <SignInOfStudent />
   ) : (
     <Navigate to="/" />
   );
 };
 
-export default CheckStudentSignIn;
+export default CheckSignInOfStudent;

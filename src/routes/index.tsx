@@ -15,7 +15,7 @@ const HomePage = lazy(() => import('../pages/Home'));
 // 认证
 const AuthenticationPage = lazy(() => import('../pages/Authentication'));
 // 签到
-const StudentSignInPage = lazy(() => import('../pages/StudentSignIn'));
+const SignInOfStudentPage = lazy(() => import('../pages/SignInOfStudent'));
 // 面试
 const InterviewPage = lazy(() => import('../pages/Interview'));
 // 管理
@@ -40,7 +40,7 @@ export default [
       // 签到页面
       {
         path: STUDENT_SIGN_IN_PATHNAME,
-        element: <StudentSignInPage />,
+        element: <SignInOfStudentPage />,
       },
       // 面试页面
       {
