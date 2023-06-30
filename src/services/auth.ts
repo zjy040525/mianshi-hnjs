@@ -17,7 +17,7 @@ export const authService = (
     token: string;
     id: number;
     username: string;
-    nickname: string;
+    nickname: string | null;
     permission: Permission;
   }>
 > => {
@@ -33,7 +33,7 @@ export const authValidationService = async (): Promise<
   Response<{
     id: number;
     username: string;
-    nickname: string;
+    nickname: string | null;
     permission: Permission;
   }>
 > => {
