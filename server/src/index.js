@@ -16,13 +16,13 @@ const { app } = new Server();
 
 // 注册API服务
 
-// 身份认证
-app.post('/auth', require('./service/auth').main);
-// 有效性认证
+// 认证
+app.post('/authentication', require('./service/authentication').main);
+// 授权
 app.post(
-  '/auth/validation',
+  '/authorization',
   token.required(),
-  require('./service/authValidation').main
+  require('./service/authorization').main
 );
 // 搜索已签到的学生
 app.get(

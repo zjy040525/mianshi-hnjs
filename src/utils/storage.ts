@@ -1,29 +1,29 @@
-import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from '../constant/storage';
+import { AUTHORIZATION_TOKEN_LOCAL_STORAGE_KEY } from '../constant/storage';
 
 /**
- * 设置身份认证token
+ * 设置授权token
  *
  * @param token
  * @author Jia-Yao Zhao
  */
-export const setAuthToken = (token?: string | null) => {
+export const setAuthorizationToken = (token?: string | null) => {
   if (token) {
-    localStorage.setItem(AUTH_TOKEN_LOCAL_STORAGE_KEY, token);
+    localStorage.setItem(AUTHORIZATION_TOKEN_LOCAL_STORAGE_KEY, token);
   } else {
-    removeAuthToken();
+    removeAuthorizationToken();
   }
 };
 
 /**
- * 删除身份认证token
+ * 移除授权token
  */
-export const removeAuthToken = () => {
-  localStorage.removeItem(AUTH_TOKEN_LOCAL_STORAGE_KEY);
+export const removeAuthorizationToken = () => {
+  localStorage.removeItem(AUTHORIZATION_TOKEN_LOCAL_STORAGE_KEY);
 };
 
 /**
- * 获取身份认证token
+ * 获取授权token
  */
-export const getAuthToken = () => {
-  return localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY);
+export const getAuthorizationToken = () => {
+  return localStorage.getItem(AUTHORIZATION_TOKEN_LOCAL_STORAGE_KEY);
 };

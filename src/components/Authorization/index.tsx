@@ -1,21 +1,21 @@
 import { useMount, useRequest } from 'ahooks';
 import { App as AntdApp } from 'antd';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
-import { authStateSelector } from '../../selectors/auth';
-import { authValidationService } from '../../services/auth';
-import { getAuthToken } from '../../utils/storage';
+import { authorizationStateSelector } from '../../selectors/authorization';
+import { authorizationService } from '../../services/auth';
+import { getAuthorizationToken } from '../../utils/storage';
 
 /**
  * 验证当前身份的有效性
  *
  * @author Jia-Yao Zhao
  */
-const Verification = () => {
+const Authorization = () => {
   const { message } = AntdApp.useApp();
-  const setAuth = useSetRecoilState(authStateSelector);
-  const resetRecoilState = useResetRecoilState(authStateSelector);
-  const token = getAuthToken();
-  const { run: runAuth } = useRequest(authValidationService, {
+  const setAuth = useSetRecoilState(authorizationStateSelector);
+  const resetRecoilState = useResetRecoilState(authorizationStateSelector);
+  const token = getAuthorizationToken();
+  const { run: runAuthorization } = useRequest(authorizationService, {
     manual: true,
     onSuccess({ data }) {
       // 保存正确的操作员信息
@@ -29,7 +29,7 @@ const Verification = () => {
   });
   useMount(() => {
     if (token) {
-      runAuth();
+      runAuthorization();
     } else {
       resetRecoilState();
     }
@@ -37,4 +37,4 @@ const Verification = () => {
   return null;
 };
 
-export default Verification;
+export default Authorization;

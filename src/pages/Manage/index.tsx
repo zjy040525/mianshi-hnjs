@@ -15,25 +15,14 @@ import dayjs from 'dayjs';
 import { FC, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { tokenStateAtom } from '../../atoms/auth';
+import { tokenStateAtom } from '../../atoms/authorization';
 import { newMsgNotificationOfAdmin } from '../../atoms/manage';
 import HeadTitle from '../../components/HeadTitle';
-import { authStateSelector } from '../../selectors/auth';
+import { authorizationStateSelector } from '../../selectors/authorization';
 import { operationSocket, statisticSocket } from '../../services/socket';
 import type { InterviewStatus, Student } from '../../types/student';
 
-const badge = (type: InterviewStatus) => {
-  switch (type) {
-    case 'Processing':
-      return <Badge status="processing" text="进行中" />;
-    case 'Failed':
-      return <Badge status="error" text="未通过" />;
-    case 'Success':
-      return <Badge status="success" text="已通过" />;
-  }
-  return '-';
-};
-
+// 表格设置
 const studentSignColumns: ColumnsType<Student> = [
   {
     title: '系统序号',
@@ -135,6 +124,11 @@ const studentSignColumns: ColumnsType<Student> = [
   },
 ];
 
+/**
+ * 管理组件
+ *
+ * @author Jia-Yao Zhao
+ */
 const Manage: FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
   // 统计人数
@@ -300,21 +294,44 @@ const Manage: FC = () => {
   );
 };
 
-const ManageProvider: FC = () => {
-  const auth = useRecoilValue(authStateSelector);
+/**
+ * 是否通过面试的显示微标
+ *
+ * @param type 通过状态
+ * @author Jia-Yao Zhao
+ */
+const badge = (type: InterviewStatus) => {
+  switch (type) {
+    case 'Processing':
+      return <Badge status="processing" text="进行中" />;
+    case 'Failed':
+      return <Badge status="error" text="未通过" />;
+    case 'Success':
+      return <Badge status="success" text="已通过" />;
+  }
+  return '-';
+};
+
+/**
+ * 检查`管理`页面是否可以访问
+ *
+ * @author Jia-Yao Zhao
+ */
+const CheckManage: FC = () => {
+  const authorization = useRecoilValue(authorizationStateSelector);
   const { message } = AntdApp.useApp();
   useMount(() => {
-    if (!auth.token) {
+    if (!authorization.token) {
       message.error('请先认证！');
-    } else if (auth.permission !== 'MANAGE') {
+    } else if (authorization.permission !== 'MANAGE') {
       message.error('权限不足！');
     }
   });
-  return auth.token && auth.permission === 'MANAGE' ? (
+  return authorization.token && authorization.permission === 'MANAGE' ? (
     <Manage />
   ) : (
     <Navigate to="/" />
   );
 };
 
-export default ManageProvider;
+export default CheckManage;

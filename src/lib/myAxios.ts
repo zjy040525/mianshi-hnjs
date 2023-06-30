@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getAuthToken } from '../utils/storage';
+import { getAuthorizationToken } from '../utils/storage';
 
 // 基础配置
 const myAxios = axios.create({
@@ -9,7 +9,7 @@ const myAxios = axios.create({
 // 拦截器
 myAxios.interceptors.request.use(config => {
   // 发送请求时携带认证用户的凭证
-  const token = getAuthToken();
+  const token = getAuthorizationToken();
   if (token) {
     config.headers.setAuthorization(`Bearer ${token}`);
   }

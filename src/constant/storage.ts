@@ -1,2 +1,2 @@
-// 身份认证令牌
-export const AUTH_TOKEN_LOCAL_STORAGE_KEY = '_IMS_token_';
+// 授权token本地存储的键名
+export const AUTHORIZATION_TOKEN_LOCAL_STORAGE_KEY = '_IMS_authorized_token_';

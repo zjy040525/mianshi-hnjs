@@ -9,7 +9,7 @@ import { FC } from 'react';
 import { Student } from '../../types/student';
 import classes from './index.module.less';
 
-const PrintPreview: FC<{ student: Student }> = ({ student }) => {
+const StudentInterviewDoc: FC<{ student: Student }> = ({ student }) => {
   return (
     <>
       <Descriptions
@@ -276,4 +276,4 @@ const PrintPreview: FC<{ student: Student }> = ({ student }) => {
   );
 };
 
-export default PrintPreview;
+export default StudentInterviewDoc;

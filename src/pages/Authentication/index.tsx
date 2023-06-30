@@ -11,11 +11,11 @@ import {
 import { FC } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
-import { tokenStateAtom } from '../../atoms/auth';
+import { tokenStateAtom } from '../../atoms/authorization';
 import HeadTitle from '../../components/HeadTitle';
-import { AUTH_MESSAGE_KEY } from '../../constant/msg';
-import { authStateSelector } from '../../selectors/auth';
-import { authService } from '../../services/auth';
+import { AUTHENTICATION_MESSAGE_KEY } from '../../constant/msg';
+import { authorizationStateSelector } from '../../selectors/authorization';
+import { authenticationService } from '../../services/auth';
 import classes from './index.module.less';
 
 /**
@@ -23,17 +23,17 @@ import classes from './index.module.less';
  *
  * @author Jia-Yao Zhao
  */
-const Auth: FC = () => {
-  const setAuth = useSetRecoilState(authStateSelector);
-  const resetRecoilState = useResetRecoilState(authStateSelector);
+const Authentication: FC = () => {
+  const setAuth = useSetRecoilState(authorizationStateSelector);
+  const resetRecoilState = useResetRecoilState(authorizationStateSelector);
   const { message } = AntdApp.useApp();
   const navigate = useNavigate();
   // 身份认证服务
-  const { run, loading } = useRequest(authService, {
+  const { run, loading } = useRequest(authenticationService, {
     manual: true,
     onBefore() {
       message.open({
-        key: AUTH_MESSAGE_KEY,
+        key: AUTHENTICATION_MESSAGE_KEY,
         type: 'loading',
         content: '认证中…',
         duration: 0,
@@ -42,7 +42,7 @@ const Auth: FC = () => {
     onSuccess(res) {
       setAuth({ ...res.data });
       message.open({
-        key: AUTH_MESSAGE_KEY,
+        key: AUTHENTICATION_MESSAGE_KEY,
         type: 'success',
         content: res.message,
       });
@@ -51,7 +51,7 @@ const Auth: FC = () => {
     onError(err) {
       resetRecoilState();
       message.open({
-        key: AUTH_MESSAGE_KEY,
+        key: AUTHENTICATION_MESSAGE_KEY,
         type: 'error',
         content: `认证失败，${err.message}`,
       });
@@ -110,11 +110,11 @@ const Auth: FC = () => {
 };
 
 /**
- * 身份验证模块验证
+ * 检查`认证`页面是否可以访问
  *
  * @author Jia-Yao Zhao
  */
-const AuthProvider: FC = () => {
+const CheckAuthentication: FC = () => {
   const tokenState = useRecoilValue(tokenStateAtom);
   const { message } = AntdApp.useApp();
   useMount(() => {
@@ -122,7 +122,7 @@ const AuthProvider: FC = () => {
       message.error('你已登录，请先退出登录！');
     }
   });
-  return tokenState ? <Navigate to="/" /> : <Auth />;
+  return tokenState ? <Navigate to="/" /> : <Authentication />;
 };
 
-export default AuthProvider;
+export default CheckAuthentication;

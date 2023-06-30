@@ -3,13 +3,13 @@ import type { Permission } from '../types/permission';
 import type { Response } from '../types/response';
 
 /**
- * 身份认证服务
+ * 认证服务
  *
  * @param username 用户名称
  * @param password 认证密码
  * @author Jia-Yao Zhao
  */
-export const authService = (
+export const authenticationService = (
   username: string | null,
   password: string | null
 ): Promise<
@@ -21,15 +21,15 @@ export const authService = (
     permission: Permission;
   }>
 > => {
-  return myAxios.post('/auth', { username, password });
+  return myAxios.post('/authentication', { username, password });
 };
 
 /**
- * 身份有效性验证服务
+ * 授权服务
  *
  * @author Jia-Yao Zhao
  */
-export const authValidationService = async (): Promise<
+export const authorizationService = async (): Promise<
   Response<{
     id: number;
     username: string;
@@ -37,5 +37,5 @@ export const authValidationService = async (): Promise<
     permission: Permission;
   }>
 > => {
-  return await myAxios.post('/auth/validation');
+  return await myAxios.post('/authorization');
 };

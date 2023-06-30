@@ -1,21 +1,9 @@
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { Descriptions, Typography } from 'antd';
 import { FC, ReactNode } from 'react';
-import type { Student } from '../../types/student';
+import type { InterviewStatus, Student } from '../../types/student';
 
-const IconStatus: FC<{ condition: any }> = ({ condition }) => {
-  return condition ? (
-    <Typography.Text type="success">
-      <CheckCircleFilled />
-    </Typography.Text>
-  ) : (
-    <Typography.Text type="danger">
-      <CloseCircleFilled />
-    </Typography.Text>
-  );
-};
-
-const StudentCredential: FC<{
+const StudentDescription: FC<{
   student: Student;
   signStatus?: ReactNode;
 }> = ({ student, signStatus }) => {
@@ -36,17 +24,29 @@ const StudentCredential: FC<{
         {student.registration_number}
       </Descriptions.Item>
       <Descriptions.Item label="面试学前">
-        <IconStatus condition={student.interview_xq} />
+        <IsInterview condition={student.interview_xq} />
       </Descriptions.Item>
       <Descriptions.Item label="面试旅游">
-        <IconStatus condition={student.interview_ly} />
+        <IsInterview condition={student.interview_ly} />
       </Descriptions.Item>
       <Descriptions.Item label="面试轨道">
-        <IconStatus condition={student.interview_gd} />
+        <IsInterview condition={student.interview_gd} />
       </Descriptions.Item>
       <Descriptions.Item label="签到状态">{signStatus}</Descriptions.Item>
     </Descriptions>
   );
 };
 
-export default StudentCredential;
+const IsInterview: FC<{ condition: InterviewStatus }> = ({ condition }) => {
+  return condition ? (
+    <Typography.Text type="success">
+      <CheckCircleFilled />
+    </Typography.Text>
+  ) : (
+    <Typography.Text type="danger">
+      <CloseCircleFilled />
+    </Typography.Text>
+  );
+};
+
+export default StudentDescription;

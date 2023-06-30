@@ -17,16 +17,16 @@ import {
 import { FC, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { idStateAtom } from '../../atoms/auth';
+import { idStateAtom } from '../../atoms/authorization';
 import HeadTitle from '../../components/HeadTitle';
-import StudentCredential from '../../components/StudentCredential';
-import PrintPreview from '../../components/StudentPrintPreview';
+import StudentDescription from '../../components/StudentDescription';
+import PrintPreview from '../../components/StudentInterviewDoc';
 import {
-  PRINT_KEY,
-  SEARCH_STUDENT_KEY,
+  PRINT_DOC_KEY,
+  STUDENT_SEARCH_KEY,
   STUDENT_SIGN_KEY,
 } from '../../constant/msg';
-import { authStateSelector } from '../../selectors/auth';
+import { authorizationStateSelector } from '../../selectors/authorization';
 import {
   studentPrintService,
   studentSignSearchService,
@@ -79,11 +79,11 @@ const StudentSignIn: FC = () => {
       throttleWait: 500,
       onSuccess({ data }) {
         setStudents(data);
-        message.destroy(SEARCH_STUDENT_KEY);
+        message.destroy(STUDENT_SEARCH_KEY);
       },
       onError(err) {
         message.open({
-          key: SEARCH_STUDENT_KEY,
+          key: STUDENT_SEARCH_KEY,
           type: 'error',
           content: err.message,
         });
@@ -126,19 +126,19 @@ const StudentSignIn: FC = () => {
     manual: true,
     onBefore() {
       message.open({
-        key: PRINT_KEY,
+        key: PRINT_DOC_KEY,
         type: 'loading',
         content: '获取打印模板中…',
       });
     },
     onSuccess(res) {
-      message.destroy(PRINT_KEY);
+      message.destroy(PRINT_DOC_KEY);
       setPrintDoc(res);
       setCurrentStep(currentStep + 1);
     },
     onError(err) {
       message.open({
-        key: PRINT_KEY,
+        key: PRINT_DOC_KEY,
         type: 'error',
         content: err.message,
       });
@@ -255,7 +255,7 @@ const StudentSignIn: FC = () => {
           {chosenStudent &&
           (currentStep === STEP_2 || currentStep === STEP_3) ? (
             <Col>
-              <StudentCredential
+              <StudentDescription
                 student={chosenStudent}
                 signStatus={
                   <Badge
@@ -356,21 +356,26 @@ const StudentSignIn: FC = () => {
   );
 };
 
-const StudentSignInProvider: FC = () => {
+/**
+ * 检查`签到`页面是否可以访问
+ *
+ * @author Jia-Yao Zhao
+ */
+const CheckStudentSignIn: FC = () => {
   const { message } = AntdApp.useApp();
-  const auth = useRecoilValue(authStateSelector);
+  const authorization = useRecoilValue(authorizationStateSelector);
   useMount(() => {
-    if (!auth.token) {
+    if (!authorization.token) {
       message.error('请先认证！');
-    } else if (auth.permission !== 'SIGN') {
+    } else if (authorization.permission !== 'SIGN') {
       message.error('权限不足！');
     }
   });
-  return auth.token && auth.permission === 'SIGN' ? (
+  return authorization.token && authorization.permission === 'SIGN' ? (
     <StudentSignIn />
   ) : (
     <Navigate to="/" />
   );
 };
 
-export default StudentSignInProvider;
+export default CheckStudentSignIn;

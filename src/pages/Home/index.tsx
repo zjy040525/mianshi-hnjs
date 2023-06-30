@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { newMsgNotificationOfAdmin } from '../../atoms/manage';
 import HeadTitle from '../../components/HeadTitle';
-import { AUTH_PATHNAME } from '../../constant/path';
-import { authStateSelector } from '../../selectors/auth';
+import { AUTHENTICATION_PATHNAME } from '../../constant/pathname';
+import { authorizationStateSelector } from '../../selectors/authorization';
 
 const Home: FC = () => {
-  const auth = useRecoilValue(authStateSelector);
   const navigate = useNavigate();
-  const resetRecoilState = useResetRecoilState(authStateSelector);
+  const resetRecoilState = useResetRecoilState(authorizationStateSelector);
+  const authorization = useRecoilValue(authorizationStateSelector);
 
   return (
     <>
@@ -19,8 +19,8 @@ const Home: FC = () => {
       <Row gutter={[16, 16]}>
         <HasManageFeature />
         <Col>
-          <Card title={auth.nickname ?? auth.username}>
-            {auth.token ? (
+          <Card title={authorization.nickname ?? authorization.username}>
+            {authorization.token ? (
               <Button
                 type="primary"
                 icon={<LogoutOutlined />}
@@ -33,7 +33,7 @@ const Home: FC = () => {
               <Button
                 type="primary"
                 icon={<LoginOutlined />}
-                onClick={() => navigate(AUTH_PATHNAME)}
+                onClick={() => navigate(AUTHENTICATION_PATHNAME)}
               >
                 前往认证
               </Button>
@@ -51,11 +51,11 @@ const Home: FC = () => {
  * @author Jia-Yao Zhao
  */
 const HasManageFeature: FC = () => {
-  const auth = useRecoilValue(authStateSelector);
+  const authorization = useRecoilValue(authorizationStateSelector);
   const [newMsgNotification, setNewMsgNotification] = useRecoilState(
     newMsgNotificationOfAdmin
   );
-  if (auth.permission === 'MANAGE') {
+  if (authorization.permission === 'MANAGE') {
     return (
       <Col>
         <Card title="设置">

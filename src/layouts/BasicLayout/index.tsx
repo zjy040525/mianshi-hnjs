@@ -12,24 +12,67 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import ChunkLoading from '../../components/ChunkLoading';
 import {
-  AUTH_PATHNAME,
+  AUTHENTICATION_PATHNAME,
   INTERVIEW_PATHNAME,
   MANAGE_PATHNAME,
   STUDENT_SIGN_IN_PATHNAME,
-} from '../../constant/path';
-import { authStateSelector } from '../../selectors/auth';
+} from '../../constant/pathname';
+import { authorizationStateSelector } from '../../selectors/authorization';
 import classes from './index.module.less';
 
 const { Content, Header } = Layout;
 
 const BasicLayout: FC = () => {
+  const authorization = useRecoilValue(authorizationStateSelector);
+  // 是否显示`认证`菜单选项
+  const showAuthentication = () => {
+    if (authorization.token) {
+      return [];
+    }
+    return {
+      icon: <LockOutlined />,
+      key: AUTHENTICATION_PATHNAME,
+      label: '认证',
+    };
+  };
+  // 是否显示`签到`菜单选项
+  const showSign = () => {
+    if (authorization.token && authorization.permission === 'SIGN') {
+      return {
+        icon: <SolutionOutlined />,
+        key: STUDENT_SIGN_IN_PATHNAME,
+        label: '签到',
+      };
+    }
+    return [];
+  };
+  // 是否显示`面试`菜单选项
+  const showInterview = () => {
+    if (authorization.token && authorization.permission === 'INTERVIEW') {
+      return {
+        icon: <UserOutlined />,
+        key: INTERVIEW_PATHNAME,
+        label: '面试',
+      };
+    }
+    return [];
+  };
+  // 是否显示`管理`菜单选项
+  const showManage = () => {
+    if (authorization.token && authorization.permission === 'MANAGE') {
+      return {
+        icon: <SettingOutlined />,
+        key: MANAGE_PATHNAME,
+        label: '管理',
+      };
+    }
+    return [];
+  };
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   const location = useLocation();
   const navigate = useNavigate();
-  const auth = useRecoilValue(authStateSelector);
-  const resetRecoilState = useResetRecoilState(authStateSelector);
 
   return (
     <Layout className={classes.layout}>
@@ -55,94 +98,14 @@ const BasicLayout: FC = () => {
           className={classes.menu}
           mode="horizontal"
           items={[{ icon: <HomeOutlined />, key: '/', label: '主页' }]
-            .concat(
-              auth.token
-                ? []
-                : [
-                    {
-                      icon: <LockOutlined />,
-                      key: AUTH_PATHNAME,
-                      label: '认证',
-                    },
-                  ]
-            )
-            .concat(
-              auth.token && auth.permission === 'SIGN'
-                ? [
-                    {
-                      icon: <SolutionOutlined />,
-                      key: STUDENT_SIGN_IN_PATHNAME,
-                      label: '签到',
-                    },
-                  ]
-                : []
-            )
-            .concat(
-              auth.token && auth.permission === 'INTERVIEW'
-                ? [
-                    {
-                      icon: <UserOutlined />,
-                      key: INTERVIEW_PATHNAME,
-                      label: '面试',
-                    },
-                  ]
-                : []
-            )
-            .concat(
-              auth.token && auth.permission === 'MANAGE'
-                ? [
-                    {
-                      icon: <SettingOutlined />,
-                      key: MANAGE_PATHNAME,
-                      label: '管理',
-                    },
-                  ]
-                : []
-            )}
-          onSelect={selectInfo => navigate(selectInfo.key)}
+            .concat(showAuthentication())
+            .concat(showSign())
+            .concat(showInterview())
+            .concat(showManage())}
           selectedKeys={[location.pathname]}
+          onSelect={selectInfo => navigate(selectInfo.key)}
         />
-        {auth.token ? (
-          <Dropdown
-            destroyPopupOnHide
-            placement="bottom"
-            menu={{
-              items: [
-                {
-                  key: 'operator',
-                  label: (
-                    <>
-                      当前身份
-                      <strong style={{ paddingInlineStart: 8 }}>
-                        {auth.nickname ?? auth.username}
-                      </strong>
-                    </>
-                  ),
-                  onClick() {
-                    navigate('/');
-                  },
-                  icon: <UserOutlined />,
-                },
-                { type: 'divider' },
-                {
-                  key: 'logout',
-                  label: '退出登录',
-                  icon: <LogoutOutlined />,
-                  onClick() {
-                    resetRecoilState();
-                  },
-                  danger: true,
-                },
-              ],
-            }}
-          >
-            <Avatar
-              className={classes.avatar}
-              icon={<UserOutlined />}
-              draggable={false}
-            />
-          </Dropdown>
-        ) : null}
+        <HasAuthorizationFeature />
       </Header>
       <Content className={classes.content}>
         <Suspense key={location.key} fallback={<ChunkLoading />}>
@@ -151,6 +114,63 @@ const BasicLayout: FC = () => {
       </Content>
     </Layout>
   );
+};
+
+/**
+ * 操作员登录成功后，显示的额外内容
+ *
+ * @author Jia-Yao Zhao
+ */
+const HasAuthorizationFeature: FC = () => {
+  const navigate = useNavigate();
+  const authorization = useRecoilValue(authorizationStateSelector);
+  const resetRecoilState = useResetRecoilState(authorizationStateSelector);
+  if (authorization.token) {
+    return (
+      <>
+        <Dropdown
+          destroyPopupOnHide
+          placement="bottom"
+          menu={{
+            items: [
+              {
+                key: 'operator',
+                label: (
+                  <>
+                    当前身份
+                    <strong style={{ paddingInlineStart: 8 }}>
+                      {authorization.nickname ?? authorization.username}
+                    </strong>
+                  </>
+                ),
+                onClick() {
+                  navigate('/');
+                },
+                icon: <UserOutlined />,
+              },
+              { type: 'divider' },
+              {
+                key: 'logout',
+                label: '退出登录',
+                icon: <LogoutOutlined />,
+                onClick() {
+                  resetRecoilState();
+                },
+                danger: true,
+              },
+            ],
+          }}
+        >
+          <Avatar
+            className={classes.avatar}
+            icon={<UserOutlined />}
+            draggable={false}
+          />
+        </Dropdown>
+      </>
+    );
+  }
+  return null;
 };
 
 export default BasicLayout;

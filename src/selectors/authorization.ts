@@ -5,11 +5,11 @@ import {
   permissionStateAtom,
   tokenStateAtom,
   usernameStateAtom,
-} from '../atoms/auth';
-import { setAuthToken } from '../utils/storage';
+} from '../atoms/authorization';
+import { setAuthorizationToken } from '../utils/storage';
 
-export const authStateSelector = selector({
-  key: 'authStateSelector',
+export const authorizationStateSelector = selector({
+  key: 'authorizationStateSelector',
   get: ({ get }) => ({
     id: get(idStateAtom),
     token: get(tokenStateAtom),
@@ -21,7 +21,7 @@ export const authStateSelector = selector({
     const defaultValue = newValue instanceof DefaultValue;
 
     set(idStateAtom, defaultValue ? null : newValue.id);
-    setAuthToken(defaultValue ? null : newValue.token);
+    setAuthorizationToken(defaultValue ? null : newValue.token);
     set(tokenStateAtom, defaultValue ? null : newValue.token);
     set(usernameStateAtom, defaultValue ? null : newValue.username);
     set(nicknameStateAtom, defaultValue ? null : newValue.nickname);

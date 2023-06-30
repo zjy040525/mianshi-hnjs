@@ -1,5 +1,5 @@
-// 身份验证页面
-export const AUTH_PATHNAME = '/auth';
+// 认证页面
+export const AUTHENTICATION_PATHNAME = '/authentication';
 
 // 签到页面
 export const STUDENT_SIGN_IN_PATHNAME = '/student-sign-in';
