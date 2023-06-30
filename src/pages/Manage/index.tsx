@@ -277,7 +277,7 @@ const Manage: FC = () => {
             bordered
             columns={studentSignColumns}
             rowKey={record => record.id_card}
-            loading={statisticReadyState !== 1 || !students.length}
+            loading={statisticReadyState !== 1}
             dataSource={students}
             pagination={{
               defaultPageSize: 20,
