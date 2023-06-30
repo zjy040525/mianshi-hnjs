@@ -137,11 +137,14 @@ const studentSignColumns: ColumnsType<Student> = [
 const Manage: FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
   // 统计人数
-  const [counts, setCounts] = useState({
-    signedCount: 0,
-    noSignedCount: 0,
-    interviewedCount: 0,
-    noInterviewedCount: 0,
+  const [
+    { signedCount, noSignedCount, noInterviewedCount, interviewedCount },
+    setCounts,
+  ] = useState({
+    signedCount: -1,
+    noSignedCount: -1,
+    interviewedCount: -1,
+    noInterviewedCount: -1,
   });
   const { notification } = AntdApp.useApp();
   const token = useRecoilValue(tokenStateAtom);
@@ -164,7 +167,8 @@ const Manage: FC = () => {
     useWebSocket(statisticSocket(), {
       onMessage(ev) {
         const { counts, students } = JSON.parse(ev.data);
-        setCounts({ ...counts });
+
+        setCounts(counts);
         setStudents(students);
       },
       protocols: token ?? undefined,
@@ -185,11 +189,8 @@ const Manage: FC = () => {
               <Card>
                 <Statistic
                   title="已签到人数"
-                  loading={
-                    statisticReadyState !== 1 ||
-                    counts.signedCount + counts.noSignedCount < 1
-                  }
-                  value={counts.signedCount}
+                  loading={statisticReadyState !== 1 || signedCount < 0}
+                  value={signedCount}
                 />
               </Card>
             </Col>
@@ -197,11 +198,8 @@ const Manage: FC = () => {
               <Card>
                 <Statistic
                   title="未签到人数"
-                  loading={
-                    statisticReadyState !== 1 ||
-                    counts.signedCount + counts.noSignedCount < 1
-                  }
-                  value={counts.noSignedCount}
+                  loading={statisticReadyState !== 1 || noSignedCount < 0}
+                  value={noSignedCount}
                 />
               </Card>
             </Col>
@@ -210,10 +208,9 @@ const Manage: FC = () => {
                 <Statistic
                   title="总人数"
                   loading={
-                    statisticReadyState !== 1 ||
-                    counts.signedCount + counts.noSignedCount < 1
+                    statisticReadyState !== 1 || signedCount + noSignedCount < 0
                   }
-                  value={counts.noSignedCount + counts.signedCount}
+                  value={signedCount + noSignedCount}
                 />
               </Card>
             </Col>
@@ -222,13 +219,10 @@ const Manage: FC = () => {
                 <Statistic
                   title="签到进度"
                   loading={
-                    statisticReadyState !== 1 ||
-                    counts.signedCount + counts.noSignedCount < 1
+                    statisticReadyState !== 1 || signedCount + noSignedCount < 0
                   }
                   value={
-                    (counts.signedCount /
-                      (counts.signedCount + counts.noSignedCount)) *
-                      100 || 0
+                    (signedCount / (signedCount + noSignedCount)) * 100 || 0
                   }
                   precision={3}
                   suffix="%"
@@ -244,11 +238,8 @@ const Manage: FC = () => {
               <Card>
                 <Statistic
                   title="已面试人数"
-                  loading={
-                    statisticReadyState !== 1 ||
-                    counts.signedCount + counts.noSignedCount < 1
-                  }
-                  value={counts.interviewedCount}
+                  loading={statisticReadyState !== 1 || interviewedCount < 0}
+                  value={interviewedCount}
                 />
               </Card>
             </Col>
@@ -256,11 +247,8 @@ const Manage: FC = () => {
               <Card>
                 <Statistic
                   title="未面试人数"
-                  loading={
-                    statisticReadyState !== 1 ||
-                    counts.signedCount + counts.noSignedCount < 1
-                  }
-                  value={counts.noInterviewedCount}
+                  loading={statisticReadyState !== 1 || noInterviewedCount < 0}
+                  value={noInterviewedCount}
                 />
               </Card>
             </Col>
@@ -270,11 +258,11 @@ const Manage: FC = () => {
                   title="面试进度"
                   loading={
                     statisticReadyState !== 1 ||
-                    counts.signedCount + counts.noSignedCount < 1
+                    interviewedCount + noInterviewedCount < 0
                   }
                   value={
-                    (counts.interviewedCount /
-                      (counts.interviewedCount + counts.noInterviewedCount)) *
+                    (interviewedCount /
+                      (interviewedCount + noInterviewedCount)) *
                       100 || 0
                   }
                   precision={3}
@@ -289,7 +277,7 @@ const Manage: FC = () => {
             bordered
             columns={studentSignColumns}
             rowKey={record => record.id_card}
-            loading={!students.length || statisticReadyState !== 1}
+            loading={statisticReadyState !== 1 || !students.length}
             dataSource={students}
             pagination={{
               defaultPageSize: 20,
