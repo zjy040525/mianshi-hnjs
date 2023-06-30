@@ -6,20 +6,20 @@ import {
   AUTH_PATHNAME,
   INTERVIEW_PATHNAME,
   MANAGE_PATHNAME,
-  SIGN_IN_PATHNAME,
+  STUDENT_SIGN_IN_PATHNAME,
 } from '../constant/path';
 import BasicLayout from '../layouts/BasicLayout';
 
 // 主页
-const Home = lazy(() => import('../pages/Home'));
+const HomePage = lazy(() => import('../pages/Home'));
 // 认证
-const AuthProvider = lazy(() => import('../pages/Auth'));
+const AuthPage = lazy(() => import('../pages/Auth'));
 // 签到
-const SignInProvider = lazy(() => import('../pages/SignIn'));
+const StudentSignInPage = lazy(() => import('../pages/StudentSignIn'));
 // 面试
-const InterviewProvider = lazy(() => import('../pages/Interview'));
+const InterviewPage = lazy(() => import('../pages/Interview'));
 // 管理
-const ManageProvider = lazy(() => import('../pages/Manage'));
+const ManagePage = lazy(() => import('../pages/Manage'));
 
 export default [
   {
@@ -30,27 +30,27 @@ export default [
       // 主页
       {
         path: '/',
-        element: <Home />,
+        element: <HomePage />,
       },
       // 认证页面
       {
         path: AUTH_PATHNAME,
-        element: <AuthProvider />,
+        element: <AuthPage />,
       },
       // 签到页面
       {
-        path: SIGN_IN_PATHNAME,
-        element: <SignInProvider />,
+        path: STUDENT_SIGN_IN_PATHNAME,
+        element: <StudentSignInPage />,
       },
       // 面试页面
       {
         path: INTERVIEW_PATHNAME,
-        element: <InterviewProvider />,
+        element: <InterviewPage />,
       },
       // 管理页面
       {
         path: MANAGE_PATHNAME,
-        element: <ManageProvider />,
+        element: <ManagePage />,
       },
     ],
   },

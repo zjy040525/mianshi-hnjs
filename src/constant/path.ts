@@ -2,7 +2,7 @@
 export const AUTH_PATHNAME = '/auth';
 
 // 签到页面
-export const SIGN_IN_PATHNAME = '/sign-in';
+export const STUDENT_SIGN_IN_PATHNAME = '/student-sign-in';
 
 // 面试页面
 export const INTERVIEW_PATHNAME = '/interview';
