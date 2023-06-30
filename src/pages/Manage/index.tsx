@@ -16,6 +16,7 @@ import { FC, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { tokenStateAtom } from '../../atoms/auth';
+import { newMsgNotificationOfAdmin } from '../../atoms/manage';
 import HeadTitle from '../../components/HeadTitle';
 import { authStateSelector } from '../../selectors/auth';
 import { operationSocket, statisticSocket } from '../../services/socket';
@@ -149,18 +150,27 @@ const Manage: FC = () => {
   const { notification } = AntdApp.useApp();
   const token = useRecoilValue(tokenStateAtom);
   // 操作员的操作信息套接字
-  const { disconnect: operationDisconnect } = useWebSocket(operationSocket(), {
-    onMessage(ev) {
-      const { key, type, message, description } = JSON.parse(ev.data);
-      notification.open({
-        key,
-        type,
-        message,
-        description,
-        placement: 'bottomRight',
-      });
-    },
-    protocols: token ?? undefined,
+  const { disconnect: operationDisconnect, connect: operationConnect } =
+    useWebSocket(operationSocket(), {
+      manual: true,
+      onMessage(ev) {
+        const { key, type, message, description } = JSON.parse(ev.data);
+        notification.open({
+          key,
+          type,
+          message,
+          description,
+          placement: 'bottomRight',
+        });
+      },
+      protocols: token ?? undefined,
+    });
+  const newMsgNotification = useRecoilValue(newMsgNotificationOfAdmin);
+  // 只有在`新消息通知`为启用状态下，才会连接到对应的socket
+  useMount(() => {
+    if (newMsgNotification) {
+      operationConnect();
+    }
   });
   // 统计信息套接字
   const { disconnect: statisticDisconnect, readyState: statisticReadyState } =
