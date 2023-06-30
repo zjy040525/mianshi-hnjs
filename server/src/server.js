@@ -13,9 +13,6 @@ class Server {
   static app = express();
   static appWs = expressWs(this.app);
   constructor() {
-    this.app = Server.app;
-    this.appWs = Server.appWs;
-
     Server.app.engine(
       'handlebars',
       engine({
