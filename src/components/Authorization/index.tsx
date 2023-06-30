@@ -12,14 +12,14 @@ import { getAuthorizationToken } from '../../utils/storage';
  */
 const Authorization = () => {
   const { message } = AntdApp.useApp();
-  const setAuth = useSetRecoilState(authorizationStateSelector);
+  const setAuthorization = useSetRecoilState(authorizationStateSelector);
   const resetRecoilState = useResetRecoilState(authorizationStateSelector);
   const token = getAuthorizationToken();
   const { run: runAuthorization } = useRequest(authorizationService, {
     manual: true,
     onSuccess({ data }) {
       // 保存正确的操作员信息
-      setAuth({ ...data, token });
+      setAuthorization({ ...data, token });
     },
     onError(err) {
       // 验证失败，退出当前登录状态，要求重新登录

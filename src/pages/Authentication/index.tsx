@@ -24,7 +24,7 @@ import classes from './index.module.less';
  * @author Jia-Yao Zhao
  */
 const Authentication: FC = () => {
-  const setAuth = useSetRecoilState(authorizationStateSelector);
+  const setAuthorization = useSetRecoilState(authorizationStateSelector);
   const resetRecoilState = useResetRecoilState(authorizationStateSelector);
   const { message } = AntdApp.useApp();
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const Authentication: FC = () => {
       });
     },
     onSuccess(res) {
-      setAuth({ ...res.data });
+      setAuthorization({ ...res.data });
       message.open({
         key: AUTHENTICATION_MESSAGE_KEY,
         type: 'success',
