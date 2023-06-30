@@ -39,29 +39,19 @@ MANAGE_OPERATORS=admin1:管理员
 
 启动服务。
 
-通过 PM2 启动（推荐）。
+命令行启动（开发环境推荐）。
+
+```sh
+$ pnpm serve
+```
+
+通过 PM2 启动（生产环境推荐）。
 
 一共启动 8 个服务，自动实现负载均衡，更多命令请前往 [PM2](https://pm2.keymetrics.io/docs/usage/quick-start/) 官网查看。
 
 ```sh
 $ npm -g install pm2
-$ pm2 start .\src\index.js -n IMS_SERVER -i 8
-```
-
-服务关闭/重启/重载
-
-```sh
-$ pm2 stop IMS_SERVER
-
-$ pm2 restart IMS_SERVER
-
-$ pm2 reload IMS_SERVER
-```
-
-命令行启动（不推荐生产环境使用）。
-
-```sh
-$ pnpm start
+$ pm2 start .\src\index.js -n IMS_serve -i 8
 ```
 
 ## Maintainers
