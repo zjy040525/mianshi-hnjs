@@ -42,7 +42,10 @@ exports.main = async (req, res) => {
         sign_status: true,
         // 根据学生Id的范围查询
         id: {
-          [Op.between]: [parseInt(studentId), parseInt(studentId) + 24],
+          [Op.between]: [
+            isNaN(parseInt(studentId)) ? 0 : parseInt(studentId),
+            isNaN(parseInt(studentId)) ? 0 : parseInt(studentId) + 24,
+          ],
         },
       },
       order: [
