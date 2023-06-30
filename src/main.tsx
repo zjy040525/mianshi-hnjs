@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import Verification from './components/Authorization';
+import Authorization from './components/Authorization';
 import GlobalLoading from './components/GlobalLoading';
 import routes from './routes';
 
@@ -25,7 +25,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
               maxCount: 5,
             }}
           >
-            <Verification />
+            <Authorization />
             <React.Suspense fallback={<GlobalLoading />}>
               <RouterProvider router={createBrowserRouter(routes)} />
             </React.Suspense>
