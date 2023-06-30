@@ -1,5 +1,5 @@
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Row, Space, Switch } from 'antd';
+import { Button, Card, Col, Row, Space, Switch, Typography } from 'antd';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
@@ -59,12 +59,14 @@ const HasManageFeature: FC = () => {
     return (
       <Col>
         <Card title="设置">
-          <Space size={16}>
-            新消息通知
-            <Switch
-              checked={newMsgNotification}
-              onChange={setNewMsgNotification}
-            />
+          <Space direction="vertical">
+            <Space size={16}>
+              <Typography.Text>新消息通知</Typography.Text>
+              <Switch
+                checked={newMsgNotification}
+                onChange={setNewMsgNotification}
+              />
+            </Space>
           </Space>
         </Card>
       </Col>

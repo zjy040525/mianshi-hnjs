@@ -1,4 +1,5 @@
 import {
+  EditOutlined,
   HomeOutlined,
   LockOutlined,
   LogoutOutlined,
@@ -50,7 +51,7 @@ const BasicLayout: FC = () => {
   const showInterview = () => {
     if (authorization.token && authorization.permission === 'INTERVIEW') {
       return {
-        icon: <UserOutlined />,
+        icon: <EditOutlined />,
         key: INTERVIEW_PATHNAME,
         label: '面试',
       };
