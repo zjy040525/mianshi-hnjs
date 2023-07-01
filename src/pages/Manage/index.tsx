@@ -11,6 +11,7 @@ import {
   Typography,
 } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+import { ColumnFilterItem } from 'antd/es/table/interface';
 import dayjs from 'dayjs';
 import { FC, useState } from 'react';
 import { Navigate } from 'react-router-dom';
@@ -22,114 +23,181 @@ import { authorizationStateSelector } from '../../selectors/authorization';
 import { operationSocket, statisticSocket } from '../../services/socket';
 import type { InterviewStatus, Student } from '../../types/student';
 
-// 表格设置
-const studentSignColumns: ColumnsType<Student> = [
-  {
-    title: '系统序号',
-    dataIndex: 'id',
-  },
-  {
-    title: '姓名',
-    dataIndex: 'name',
-  },
-  {
-    title: '性别',
-    dataIndex: 'gender',
-  },
-  {
-    title: '身份证',
-    dataIndex: 'id_card',
-  },
-  {
-    title: '初中就读学校',
-    dataIndex: 'graduated_school',
-  },
-  {
-    title: '手机号',
-    dataIndex: 'telephone_number',
-  },
-  {
-    title: '中考报名序号',
-    dataIndex: 'registration_number',
-  },
-  {
-    title: '签到状态',
-    dataIndex: 'sign_status',
-    render(status) {
-      return status ? (
-        <Typography.Text type="success">
-          <CheckCircleFilled />
-        </Typography.Text>
-      ) : (
-        <Typography.Text type="danger">
-          <CloseCircleFilled />
-        </Typography.Text>
-      );
-    },
-  },
-  {
-    title: '签到时间',
-    dataIndex: 'signed_date',
-    render(dateTime) {
-      if (dateTime) {
-        return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
-      }
-      return '-';
-    },
-  },
-  {
-    title: '签到操作员',
-    dataIndex: 'signed_operator',
-    render(signedOperator) {
-      if (signedOperator) {
-        return signedOperator.nickname ?? signedOperator.username;
-      }
-      return '-';
-    },
-  },
-  {
-    title: '学前面试进度',
-    dataIndex: 'interview_xq',
-    render: value => badge(value),
-  },
-  {
-    title: '旅游面试进度',
-    dataIndex: 'interview_ly',
-    render: value => badge(value),
-  },
-  {
-    title: '轨道面试进度',
-    dataIndex: 'interview_gd',
-    render: value => badge(value),
-  },
-  {
-    title: '面试时间',
-    dataIndex: 'interviewed_date',
-    render(dateTime) {
-      if (dateTime) {
-        return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
-      }
-      return '-';
-    },
-  },
-  {
-    title: '面试操作员',
-    dataIndex: 'interviewed_operator',
-    render(interviewedOperator) {
-      if (interviewedOperator) {
-        return interviewedOperator.nickname ?? interviewedOperator.username;
-      }
-      return '-';
-    },
-  },
-];
-
 /**
  * 管理组件
  *
  * @author Jia-Yao Zhao
  */
 const Manage: FC = () => {
+  // 筛选过滤条件
+  const [signedOperatorFilters, setSignedOperatorFilters] = useState<
+    ColumnFilterItem[]
+  >([]);
+  const [interviewedOperatorFilters, setInterviewedOperatorFilters] = useState<
+    ColumnFilterItem[]
+  >([]);
+  // 表格设置
+  const columns: ColumnsType<Student> = [
+    {
+      title: '系统序号',
+      dataIndex: 'id',
+    },
+    {
+      title: '姓名',
+      dataIndex: 'name',
+    },
+    {
+      title: '性别',
+      dataIndex: 'gender',
+    },
+    {
+      title: '身份证',
+      dataIndex: 'id_card',
+    },
+    {
+      title: '初中就读学校',
+      dataIndex: 'graduated_school',
+    },
+    {
+      title: '手机号',
+      dataIndex: 'telephone_number',
+    },
+    {
+      title: '中考报名序号',
+      dataIndex: 'registration_number',
+    },
+    {
+      title: '签到状态',
+      dataIndex: 'sign_status',
+      render(status) {
+        return status ? (
+          <Typography.Text type="success">
+            <CheckCircleFilled />
+          </Typography.Text>
+        ) : (
+          <Typography.Text type="danger">
+            <CloseCircleFilled />
+          </Typography.Text>
+        );
+      },
+      filters: [
+        {
+          text: '已签到',
+          value: true,
+        },
+        {
+          text: '未签到',
+          value: false,
+        },
+      ],
+      filterMultiple: false,
+      onFilter(value, record) {
+        return record.sign_status === value;
+      },
+    },
+    {
+      title: '签到时间',
+      dataIndex: 'signed_date',
+      render(dateTime) {
+        if (dateTime) {
+          return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
+        }
+        return '-';
+      },
+      sorter: (a, b) => {
+        return (
+          (a.signed_date ? Date.parse(a.signed_date) : 0) -
+          (b.signed_date ? Date.parse(b.signed_date) : 0)
+        );
+      },
+    },
+    {
+      title: '签到操作员',
+      dataIndex: 'signed_operator',
+      render(signedOperator) {
+        if (signedOperator) {
+          return signedOperator.nickname ?? signedOperator.username;
+        }
+        return '-';
+      },
+      filters: signedOperatorFilters,
+      onFilter(value, record) {
+        return record.signed_operator?.id === value;
+      },
+    },
+    {
+      title: '学前面试进度',
+      dataIndex: 'interview_xq',
+      render: value => badge(value),
+      filters: [
+        { text: '已通过', value: 'Success' },
+        { text: '未通过', value: 'Failed' },
+        { text: '进行中', value: 'Processing' },
+        { text: '-', value: false },
+      ],
+      onFilter(value, record) {
+        return record.interview_xq === (value === false ? null : value);
+      },
+    },
+    {
+      title: '旅游面试进度',
+      dataIndex: 'interview_ly',
+      render: value => badge(value),
+      filters: [
+        { text: '已通过', value: 'Success' },
+        { text: '未通过', value: 'Failed' },
+        { text: '进行中', value: 'Processing' },
+        { text: '-', value: false },
+      ],
+      onFilter(value, record) {
+        return record.interview_ly === (value === false ? null : value);
+      },
+    },
+    {
+      title: '轨道面试进度',
+      dataIndex: 'interview_gd',
+      render: value => badge(value),
+      filters: [
+        { text: '已通过', value: 'Success' },
+        { text: '未通过', value: 'Failed' },
+        { text: '进行中', value: 'Processing' },
+        { text: '-', value: false },
+      ],
+      onFilter(value, record) {
+        return record.interview_gd === (value === false ? null : value);
+      },
+    },
+    {
+      title: '面试时间',
+      dataIndex: 'interviewed_date',
+      render(dateTime) {
+        if (dateTime) {
+          return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
+        }
+        return '-';
+      },
+      sorter: (a, b) => {
+        return (
+          (a.interviewed_date ? Date.parse(a.interviewed_date) : 0) -
+          (b.interviewed_date ? Date.parse(b.interviewed_date) : 0)
+        );
+      },
+    },
+    {
+      title: '面试操作员',
+      dataIndex: 'interviewed_operator',
+      render(interviewedOperator) {
+        if (interviewedOperator) {
+          return interviewedOperator.nickname ?? interviewedOperator.username;
+        }
+        return '-';
+      },
+      filters: interviewedOperatorFilters,
+      onFilter(value, record) {
+        return record.interviewed_operator?.id === value;
+      },
+    },
+  ];
   const [students, setStudents] = useState<Student[]>([]);
   // 统计人数
   const [
@@ -174,6 +242,39 @@ const Manage: FC = () => {
 
         setCounts(counts);
         setStudents(students);
+        // 设置可筛选过滤的条件
+        const map = new Map<number, string>();
+        const map2 = new Map<number, string>();
+        // 遍历去重
+        for (const student of students as Student[]) {
+          if (student.signed_operator && !map.has(student.signed_operator.id)) {
+            map.set(
+              student.signed_operator.id,
+              student.signed_operator.nickname ??
+                student.signed_operator.username
+            );
+          }
+          if (
+            student.interviewed_operator &&
+            !map2.has(student.interviewed_operator.id)
+          ) {
+            map2.set(
+              student.interviewed_operator.id,
+              student.interviewed_operator.nickname ??
+                student.interviewed_operator.username
+            );
+          }
+        }
+        // 可过滤列表
+        const signedOperatorFilters = [...map]
+          .map(([value, text]) => ({ text, value }))
+          .sort((a, b) => a.value - b.value);
+        const interviewedOperatorFilters = [...map2]
+          .map(([value, text]) => ({ text, value }))
+          .sort((a, b) => a.value - b.value);
+        // 设置可过滤列表
+        setSignedOperatorFilters(signedOperatorFilters);
+        setInterviewedOperatorFilters(interviewedOperatorFilters);
       },
       protocols: token ?? undefined,
     });
@@ -279,7 +380,7 @@ const Manage: FC = () => {
         <Col span={24}>
           <Table
             bordered
-            columns={studentSignColumns}
+            columns={columns}
             rowKey={record => record.id_card}
             loading={statisticReadyState !== 1}
             dataSource={students}

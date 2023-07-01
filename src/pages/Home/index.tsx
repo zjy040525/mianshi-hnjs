@@ -61,7 +61,7 @@ const HasManageFeature: FC = () => {
         <Card title="设置">
           <Space direction="vertical">
             <Space size={16}>
-              <Typography.Text>新消息通知</Typography.Text>
+              <Typography.Text>接收新消息通知</Typography.Text>
               <Switch
                 checked={newMsgNotification}
                 onChange={setNewMsgNotification}
