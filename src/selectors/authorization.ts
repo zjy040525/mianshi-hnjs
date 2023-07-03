@@ -17,14 +17,14 @@ export const authorizationStateSelector = selector({
     nickname: get(nicknameStateAtom),
     permission: get(permissionStateAtom),
   }),
-  set: ({ set }, newValue) => {
-    const defaultValue = newValue instanceof DefaultValue;
+  set({ set }, newValue) {
+    const isDefault = newValue instanceof DefaultValue;
 
-    set(idStateAtom, defaultValue ? null : newValue.id);
-    setAuthorizationToken(defaultValue ? null : newValue.token);
-    set(tokenStateAtom, defaultValue ? null : newValue.token);
-    set(usernameStateAtom, defaultValue ? null : newValue.username);
-    set(nicknameStateAtom, defaultValue ? null : newValue.nickname);
-    set(permissionStateAtom, defaultValue ? null : newValue.permission);
+    set(idStateAtom, isDefault ? null : newValue.id);
+    setAuthorizationToken(isDefault ? null : newValue.token);
+    set(tokenStateAtom, isDefault ? null : newValue.token);
+    set(usernameStateAtom, isDefault ? null : newValue.username);
+    set(nicknameStateAtom, isDefault ? null : newValue.nickname);
+    set(permissionStateAtom, isDefault ? null : newValue.permission);
   },
 });

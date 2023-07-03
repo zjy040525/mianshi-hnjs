@@ -104,12 +104,9 @@ const Manage: FC = () => {
         }
         return '-';
       },
-      sorter: (a, b) => {
-        return (
-          (a.signed_date ? Date.parse(a.signed_date) : 0) -
-          (b.signed_date ? Date.parse(b.signed_date) : 0)
-        );
-      },
+      sorter: (a, b) =>
+        (a.signed_date ? Date.parse(a.signed_date) : 0) -
+        (b.signed_date ? Date.parse(b.signed_date) : 0),
     },
     {
       title: '签到操作员',
@@ -176,12 +173,9 @@ const Manage: FC = () => {
         }
         return '-';
       },
-      sorter: (a, b) => {
-        return (
-          (a.interviewed_date ? Date.parse(a.interviewed_date) : 0) -
-          (b.interviewed_date ? Date.parse(b.interviewed_date) : 0)
-        );
-      },
+      sorter: (a, b) =>
+        (a.interviewed_date ? Date.parse(a.interviewed_date) : 0) -
+        (b.interviewed_date ? Date.parse(b.interviewed_date) : 0),
     },
     {
       title: '面试操作员',
