@@ -32,7 +32,7 @@ export interface Student {
 
 export type InterviewStatus = 'Processing' | 'Success' | 'Failed' | null;
 
-export interface Operator {
+interface Operator {
   id: number;
   username: string;
   nickname: string | null;
