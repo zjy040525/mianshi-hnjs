@@ -19,7 +19,9 @@ const Home: FC = () => {
       <Row gutter={[16, 16]}>
         <HasManageFeature />
         <Col>
-          <Card title={authorization.nickname ?? authorization.username}>
+          <Card
+            title={authorization.nickname ?? authorization.username ?? '未登录'}
+          >
             {authorization.token ? (
               <Button
                 type="primary"
