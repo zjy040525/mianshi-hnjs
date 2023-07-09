@@ -25,10 +25,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
               maxCount: 5,
             }}
           >
-            <Authorization />
-            <React.Suspense fallback={<GlobalLoading />}>
-              <RouterProvider router={createBrowserRouter(routes)} />
-            </React.Suspense>
+            <Authorization>
+              <React.Suspense fallback={<GlobalLoading />}>
+                <RouterProvider router={createBrowserRouter(routes)} />
+              </React.Suspense>
+            </Authorization>
           </AppProvider>
         </ConfigProvider>
       </HelmetProvider>
