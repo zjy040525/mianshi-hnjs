@@ -8,7 +8,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { Avatar, Dropdown, Layout, Menu, Typography, theme } from 'antd';
-import { FC, Suspense } from 'react';
+import { FC, Suspense, useCallback } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import ChunkLoading from '../../components/ChunkLoading';
@@ -26,7 +26,7 @@ const { Content, Header } = Layout;
 const BasicLayout: FC = () => {
   const authorization = useRecoilValue(authorizationStateSelector);
   // 是否显示`认证`菜单选项
-  const showAuthentication = () => {
+  const showAuthentication = useCallback(() => {
     if (authorization.token) {
       return [];
     }
@@ -35,9 +35,9 @@ const BasicLayout: FC = () => {
       key: AUTHENTICATION_PATHNAME,
       label: '认证',
     };
-  };
+  }, [authorization]);
   // 是否显示`签到`菜单选项
-  const showSign = () => {
+  const showSign = useCallback(() => {
     if (authorization.token && authorization.permission === 'SIGN') {
       return {
         icon: <SolutionOutlined />,
@@ -46,9 +46,9 @@ const BasicLayout: FC = () => {
       };
     }
     return [];
-  };
+  }, [authorization]);
   // 是否显示`面试`菜单选项
-  const showInterview = () => {
+  const showInterview = useCallback(() => {
     if (authorization.token && authorization.permission === 'INTERVIEW') {
       return {
         icon: <EditOutlined />,
@@ -57,9 +57,9 @@ const BasicLayout: FC = () => {
       };
     }
     return [];
-  };
+  }, [authorization]);
   // 是否显示`管理`菜单选项
-  const showManage = () => {
+  const showManage = useCallback(() => {
     if (authorization.token && authorization.permission === 'MANAGE') {
       return {
         icon: <SettingOutlined />,
@@ -68,7 +68,7 @@ const BasicLayout: FC = () => {
       };
     }
     return [];
-  };
+  }, [authorization]);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
