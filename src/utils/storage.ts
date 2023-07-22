@@ -1,4 +1,4 @@
-import { AUTHORIZATION_TOKEN_LOCAL_STORAGE_KEY } from '../constants';
+import { AUTHORIZATION_TOKEN_LOCAL_STORAGE_KEY } from '@/constants';
 
 /**
  * 设置授权token

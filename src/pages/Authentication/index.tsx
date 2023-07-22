@@ -1,3 +1,6 @@
+import { HeadTitle } from '@/components';
+import { authorizationStateSelector } from '@/selectors';
+import { authenticationService } from '@/services';
 import { useRequest } from 'ahooks';
 import {
   App as AntdApp,
@@ -11,9 +14,6 @@ import {
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
-import { HeadTitle } from '../../components';
-import { authorizationStateSelector } from '../../selectors';
-import { authenticationService } from '../../services';
 import { CheckAuthentication } from './components';
 import { AUTHENTICATION_MESSAGE_KEY } from './constants';
 import classes from './index.module.less';

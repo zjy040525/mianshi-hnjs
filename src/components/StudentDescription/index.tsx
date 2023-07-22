@@ -1,7 +1,7 @@
+import type { InterviewStatus, Student } from '@/typings';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { Descriptions, Typography } from 'antd';
 import { FC, ReactNode } from 'react';
-import type { InterviewStatus, Student } from '../../typings';
 
 export const StudentDescription: FC<{
   student: Student;

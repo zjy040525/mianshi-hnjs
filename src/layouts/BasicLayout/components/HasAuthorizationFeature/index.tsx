@@ -1,9 +1,9 @@
+import { authorizationStateSelector } from '@/selectors';
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Dropdown } from 'antd';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
-import { authorizationStateSelector } from '../../../../selectors';
 import classes from './index.module.less';
 
 export const HasAuthorizationFeature: FC = () => {

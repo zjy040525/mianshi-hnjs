@@ -1,5 +1,5 @@
+import { getAuthorizationToken } from '@/utils';
 import axios from 'axios';
-import { getAuthorizationToken } from '../utils';
 
 // 基础配置
 const myAxios = axios.create({

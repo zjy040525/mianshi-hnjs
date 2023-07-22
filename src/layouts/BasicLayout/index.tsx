@@ -1,3 +1,11 @@
+import { ChunkLoading } from '@/components';
+import {
+  AUTHENTICATION_PATHNAME,
+  INTERVIEW_PATHNAME,
+  MANAGE_PATHNAME,
+  STUDENT_SIGN_IN_PATHNAME,
+} from '@/constants';
+import { authorizationStateSelector } from '@/selectors';
 import {
   EditOutlined,
   HomeOutlined,
@@ -9,14 +17,6 @@ import { Layout, Menu, Typography, theme } from 'antd';
 import { FC, Suspense, useCallback } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { ChunkLoading } from '../../components';
-import {
-  AUTHENTICATION_PATHNAME,
-  INTERVIEW_PATHNAME,
-  MANAGE_PATHNAME,
-  STUDENT_SIGN_IN_PATHNAME,
-} from '../../constants';
-import { authorizationStateSelector } from '../../selectors';
 import { HasAuthorizationFeature } from './components';
 import classes from './index.module.less';
 

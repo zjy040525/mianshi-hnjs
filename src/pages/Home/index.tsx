@@ -1,11 +1,11 @@
+import { HeadTitle } from '@/components';
+import { AUTHENTICATION_PATHNAME } from '@/constants';
+import { authorizationStateSelector } from '@/selectors';
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Row } from 'antd';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
-import { HeadTitle } from '../../components';
-import { AUTHENTICATION_PATHNAME } from '../../constants';
-import { authorizationStateSelector } from '../../selectors';
 import { HasManageFeature } from './components';
 
 const Home: FC = () => {

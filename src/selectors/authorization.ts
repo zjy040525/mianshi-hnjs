@@ -1,12 +1,12 @@
-import { DefaultValue, selector } from 'recoil';
 import {
   idStateAtom,
   nicknameStateAtom,
   permissionStateAtom,
   tokenStateAtom,
   usernameStateAtom,
-} from '../atoms';
-import { setAuthorizationToken } from '../utils';
+} from '@/atoms';
+import { setAuthorizationToken } from '@/utils';
+import { DefaultValue, selector } from 'recoil';
 
 export const authorizationStateSelector = selector({
   key: 'authorizationStateSelector',

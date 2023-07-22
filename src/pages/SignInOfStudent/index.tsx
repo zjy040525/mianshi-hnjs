@@ -1,3 +1,16 @@
+import { idStateAtom } from '@/atoms';
+import {
+  Access,
+  HeadTitle,
+  StudentDescription,
+  StudentInterviewDoc,
+} from '@/components';
+import {
+  studentPrintService,
+  studentSignSearchService,
+  studentSignService,
+} from '@/services';
+import type { Student } from '@/typings';
 import { useRequest } from 'ahooks';
 import {
   App as AntdApp,
@@ -16,19 +29,6 @@ import {
 } from 'antd';
 import { FC, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { idStateAtom } from '../../atoms';
-import {
-  Access,
-  HeadTitle,
-  StudentDescription,
-  StudentInterviewDoc,
-} from '../../components';
-import {
-  studentPrintService,
-  studentSignSearchService,
-  studentSignService,
-} from '../../services';
-import type { Student } from '../../typings';
 import {
   PRINT_DOC_KEY,
   STUDENT_SIGN_KEY,

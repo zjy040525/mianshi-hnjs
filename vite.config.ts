@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react-swc';
+import path from 'path';
 import { defineConfig } from 'vite';
 
 // noinspection JSUnusedGlobalSymbols
@@ -7,6 +8,11 @@ export default defineConfig({
   css: {
     modules: {
       localsConvention: 'camelCase',
+    },
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
     },
   },
   build: {

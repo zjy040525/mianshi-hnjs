@@ -1,3 +1,7 @@
+import { newMsgNotificationOfAdmin, tokenStateAtom } from '@/atoms';
+import { Access, HeadTitle } from '@/components';
+import { operationSocket, statisticSocket } from '@/services';
+import type { Student } from '@/typings';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { useMount, useUnmount, useWebSocket } from 'ahooks';
 import {
@@ -14,10 +18,6 @@ import { ColumnFilterItem } from 'antd/es/table/interface';
 import dayjs from 'dayjs';
 import { FC, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { newMsgNotificationOfAdmin, tokenStateAtom } from '../../atoms';
-import { Access, HeadTitle } from '../../components';
-import { operationSocket, statisticSocket } from '../../services';
-import type { Student } from '../../typings';
 import { badge } from './components';
 
 /**

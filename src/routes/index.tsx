@@ -1,24 +1,24 @@
-import { lazy } from 'react';
-import { RouteObject } from 'react-router-dom';
-import { GlobalErrorBoundary, PageNotFound } from '../components';
+import { GlobalErrorBoundary, PageNotFound } from '@/components';
 import {
   AUTHENTICATION_PATHNAME,
   INTERVIEW_PATHNAME,
   MANAGE_PATHNAME,
   STUDENT_SIGN_IN_PATHNAME,
-} from '../constants';
-import { BasicLayout } from '../layouts';
+} from '@/constants';
+import { BasicLayout } from '@/layouts';
+import { lazy } from 'react';
+import { RouteObject } from 'react-router-dom';
 
 // 主页
-const HomePage = lazy(() => import('../pages/Home'));
+const HomePage = lazy(() => import('@/pages/Home'));
 // 认证
-const AuthenticationPage = lazy(() => import('../pages/Authentication'));
+const AuthenticationPage = lazy(() => import('@/pages/Authentication'));
 // 签到
-const SignInOfStudentPage = lazy(() => import('../pages/SignInOfStudent'));
+const SignInOfStudentPage = lazy(() => import('@/pages/SignInOfStudent'));
 // 面试
-const InterviewPage = lazy(() => import('../pages/Interview'));
+const InterviewPage = lazy(() => import('@/pages/Interview'));
 // 管理
-const ManagePage = lazy(() => import('../pages/Manage'));
+const ManagePage = lazy(() => import('@/pages/Manage'));
 
 export default [
   {

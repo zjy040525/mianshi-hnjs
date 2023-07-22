@@ -1,5 +1,5 @@
-import myAxios from '../lib/myAxios';
-import type { InterviewStatus, Response, Student } from '../typings';
+import myAxios from '@/lib/myAxios';
+import type { InterviewStatus, Response, Student } from '@/typings';
 
 /**
  * 搜索学生服务

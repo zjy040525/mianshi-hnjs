@@ -1,3 +1,4 @@
+import type { Student } from '@/typings';
 import {
   BorderOutlined,
   CheckOutlined,
@@ -6,7 +7,6 @@ import {
 import { Descriptions, Space, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { FC } from 'react';
-import type { Student } from '../../typings';
 import classes from './index.module.less';
 
 export const StudentInterviewDoc: FC<{ student: Student }> = ({ student }) => {

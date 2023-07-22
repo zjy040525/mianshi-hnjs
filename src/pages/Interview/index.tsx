@@ -1,3 +1,10 @@
+import { idStateAtom } from '@/atoms';
+import { Access, HeadTitle, StudentDescription } from '@/components';
+import {
+  studentInterviewSearchService,
+  studentInterviewService,
+} from '@/services';
+import type { InterviewStatus, Student } from '@/typings';
 import { useRequest } from 'ahooks';
 import {
   App as AntdApp,
@@ -19,13 +26,6 @@ import {
 import dayjs from 'dayjs';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { idStateAtom } from '../../atoms';
-import { Access, HeadTitle, StudentDescription } from '../../components';
-import {
-  studentInterviewSearchService,
-  studentInterviewService,
-} from '../../services';
-import type { InterviewStatus, Student } from '../../typings';
 import { InterviewBadge, InterviewTag } from './components';
 import {
   STUDENT_INTERVIEW_KEY,
