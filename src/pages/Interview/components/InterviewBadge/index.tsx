@@ -1,6 +1,6 @@
 import { Tag } from 'antd';
 import { FC } from 'react';
-import { InterviewStatus } from '../../../../typings';
+import type { InterviewStatus } from '../../../../typings';
 
 export const InterviewTag: FC<{
   status: InterviewStatus;

@@ -1,6 +1,6 @@
 import { Badge } from 'antd';
 import { FC } from 'react';
-import { InterviewStatus } from '../../../../typings';
+import type { InterviewStatus } from '../../../../typings';
 
 export const InterviewBadge: FC<{ status: InterviewStatus }> = ({ status }) => {
   switch (status) {

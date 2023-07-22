@@ -25,7 +25,7 @@ import {
   studentInterviewSearchService,
   studentInterviewService,
 } from '../../services';
-import { InterviewStatus, Student } from '../../typings';
+import type { InterviewStatus, Student } from '../../typings';
 import { InterviewBadge, InterviewTag } from './components';
 import {
   STUDENT_INTERVIEW_KEY,

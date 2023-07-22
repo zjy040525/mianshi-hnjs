@@ -1,5 +1,5 @@
 import { Badge } from 'antd';
-import { InterviewStatus } from '../../../typings';
+import type { InterviewStatus } from '../../../typings';
 
 /**
  * 是否通过面试的显示微标
