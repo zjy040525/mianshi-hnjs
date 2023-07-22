@@ -31,6 +31,6 @@ export const Access: FC<PropsWithChildren<{ permission: Permission }>> = ({
   } else if (authorization.permission !== permission) {
     return <Navigate to="/" />;
   } else {
-    return children;
+    return <>{children}</>;
   }
 };

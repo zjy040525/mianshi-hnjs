@@ -13,5 +13,5 @@ export const CheckAuthentication: FC<PropsWithChildren> = ({ children }) => {
       message.error('你已登录，请先退出登录！');
     }
   });
-  return tokenState ? <Navigate to="/" /> : children;
+  return tokenState ? <Navigate to="/" /> : <>{children}</>;
 };
