@@ -2,7 +2,6 @@ import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { useMount, useUnmount, useWebSocket } from 'ahooks';
 import {
   App as AntdApp,
-  Badge,
   Card,
   Col,
   Row,
@@ -14,14 +13,12 @@ import { ColumnsType } from 'antd/es/table';
 import { ColumnFilterItem } from 'antd/es/table/interface';
 import dayjs from 'dayjs';
 import { FC, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { tokenStateAtom } from '../../atoms/authorization';
-import { newMsgNotificationOfAdmin } from '../../atoms/manage';
-import HeadTitle from '../../components/HeadTitle';
-import { authorizationStateSelector } from '../../selectors/authorization';
-import { operationSocket, statisticSocket } from '../../services/socket';
-import type { InterviewStatus, Student } from '../../types/student';
+import { newMsgNotificationOfAdmin, tokenStateAtom } from '../../atoms';
+import { Access, HeadTitle } from '../../components';
+import { operationSocket, statisticSocket } from '../../services';
+import type { Student } from '../../typings';
+import { badge } from './components';
 
 /**
  * 管理组件
@@ -288,7 +285,7 @@ const Manage: FC = () => {
     statisticDisconnect();
   });
   return (
-    <>
+    <Access permission="MANAGE">
       <HeadTitle titles={['管理']} />
       <Row gutter={[16, 16]}>
         <Col span={12}>
@@ -394,48 +391,8 @@ const Manage: FC = () => {
           />
         </Col>
       </Row>
-    </>
+    </Access>
   );
 };
 
-/**
- * 是否通过面试的显示微标
- *
- * @param type 通过状态
- * @author Jia-Yao Zhao
- */
-const badge = (type: InterviewStatus) => {
-  switch (type) {
-    case 'Processing':
-      return <Badge status="processing" text="进行中" />;
-    case 'Failed':
-      return <Badge status="error" text="未通过" />;
-    case 'Success':
-      return <Badge status="success" text="已通过" />;
-  }
-  return '-';
-};
-
-/**
- * 检查`管理`页面是否可以访问
- *
- * @author Jia-Yao Zhao
- */
-const CheckManage: FC = () => {
-  const authorization = useRecoilValue(authorizationStateSelector);
-  const { message } = AntdApp.useApp();
-  useMount(() => {
-    if (!authorization.token) {
-      message.error('请先认证！');
-    } else if (authorization.permission !== 'MANAGE') {
-      message.error('权限不足！');
-    }
-  });
-  return authorization.token && authorization.permission === 'MANAGE' ? (
-    <Manage />
-  ) : (
-    <Navigate to="/" />
-  );
-};
-
-export default CheckManage;
+export default Manage;

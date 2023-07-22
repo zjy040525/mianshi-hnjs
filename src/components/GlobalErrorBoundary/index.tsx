@@ -8,7 +8,7 @@ import classes from './index.module.less';
  *
  * @author Jia-Yao Zhao
  */
-const GlobalErrorBoundary: FC = () => {
+export const GlobalErrorBoundary: FC = () => {
   const error = useRouteError() as string;
 
   return (
@@ -40,5 +40,3 @@ const GlobalErrorBoundary: FC = () => {
     </Result>
   );
 };
-
-export default GlobalErrorBoundary;

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
  *
  * @author Jia-Yao Zhao
  */
-const PageNotFound: FC = () => {
+export const PageNotFound: FC = () => {
   return (
     <Result
       style={{ paddingBlockStart: 40 }}
@@ -24,5 +24,3 @@ const PageNotFound: FC = () => {
     />
   );
 };
-
-export default PageNotFound;

@@ -1,12 +1,12 @@
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Row, Space, Switch, Typography } from 'antd';
+import { Button, Card, Col, Row } from 'antd';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { newMsgNotificationOfAdmin } from '../../atoms/manage';
-import HeadTitle from '../../components/HeadTitle';
-import { AUTHENTICATION_PATHNAME } from '../../constant/pathname';
-import { authorizationStateSelector } from '../../selectors/authorization';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { HeadTitle } from '../../components';
+import { AUTHENTICATION_PATHNAME } from '../../constants';
+import { authorizationStateSelector } from '../../selectors';
+import { HasManageFeature } from './components';
 
 const Home: FC = () => {
   const navigate = useNavigate();
@@ -45,36 +45,6 @@ const Home: FC = () => {
       </Row>
     </>
   );
-};
-
-/**
- * 管理身份登录时，首页的额外内容
- *
- * @author Jia-Yao Zhao
- */
-const HasManageFeature: FC = () => {
-  const authorization = useRecoilValue(authorizationStateSelector);
-  const [newMsgNotification, setNewMsgNotification] = useRecoilState(
-    newMsgNotificationOfAdmin
-  );
-  if (authorization.permission === 'MANAGE') {
-    return (
-      <Col>
-        <Card title="设置">
-          <Space direction="vertical">
-            <Space size={16}>
-              <Typography.Text>接收新消息通知</Typography.Text>
-              <Switch
-                checked={newMsgNotification}
-                onChange={setNewMsgNotification}
-              />
-            </Space>
-          </Space>
-        </Card>
-      </Col>
-    );
-  }
-  return null;
 };
 
 export default Home;

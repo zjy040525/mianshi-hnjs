@@ -1,9 +1,9 @@
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { Descriptions, Typography } from 'antd';
 import { FC, ReactNode } from 'react';
-import type { InterviewStatus, Student } from '../../types/student';
+import type { InterviewStatus, Student } from '../../typings';
 
-const StudentDescription: FC<{
+export const StudentDescription: FC<{
   student: Student;
   signStatus?: ReactNode;
 }> = ({ student, signStatus }) => {
@@ -48,5 +48,3 @@ const IsInterview: FC<{ condition: InterviewStatus }> = ({ condition }) => {
     </Typography.Text>
   );
 };
-
-export default StudentDescription;

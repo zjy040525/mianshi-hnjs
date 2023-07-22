@@ -9,8 +9,7 @@ import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import Authorization from './components/Authorization';
-import GlobalLoading from './components/GlobalLoading';
+import { Authorization, GlobalLoading } from './components';
 import routes from './routes';
 
 dayjs.extend(relativeTime);

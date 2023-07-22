@@ -1,6 +1,5 @@
 import myAxios from '../lib/myAxios';
-import type { Permission } from '../types/permission';
-import type { Response } from '../types/response';
+import type { Permission, Response } from '../typings';
 
 /**
  * 认证服务

@@ -1,6 +1,5 @@
 import myAxios from '../lib/myAxios';
-import type { Response } from '../types/response';
-import type { InterviewStatus, Student } from '../types/student';
+import type { InterviewStatus, Response, Student } from '../typings';
 
 /**
  * 搜索学生服务

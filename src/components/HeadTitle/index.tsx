@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet-async';
  * @param titles 网页Title标签内容数组，自动用-符号分隔
  * @author Jia-Yao Zhao
  */
-const HeadTitle: FC<{ titles?: (string | null | undefined)[] }> = ({
+export const HeadTitle: FC<{ titles?: (string | null | undefined)[] }> = ({
   titles,
 }) => (
   <Helmet>
@@ -17,5 +17,3 @@ const HeadTitle: FC<{ titles?: (string | null | undefined)[] }> = ({
     </title>
   </Helmet>
 );
-
-export default HeadTitle;

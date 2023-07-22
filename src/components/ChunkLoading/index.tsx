@@ -7,12 +7,10 @@ import classes from './index.module.less';
  *
  * @author Jia-Yao Zhao
  */
-const ChunkLoading: FC = () => {
+export const ChunkLoading: FC = () => {
   return (
     <div className={classes.chunkLoading}>
       <Spin />
     </div>
   );
 };
-
-export default ChunkLoading;

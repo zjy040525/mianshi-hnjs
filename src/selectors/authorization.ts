@@ -5,8 +5,8 @@ import {
   permissionStateAtom,
   tokenStateAtom,
   usernameStateAtom,
-} from '../atoms/authorization';
-import { setAuthorizationToken } from '../utils/storage';
+} from '../atoms';
+import { setAuthorizationToken } from '../utils';
 
 export const authorizationStateSelector = selector({
   key: 'authorizationStateSelector',

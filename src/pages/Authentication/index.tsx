@@ -1,4 +1,4 @@
-import { useMount, useRequest } from 'ahooks';
+import { useRequest } from 'ahooks';
 import {
   App as AntdApp,
   Button,
@@ -9,13 +9,13 @@ import {
   Typography,
 } from 'antd';
 import { FC } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
-import { tokenStateAtom } from '../../atoms/authorization';
-import HeadTitle from '../../components/HeadTitle';
-import { AUTHENTICATION_MESSAGE_KEY } from '../../constant/msg';
-import { authorizationStateSelector } from '../../selectors/authorization';
-import { authenticationService } from '../../services/auth';
+import { useNavigate } from 'react-router-dom';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
+import { HeadTitle } from '../../components';
+import { authorizationStateSelector } from '../../selectors';
+import { authenticationService } from '../../services';
+import { CheckAuthentication } from './components';
+import { AUTHENTICATION_MESSAGE_KEY } from './constants';
 import classes from './index.module.less';
 
 /**
@@ -58,7 +58,7 @@ const Authentication: FC = () => {
     },
   });
   return (
-    <>
+    <CheckAuthentication>
       <HeadTitle titles={['身份认证']} />
       <Card className={classes.card}>
         <Typography.Title level={3}>身份认证</Typography.Title>
@@ -105,24 +105,8 @@ const Authentication: FC = () => {
           </Form.Item>
         </Form>
       </Card>
-    </>
+    </CheckAuthentication>
   );
 };
 
-/**
- * 检查`认证`页面是否可以访问
- *
- * @author Jia-Yao Zhao
- */
-const CheckAuthentication: FC = () => {
-  const tokenState = useRecoilValue(tokenStateAtom);
-  const { message } = AntdApp.useApp();
-  useMount(() => {
-    if (tokenState) {
-      message.error('你已登录，请先退出登录！');
-    }
-  });
-  return tokenState ? <Navigate to="/" /> : <Authentication />;
-};
-
-export default CheckAuthentication;
+export default Authentication;

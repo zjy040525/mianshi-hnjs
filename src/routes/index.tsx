@@ -1,14 +1,13 @@
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
-import GlobalErrorBoundary from '../components/GlobalErrorBoundary';
-import PageNotFound from '../components/PageNotFound';
+import { GlobalErrorBoundary, PageNotFound } from '../components';
 import {
   AUTHENTICATION_PATHNAME,
   INTERVIEW_PATHNAME,
   MANAGE_PATHNAME,
   STUDENT_SIGN_IN_PATHNAME,
-} from '../constant/pathname';
-import BasicLayout from '../layouts/BasicLayout';
+} from '../constants';
+import { BasicLayout } from '../layouts';
 
 // 主页
 const HomePage = lazy(() => import('../pages/Home'));

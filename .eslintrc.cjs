@@ -23,6 +23,22 @@ module.exports = defineConfig({
     '@typescript-eslint/no-var-requires': 'off',
     'react/react-in-jsx-scope': 'off',
     'react-refresh/only-export-components': 'warn',
+    'no-restricted-imports': [
+      'error',
+      {
+        patterns: [
+          '**/atoms/*',
+          '**/components/*',
+          '**/constants/*',
+          '**/layouts/*',
+          '**/pages/*',
+          '**/selectors/*',
+          '**/services/*',
+          '**/typings/*',
+          '**/utils/*',
+        ],
+      },
+    ],
   },
   settings: {
     react: {

@@ -1,4 +1,4 @@
-import { useMount, useRequest } from 'ahooks';
+import { useRequest } from 'ahooks';
 import {
   App as AntdApp,
   Badge,
@@ -15,24 +15,25 @@ import {
   Tag,
 } from 'antd';
 import { FC, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { idStateAtom } from '../../atoms/authorization';
-import HeadTitle from '../../components/HeadTitle';
-import StudentDescription from '../../components/StudentDescription';
-import PrintPreview from '../../components/StudentInterviewDoc';
+import { idStateAtom } from '../../atoms';
 import {
-  PRINT_DOC_KEY,
-  STUDENT_SEARCH_KEY,
-  STUDENT_SIGN_KEY,
-} from '../../constant/msg';
-import { authorizationStateSelector } from '../../selectors/authorization';
+  Access,
+  HeadTitle,
+  StudentDescription,
+  StudentInterviewDoc,
+} from '../../components';
 import {
   studentPrintService,
   studentSignSearchService,
   studentSignService,
-} from '../../services/student';
-import type { Student } from '../../types/student';
+} from '../../services';
+import type { Student } from '../../typings';
+import {
+  PRINT_DOC_KEY,
+  STUDENT_SIGN_KEY,
+  STUDENT_SIGN_SEARCH_KEY,
+} from './constants';
 import classes from './index.module.less';
 
 // 步骤列表
@@ -79,11 +80,11 @@ const SignInOfStudent: FC = () => {
       throttleWait: 500,
       onSuccess({ data }) {
         setStudents(data);
-        message.destroy(STUDENT_SEARCH_KEY);
+        message.destroy(STUDENT_SIGN_SEARCH_KEY);
       },
       onError(err) {
         message.open({
-          key: STUDENT_SEARCH_KEY,
+          key: STUDENT_SIGN_SEARCH_KEY,
           type: 'error',
           content: err.message,
         });
@@ -145,7 +146,7 @@ const SignInOfStudent: FC = () => {
     },
   });
   return (
-    <>
+    <Access permission="SIGN">
       <HeadTitle titles={['签到']} />
       <iframe
         className={classes.printElement}
@@ -249,7 +250,7 @@ const SignInOfStudent: FC = () => {
           ) : null}
           {chosenStudent && currentStep > STEP_3 ? (
             <Col>
-              <PrintPreview student={chosenStudent} />
+              <StudentInterviewDoc student={chosenStudent} />
             </Col>
           ) : null}
           {chosenStudent &&
@@ -352,30 +353,8 @@ const SignInOfStudent: FC = () => {
           </Col>
         </Row>
       </Card>
-    </>
+    </Access>
   );
 };
 
-/**
- * 检查`签到`页面是否可以访问
- *
- * @author Jia-Yao Zhao
- */
-const CheckSignInOfStudent: FC = () => {
-  const { message } = AntdApp.useApp();
-  const authorization = useRecoilValue(authorizationStateSelector);
-  useMount(() => {
-    if (!authorization.token) {
-      message.error('请先认证！');
-    } else if (authorization.permission !== 'SIGN') {
-      message.error('权限不足！');
-    }
-  });
-  return authorization.token && authorization.permission === 'SIGN' ? (
-    <SignInOfStudent />
-  ) : (
-    <Navigate to="/" />
-  );
-};
-
-export default CheckSignInOfStudent;
+export default SignInOfStudent;

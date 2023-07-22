@@ -6,10 +6,10 @@ import {
 import { Descriptions, Space, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { FC } from 'react';
-import type { Student } from '../../types/student';
+import type { Student } from '../../typings';
 import classes from './index.module.less';
 
-const StudentInterviewDoc: FC<{ student: Student }> = ({ student }) => {
+export const StudentInterviewDoc: FC<{ student: Student }> = ({ student }) => {
   return (
     <>
       <Descriptions
@@ -275,5 +275,3 @@ const StudentInterviewDoc: FC<{ student: Student }> = ({ student }) => {
     </>
   );
 };
-
-export default StudentInterviewDoc;

@@ -7,10 +7,8 @@ import classes from './index.module.less';
  *
  * @author Jia-Yao Zhao
  */
-const GlobalLoading: FC = () => (
+export const GlobalLoading: FC = () => (
   <div className={classes.globalLoading}>
     <Spin size="large" />
   </div>
 );
-
-export default GlobalLoading;

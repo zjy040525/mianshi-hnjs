@@ -1,4 +1,4 @@
-import { useMount, useRequest } from 'ahooks';
+import { useRequest } from 'ahooks';
 import {
   App as AntdApp,
   Badge,
@@ -18,18 +18,19 @@ import {
 } from 'antd';
 import dayjs from 'dayjs';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { idStateAtom } from '../../atoms/authorization';
-import HeadTitle from '../../components/HeadTitle';
-import StudentDescription from '../../components/StudentDescription';
-import { STUDENT_INTERVIEW_KEY, STUDENT_SEARCH_KEY } from '../../constant/msg';
-import { authorizationStateSelector } from '../../selectors/authorization';
+import { idStateAtom } from '../../atoms';
+import { Access, HeadTitle, StudentDescription } from '../../components';
 import {
   studentInterviewSearchService,
   studentInterviewService,
-} from '../../services/student';
-import type { InterviewStatus, Student } from '../../types/student';
+} from '../../services';
+import { InterviewStatus, Student } from '../../typings';
+import { InterviewBadge, InterviewTag } from './components';
+import {
+  STUDENT_INTERVIEW_KEY,
+  STUDENT_INTERVIEW_SEARCH_KEY,
+} from './constants';
 import classes from './index.module.less';
 
 /**
@@ -75,11 +76,11 @@ const Interview: FC = () => {
       throttleWait: 500,
       onSuccess({ data }) {
         setStudents(data);
-        message.destroy(STUDENT_SEARCH_KEY);
+        message.destroy(STUDENT_INTERVIEW_SEARCH_KEY);
       },
       onError(err) {
         message.open({
-          key: STUDENT_SEARCH_KEY,
+          key: STUDENT_INTERVIEW_SEARCH_KEY,
           type: 'error',
           content: err.message,
         });
@@ -118,7 +119,7 @@ const Interview: FC = () => {
     }
   );
   return (
-    <>
+    <Access permission="INTERVIEW">
       <HeadTitle titles={['面试']} />
       <Card>
         <Steps
@@ -176,15 +177,15 @@ const Interview: FC = () => {
                         <span style={{ marginInlineEnd: 8 }}>
                           {student.name}（{student.id}）
                         </span>
-                        <IsInterviewTag
+                        <InterviewTag
                           status={student.interview_xq}
                           text="学前"
                         />
-                        <IsInterviewTag
+                        <InterviewTag
                           status={student.interview_ly}
                           text="旅游"
                         />
-                        <IsInterviewTag
+                        <InterviewTag
                           status={student.interview_gd}
                           text="轨道"
                         />
@@ -261,7 +262,7 @@ const Interview: FC = () => {
                           {currentStep > STEP_2 ? (
                             <Space size={16}>
                               <Typography.Text>面试结果</Typography.Text>
-                              <IsInterviewBadge status={status} />
+                              <InterviewBadge status={status} />
                             </Space>
                           ) : (
                             <Radio.Group
@@ -331,72 +332,8 @@ const Interview: FC = () => {
           </Col>
         </Row>
       </Card>
-    </>
+    </Access>
   );
 };
 
-/**
- * 是否面试的显示标签
- *
- * @param status 面试状态
- * @param text 文本信息
- * @author Jia-Yao Zhao
- */
-const IsInterviewTag: FC<{
-  status: InterviewStatus;
-  text: string;
-}> = ({ status, text }) => {
-  switch (status) {
-    case 'Processing':
-      return <Tag color="processing">{text}</Tag>;
-    case 'Success':
-      return <Tag color="success">{text}</Tag>;
-    case 'Failed':
-      return <Tag color="error">{text}</Tag>;
-    default:
-      return null;
-  }
-};
-
-/**
- * 是否通过面试的显示微标
- *
- * @param status 通过状态
- * @author Jia-Yao Zhao
- */
-const IsInterviewBadge: FC<{ status: InterviewStatus }> = ({ status }) => {
-  switch (status) {
-    case 'Processing':
-      return <Badge status="processing" text="未面试（进行中）" />;
-    case 'Success':
-      return <Badge status="success" text="通过" />;
-    case 'Failed':
-      return <Badge status="error" text="不通过" />;
-    default:
-      return null;
-  }
-};
-
-/**
- * 检查`面试`页面是否可以访问
- *
- * @author Jia-Yao Zhao
- */
-const CheckInterview: FC = () => {
-  const { message } = AntdApp.useApp();
-  const authorization = useRecoilValue(authorizationStateSelector);
-  useMount(() => {
-    if (!authorization.token) {
-      message.error('请先认证！');
-    } else if (authorization.permission !== 'INTERVIEW') {
-      message.error('权限不足！');
-    }
-  });
-  return authorization.token && authorization.permission === 'INTERVIEW' ? (
-    <Interview />
-  ) : (
-    <Navigate to="/" />
-  );
-};
-
-export default CheckInterview;
+export default Interview;
