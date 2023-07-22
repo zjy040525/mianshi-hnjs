@@ -133,7 +133,10 @@ const Manage: FC = () => {
         { text: '-', value: false },
       ],
       onFilter(value, record) {
-        return record.interview_xq === (value === false ? null : value);
+        if (value) {
+          return record.interview_xq === value;
+        }
+        return record.interview_xq === null;
       },
     },
     {
@@ -147,7 +150,10 @@ const Manage: FC = () => {
         { text: '-', value: false },
       ],
       onFilter(value, record) {
-        return record.interview_ly === (value === false ? null : value);
+        if (value) {
+          return record.interview_ly === value;
+        }
+        return record.interview_ly === null;
       },
     },
     {
@@ -161,7 +167,10 @@ const Manage: FC = () => {
         { text: '-', value: false },
       ],
       onFilter(value, record) {
-        return record.interview_gd === (value === false ? null : value);
+        if (value) {
+          return record.interview_gd === value;
+        }
+        return record.interview_gd === null;
       },
     },
     {
