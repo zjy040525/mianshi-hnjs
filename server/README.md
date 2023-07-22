@@ -51,7 +51,7 @@ $ pnpm serve
 
 ```sh
 $ npm -g install pm2
-$ pm2 start .\src\index.js -n IMS_serve -i 8
+$ pm2 start ./src/index.js -n IMS_backend -i 8
 ```
 
 ## Maintainers
