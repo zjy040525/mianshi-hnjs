@@ -58,6 +58,12 @@ MYSQL_DATABASE=要使用的数据库名字
 命令行启动（开发环境推荐使用）。
 
 ```sh
+$ pnpm start:dev
+```
+
+命令行启动（正式环境使用，推荐使用 PM2 启动）。
+
+```sh
 $ pnpm start:prod
 ```
 
