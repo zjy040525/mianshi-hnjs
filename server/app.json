@@ -1,0 +1,10 @@
+{
+  "apps": {
+    "name": "prod_IMS_backend",
+    "script": "src/index.js",
+    "instances": 8,
+    "env": {
+      "NODE_ENV": "production"
+    }
+  }
+}

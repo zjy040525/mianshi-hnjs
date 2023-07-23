@@ -1,4 +1,4 @@
-# Interview Management System Server
+# Interview Management System Backend
 
 海宁技师学院面试管理系统 IMS（Interview Management System）后端
 
@@ -21,13 +21,11 @@ $ pnpm install
 
 ## Usage
 
-配置环境变量。在根目录新建`.env`。
+配置环境变量。在根目录新建`.env`、`.env.development`、`.env.production`。
 
 ```dotenv
-MYSQL_ADDRESS=数据库地址
-MYSQL_USERNAME=用户名
-MYSQL_PASSWORD=密码
-MYSQL_DATABASE=要使用的数据库的名称
+# .env
+
 JWT_SECRET=身份认证私钥
 # 签到操作员的用户名，多个用`,`分隔；别名用`:`分隔
 SIGN_OPERATORS=sign1:一号签到员,sign2:二号签到员,sign3:三号签到员,sign4:四号签到员,sign5:五号签到员
@@ -37,21 +35,39 @@ INTERVIEW_OPERATORS=score1:一号面试员,score2:二号面试员,score3:三号�
 MANAGE_OPERATORS=admin1:管理员
 ```
 
-启动服务。
+```dotenv
+# .env.development
 
-命令行启动（开发环境推荐）。
-
-```sh
-$ pnpm serve
+MYSQL_ADDRESS=开发环境数据库地址
+MYSQL_USERNAME=用户名
+MYSQL_PASSWORD=密码
+MYSQL_DATABASE=要使用的数据库名字
 ```
 
-通过 PM2 启动（生产环境推荐）。
+```dotenv
+# .env.production
+
+MYSQL_ADDRESS=正式环境数据库地址
+MYSQL_USERNAME=用户名
+MYSQL_PASSWORD=密码
+MYSQL_DATABASE=要使用的数据库名字
+```
+
+启动服务。
+
+命令行启动（开发环境推荐使用）。
+
+```sh
+$ pnpm start:prod
+```
+
+通过 PM2 启动（正式环境推荐使用）。
 
 一共启动 8 个服务，自动实现负载均衡，更多命令请前往 [PM2](https://pm2.keymetrics.io/docs/usage/quick-start/) 官网查看。
 
 ```sh
 $ npm -g install pm2
-$ pm2 start ./src/index.js -n IMS_backend -i 8
+$ pm2 start app.json
 ```
 
 ## Maintainers

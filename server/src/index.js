@@ -1,5 +1,20 @@
 require('module-alias/register');
+// .env
 require('dotenv').config();
+switch (process.env.NODE_ENV) {
+  // .env.development
+  case 'development':
+    require('dotenv').config({
+      path: '.env.development',
+    });
+    break;
+  // .env.production
+  case 'production':
+    require('dotenv').config({
+      path: '.env.production',
+    });
+    break;
+}
 
 const Server = require('./server');
 const { initDB } = require('./app');

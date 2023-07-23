@@ -22,7 +22,7 @@ const make = (username, password, permission) =>
       algorithm: 'HS256',
       expiresIn: '7d',
       audience: 'interview-management-system-app',
-      issuer: 'interview-management-system-server',
+      issuer: 'interview-management-system-backend',
     }
   );
 
