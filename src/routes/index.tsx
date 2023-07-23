@@ -10,14 +10,19 @@ import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 
 // 主页
+// eslint-disable-next-line react-refresh/only-export-components
 const HomePage = lazy(() => import('@/pages/Home'));
 // 认证
+// eslint-disable-next-line react-refresh/only-export-components
 const AuthenticationPage = lazy(() => import('@/pages/Authentication'));
 // 签到
+// eslint-disable-next-line react-refresh/only-export-components
 const SignInOfStudentPage = lazy(() => import('@/pages/SignInOfStudent'));
 // 面试
+// eslint-disable-next-line react-refresh/only-export-components
 const InterviewPage = lazy(() => import('@/pages/Interview'));
 // 管理
+// eslint-disable-next-line react-refresh/only-export-components
 const ManagePage = lazy(() => import('@/pages/Manage'));
 
 export default [
