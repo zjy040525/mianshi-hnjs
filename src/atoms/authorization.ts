@@ -32,5 +32,6 @@ export const nicknameStateAtom = atom<string | null>({
 // 操作者访问的权限
 export const permissionStateAtom = atom<Permission | null>({
   key: 'permissionStateAtom',
+  effects_UNSTABLE: [persistAtom],
   default: null,
 });
