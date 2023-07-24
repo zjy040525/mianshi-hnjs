@@ -32,7 +32,9 @@ exports.main = async (ws, req) => {
         key: WS_OPERATION_MESSAGE_KEY,
         message: '海宁技师学院面试管理系统',
         description:
-          error instanceof JsonWebTokenError ? '验证失败！请重新登录。' : error,
+          error instanceof JsonWebTokenError
+            ? '验证失败！请重新登录。'
+            : error.message,
       };
       ws.send(JSON.stringify(message));
       ws.close();

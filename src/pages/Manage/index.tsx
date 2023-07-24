@@ -245,6 +245,14 @@ const Manage: FC = () => {
     },
     onMessage(msg) {
       const data = JSON.parse(msg.data);
+      // 发生错误，提示对应的通知消息
+      if (!data.counts || !data.students) {
+        notification.open({
+          ...data,
+          placement: 'bottomRight',
+        });
+        return;
+      }
       setCounts(data.counts);
       setStudents(data.students);
       // 设置可筛选过滤的条件
