@@ -3,17 +3,14 @@ const { expressjwt } = require('express-jwt');
 
 /**
  * 生成token
- *
- * @param username token内保存的用户
- * @param password token内保存的加密过的认证密码
- * @param permission token内保存的用户权限等级
- * @return {string} 用户token
- * @author Jia-Yao Zhao
+ * @param {*} param0 token中的载荷
+ * @returns 用户的token
  */
-const make = (username, password, permission) =>
+const make = ({ username, nickname, password, permission }) =>
   jsonwebtoken.sign(
     {
       username,
+      nickname,
       password,
       permission,
     },

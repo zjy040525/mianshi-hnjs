@@ -221,12 +221,14 @@ const Manage: FC = () => {
       instance.send(JSON.stringify(msg));
     },
     onMessage(msg) {
-      const data = JSON.parse(msg.data);
-      // 通知消息
-      notification.open({
-        ...data,
-        placement: 'bottomRight',
-      });
+      if (newMsgNotification) {
+        const data = JSON.parse(msg.data);
+        // 通知消息
+        notification.open({
+          ...data,
+          placement: 'bottomRight',
+        });
+      }
     },
   });
   const newMsgNotification = useRecoilValue(newMsgNotificationOfAdmin);
