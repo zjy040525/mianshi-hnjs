@@ -24,8 +24,8 @@ const result = require('./util/resp');
 const { TokenExpiredError } = require('jsonwebtoken');
 const token = require('@/util/token');
 const {
-  WS_MANAGE_OPERATION,
-  WS_MANAGE_STATISTIC,
+  WS_OPERATION_PATHNAME,
+  WS_STATISTIC_PATHNAME,
 } = require('@/constant/socket');
 
 const port = 3000;
@@ -73,9 +73,9 @@ app.patch(
 );
 
 // 操作员的操作信息套接字
-app.ws(WS_MANAGE_OPERATION, require('./socket/manageOperation').main);
+app.ws(WS_OPERATION_PATHNAME, require('./socket/manageOperation').main);
 // 统计信息套接字
-app.ws(WS_MANAGE_STATISTIC, require('./socket/manageStatistic').main);
+app.ws(WS_STATISTIC_PATHNAME, require('./socket/manageStatistic').main);
 
 async function main() {
   // 初始化数据库

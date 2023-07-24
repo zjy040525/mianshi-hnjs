@@ -5,8 +5,8 @@ const relation = require('@/util/relation');
 const dayjs = require('dayjs');
 const Server = require('@/server');
 const {
-  WS_MANAGE_OPERATION,
-  WS_MANAGE_STATISTIC,
+  WS_OPERATION_PATHNAME,
+  WS_STATISTIC_PATHNAME,
 } = require('@/constant/socket');
 const studentCount = require('@/util/studentCount');
 
@@ -99,7 +99,7 @@ exports.main = async (req, res) => {
     const student = await relation(updatedStudent);
     // 给所有的连接设备发送不同的消息
     for (const client of appWs.getWss().clients) {
-      if (client._url.includes(WS_MANAGE_OPERATION)) {
+      if (client._url.includes(WS_OPERATION_PATHNAME)) {
         client.send(
           JSON.stringify({
             key: student.id_card,
@@ -112,7 +112,7 @@ exports.main = async (req, res) => {
             ).format(' HH:mm:ss ')}完成了面试。`,
           })
         );
-      } else if (client._url.includes(WS_MANAGE_STATISTIC)) {
+      } else if (client._url.includes(WS_STATISTIC_PATHNAME)) {
         const counts = await studentCount();
         const rawStudents = await Student.findAll();
         const students = await relation(rawStudents);

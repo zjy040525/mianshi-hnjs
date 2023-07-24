@@ -198,6 +198,7 @@ const Manage: FC = () => {
       },
     },
   ];
+  const { notification } = AntdApp.useApp();
   const [students, setStudents] = useState<Student[]>([]);
   // 统计人数
   const [
@@ -209,80 +210,81 @@ const Manage: FC = () => {
     interviewedCount: -1,
     noInterviewedCount: -1,
   });
-  const { notification } = AntdApp.useApp();
   const token = useRecoilValue(tokenStateAtom);
-  // 操作员的操作信息套接字
-  const { disconnect: operationDisconnect, connect: operationConnect } =
-    useWebSocket(operationSocket(), {
-      manual: true,
-      onMessage(ev) {
-        const { key, type, message, description } = JSON.parse(ev.data);
-        notification.open({
-          key,
-          type,
-          message,
-          description,
-          placement: 'bottomRight',
-        });
-      },
-      protocols: token ?? undefined,
-    });
+  // 操作信息socket
+  const operationWs = useWebSocket(operationSocket(), {
+    // 需要手动连接
+    manual: true,
+    onOpen(_event, instance) {
+      const msg = { token };
+      // 连接成功后发送token进行验证
+      instance.send(JSON.stringify(msg));
+    },
+    onMessage(msg) {
+      const data = JSON.parse(msg.data);
+      // 通知消息
+      notification.open({
+        ...data,
+        placement: 'bottomRight',
+      });
+    },
+  });
   const newMsgNotification = useRecoilValue(newMsgNotificationOfAdmin);
   // 只有在`新消息通知`为启用状态下，才会连接到对应的socket
   useMount(() => {
     if (newMsgNotification) {
-      operationConnect();
+      operationWs.connect();
     }
   });
-  // 统计信息套接字
-  const { disconnect: statisticDisconnect, readyState: statisticReadyState } =
-    useWebSocket(statisticSocket(), {
-      onMessage(ev) {
-        const { counts, students } = JSON.parse(ev.data);
-
-        setCounts(counts);
-        setStudents(students);
-        // 设置可筛选过滤的条件
-        const map = new Map<number, string>();
-        const map2 = new Map<number, string>();
-        // 遍历去重
-        for (const student of students as Student[]) {
-          if (student.signed_operator && !map.has(student.signed_operator.id)) {
-            map.set(
-              student.signed_operator.id,
-              student.signed_operator.nickname ??
-                student.signed_operator.username
-            );
-          }
-          if (
-            student.interviewed_operator &&
-            !map2.has(student.interviewed_operator.id)
-          ) {
-            map2.set(
-              student.interviewed_operator.id,
-              student.interviewed_operator.nickname ??
-                student.interviewed_operator.username
-            );
-          }
+  // 统计信息socket
+  const statisticWs = useWebSocket(statisticSocket(), {
+    onOpen(_event, instance) {
+      const msg = { token };
+      // 连接成功后发送token进行验证
+      instance.send(JSON.stringify(msg));
+    },
+    onMessage(msg) {
+      const data = JSON.parse(msg.data);
+      setCounts(data.counts);
+      setStudents(data.students);
+      // 设置可筛选过滤的条件
+      const map = new Map<number, string>();
+      const map2 = new Map<number, string>();
+      // 遍历去重
+      for (const student of students as Student[]) {
+        if (student.signed_operator && !map.has(student.signed_operator.id)) {
+          map.set(
+            student.signed_operator.id,
+            student.signed_operator.nickname ?? student.signed_operator.username
+          );
         }
-        // 可过滤列表
-        const signedOperatorFilters = [...map]
-          .map(([value, text]) => ({ text, value }))
-          .sort((a, b) => a.value - b.value);
-        const interviewedOperatorFilters = [...map2]
-          .map(([value, text]) => ({ text, value }))
-          .sort((a, b) => a.value - b.value);
-        // 设置可过滤列表
-        setSignedOperatorFilters(signedOperatorFilters);
-        setInterviewedOperatorFilters(interviewedOperatorFilters);
-      },
-      protocols: token ?? undefined,
-    });
-
+        if (
+          student.interviewed_operator &&
+          !map2.has(student.interviewed_operator.id)
+        ) {
+          map2.set(
+            student.interviewed_operator.id,
+            student.interviewed_operator.nickname ??
+              student.interviewed_operator.username
+          );
+        }
+      }
+      // 可过滤列表
+      const signedOperatorFilters = [...map]
+        .map(([value, text]) => ({ text, value }))
+        .sort((a, b) => a.value - b.value);
+      const interviewedOperatorFilters = [...map2]
+        .map(([value, text]) => ({ text, value }))
+        .sort((a, b) => a.value - b.value);
+      // 设置可过滤列表
+      setSignedOperatorFilters(signedOperatorFilters);
+      setInterviewedOperatorFilters(interviewedOperatorFilters);
+    },
+  });
   // 组件卸载，需要断开WebSocket的连接
   useUnmount(() => {
-    operationDisconnect();
-    statisticDisconnect();
+    operationWs.disconnect();
+    statisticWs.disconnect();
   });
   return (
     <Access permission="MANAGE">
@@ -294,7 +296,7 @@ const Manage: FC = () => {
               <Card>
                 <Statistic
                   title="已签到人数"
-                  loading={statisticReadyState !== 1 || signedCount < 0}
+                  loading={statisticWs.readyState !== 1 || signedCount < 0}
                   value={signedCount}
                 />
               </Card>
@@ -303,7 +305,7 @@ const Manage: FC = () => {
               <Card>
                 <Statistic
                   title="未签到人数"
-                  loading={statisticReadyState !== 1 || noSignedCount < 0}
+                  loading={statisticWs.readyState !== 1 || noSignedCount < 0}
                   value={noSignedCount}
                 />
               </Card>
@@ -313,7 +315,8 @@ const Manage: FC = () => {
                 <Statistic
                   title="总人数"
                   loading={
-                    statisticReadyState !== 1 || signedCount + noSignedCount < 0
+                    statisticWs.readyState !== 1 ||
+                    signedCount + noSignedCount < 0
                   }
                   value={signedCount + noSignedCount}
                 />
@@ -324,7 +327,8 @@ const Manage: FC = () => {
                 <Statistic
                   title="签到进度"
                   loading={
-                    statisticReadyState !== 1 || signedCount + noSignedCount < 0
+                    statisticWs.readyState !== 1 ||
+                    signedCount + noSignedCount < 0
                   }
                   value={
                     (signedCount / (signedCount + noSignedCount)) * 100 || 0
@@ -343,7 +347,7 @@ const Manage: FC = () => {
               <Card>
                 <Statistic
                   title="已面试人数"
-                  loading={statisticReadyState !== 1 || interviewedCount < 0}
+                  loading={statisticWs.readyState !== 1 || interviewedCount < 0}
                   value={interviewedCount}
                 />
               </Card>
@@ -352,7 +356,9 @@ const Manage: FC = () => {
               <Card>
                 <Statistic
                   title="未面试人数"
-                  loading={statisticReadyState !== 1 || noInterviewedCount < 0}
+                  loading={
+                    statisticWs.readyState !== 1 || noInterviewedCount < 0
+                  }
                   value={noInterviewedCount}
                 />
               </Card>
@@ -362,7 +368,7 @@ const Manage: FC = () => {
                 <Statistic
                   title="面试进度"
                   loading={
-                    statisticReadyState !== 1 ||
+                    statisticWs.readyState !== 1 ||
                     interviewedCount + noInterviewedCount < 0
                   }
                   value={
@@ -382,7 +388,7 @@ const Manage: FC = () => {
             bordered
             columns={columns}
             rowKey={record => record.id_card}
-            loading={statisticReadyState !== 1}
+            loading={statisticWs.readyState !== 1}
             dataSource={students}
             pagination={{
               defaultPageSize: 20,

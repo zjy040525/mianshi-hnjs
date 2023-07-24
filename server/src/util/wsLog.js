@@ -1,4 +1,4 @@
-const socketLogger = (ws, jwt, req) => {
+const wsLog = (ws, jwt, req) => {
   console.log(
     `[${new Date().toISOString()}]`,
     `"${jwt.nickname ?? jwt.username}"`,
@@ -15,4 +15,4 @@ const socketLogger = (ws, jwt, req) => {
   });
 };
 
-module.exports = socketLogger;
+module.exports = wsLog;

@@ -1,48 +1,41 @@
+const wsLog = require('@/util/wsLog');
 const jsonwebtoken = require('jsonwebtoken');
 const { Operator } = require('@/app');
-const { WS_OPERATOR_NOT_FOUND_KEY } = require('@/constant/socket');
-const socketLogger = require('@/util/socketLogger');
+const { JsonWebTokenError } = require('jsonwebtoken');
+const { WS_OPERATION_MESSAGE_KEY } = require('@/constant/socket');
 
-exports.main = async (socket, req) => {
-  try {
-    // 解析token
-    const jwt = jsonwebtoken.verify(socket.protocol, process.env.JWT_SECRET);
-    // 查询操作员
-    const operator = await Operator.findOne({
-      where: {
-        username: jwt.username,
-        password: jwt.password,
-      },
-    });
-    // 操作员不存在
-    if (!operator) {
-      socket.send(
-        JSON.stringify({
-          key: WS_OPERATOR_NOT_FOUND_KEY,
-          type: 'error',
-          message: '海宁技师学院面试管理系统',
-          description: '操作员不存在！',
-        })
-      );
-      socket.close();
+exports.main = async (ws, req) => {
+  ws.on('message', async msg => {
+    try {
+      const data = JSON.parse(msg);
+      // 验证token
+      const payload = jsonwebtoken.verify(data.token, process.env.JWT_SECRET);
+      const operator = await Operator.findOne({
+        where: {
+          username: payload.username,
+          password: payload.password,
+        },
+      });
+      if (!operator) {
+        throw new Error('操作员不存在！');
+      }
+      if (operator.permission !== 'MANAGE') {
+        throw new Error('权限不足！');
+      }
+      // 添加自定义属性，用于推送不同的内容
+      ws._url = req.url;
+      // 系统日志
+      wsLog(ws, payload, req);
+    } catch (error) {
+      const message = {
+        type: 'error',
+        key: WS_OPERATION_MESSAGE_KEY,
+        message: '海宁技师学院面试管理系统',
+        description:
+          error instanceof JsonWebTokenError ? '验证失败！请重新登录。' : error,
+      };
+      ws.send(JSON.stringify(message));
+      ws.close();
     }
-    // 操作员的权限验证
-    if (operator.permission !== 'MANAGE') {
-      socket.send(
-        JSON.stringify({
-          key: WS_OPERATOR_NOT_FOUND_KEY,
-          type: 'error',
-          message: '海宁技师学院面试管理系统',
-          description: '权限不足！',
-        })
-      );
-      socket.close();
-    }
-    // 添加自定义属性，用于推送不同的内容
-    socket._url = req.url;
-    socketLogger(socket, jwt, req);
-  } catch (err) {
-    // token验证失败
-    socket.close();
-  }
+  });
 };
