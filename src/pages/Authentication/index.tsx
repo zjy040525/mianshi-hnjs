@@ -59,7 +59,7 @@ const Authentication: FC = () => {
   });
   return (
     <CheckAuthentication>
-      <HeadTitle titles={['身份认证']} />
+      <HeadTitle titles={['认证']} />
       <Card className={classes.card}>
         <Typography.Title level={3}>身份认证</Typography.Title>
         <Divider />

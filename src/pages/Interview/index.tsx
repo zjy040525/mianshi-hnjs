@@ -120,7 +120,7 @@ const Interview: FC = () => {
   );
   return (
     <Access permission="INTERVIEW">
-      <HeadTitle titles={['面试']} />
+      <HeadTitle titles={[chosenStudent?.name, '面试']} />
       <Card>
         <Steps
           items={steps}

@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { Helmet } from 'react-helmet-async';
 
 /**
- * 修改网页title标签
+ * 修改网页标题
  *
- * @param titles 网页Title标签内容数组，自动用-符号分隔
+ * @param titles 标题数组，自动用`-`符号分隔
  * @author Jia-Yao Zhao
  */
 export const HeadTitle: FC<{ titles?: (string | null | undefined)[] }> = ({

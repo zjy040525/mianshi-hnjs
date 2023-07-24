@@ -147,7 +147,7 @@ const SignInOfStudent: FC = () => {
   });
   return (
     <Access permission="SIGN">
-      <HeadTitle titles={['签到']} />
+      <HeadTitle titles={[chosenStudent?.name, '签到']} />
       <iframe
         className={classes.printElement}
         srcDoc={printDoc ?? '请在打印步骤（步骤4）中点击下方按钮获取打印模板！'}
