@@ -1,8 +1,11 @@
+import { RECOIL_PERSIST_LOCAL_STORAGE_KEY } from '@/constants';
 import type { Permission } from '@/typings';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
-const { persistAtom } = recoilPersist();
+const { persistAtom } = recoilPersist({
+  key: RECOIL_PERSIST_LOCAL_STORAGE_KEY,
+});
 
 export const idStateAtom = atom<number | null>({
   key: 'idStateAtom',
