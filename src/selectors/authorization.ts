@@ -5,7 +5,7 @@ import {
   tokenStateAtom,
   usernameStateAtom,
 } from '@/atoms';
-import { setAuthorizationToken } from '@/utils';
+import { removeAuthorizationToken, setAuthorizationToken } from '@/utils';
 import { DefaultValue, selector } from 'recoil';
 
 export const authorizationStateSelector = selector({
@@ -18,13 +18,20 @@ export const authorizationStateSelector = selector({
     permission: get(permissionStateAtom),
   }),
   set({ set }, newValue) {
-    const isDefault = newValue instanceof DefaultValue;
-
-    set(idStateAtom, isDefault ? null : newValue.id);
-    setAuthorizationToken(isDefault ? null : newValue.token);
-    set(tokenStateAtom, isDefault ? null : newValue.token);
-    set(usernameStateAtom, isDefault ? null : newValue.username);
-    set(nicknameStateAtom, isDefault ? null : newValue.nickname);
-    set(permissionStateAtom, isDefault ? null : newValue.permission);
+    if (newValue instanceof DefaultValue) {
+      set(idStateAtom, null);
+      removeAuthorizationToken();
+      set(tokenStateAtom, null);
+      set(usernameStateAtom, null);
+      set(nicknameStateAtom, null);
+      set(permissionStateAtom, null);
+    } else {
+      set(idStateAtom, newValue.id);
+      setAuthorizationToken(newValue.token);
+      set(tokenStateAtom, newValue.token);
+      set(usernameStateAtom, newValue.username);
+      set(nicknameStateAtom, newValue.nickname);
+      set(permissionStateAtom, newValue.permission);
+    }
   },
 });
