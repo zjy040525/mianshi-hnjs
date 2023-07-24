@@ -9,21 +9,21 @@ import { BasicLayout } from '@/layouts';
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 
-// 主页
+// 主页面
 // eslint-disable-next-line react-refresh/only-export-components
-const HomePage = lazy(() => import('@/pages/Home'));
-// 认证
+const Home = lazy(() => import('@/pages/Home'));
+// 认证页面
 // eslint-disable-next-line react-refresh/only-export-components
-const AuthenticationPage = lazy(() => import('@/pages/Authentication'));
-// 签到
+const Auth = lazy(() => import('@/pages/Auth'));
+// 签到页面
 // eslint-disable-next-line react-refresh/only-export-components
-const SignInOfStudentPage = lazy(() => import('@/pages/SignInOfStudent'));
-// 面试
+const SignInOfStudent = lazy(() => import('@/pages/SignInOfStudent'));
+// 面试页面
 // eslint-disable-next-line react-refresh/only-export-components
-const InterviewPage = lazy(() => import('@/pages/Interview'));
-// 管理
+const Interview = lazy(() => import('@/pages/Interview'));
+// 管理页面
 // eslint-disable-next-line react-refresh/only-export-components
-const ManagePage = lazy(() => import('@/pages/Manage'));
+const Manage = lazy(() => import('@/pages/Manage'));
 
 export default [
   {
@@ -31,30 +31,30 @@ export default [
     element: <BasicLayout />,
     errorElement: <GlobalErrorBoundary />,
     children: [
-      // 主页
+      // 主页面
       {
         path: '/',
-        element: <HomePage />,
+        element: <Home />,
       },
       // 认证页面
       {
         path: AUTHENTICATION_PATHNAME,
-        element: <AuthenticationPage />,
+        element: <Auth />,
       },
       // 签到页面
       {
         path: STUDENT_SIGN_IN_PATHNAME,
-        element: <SignInOfStudentPage />,
+        element: <SignInOfStudent />,
       },
       // 面试页面
       {
         path: INTERVIEW_PATHNAME,
-        element: <InterviewPage />,
+        element: <Interview />,
       },
       // 管理页面
       {
         path: MANAGE_PATHNAME,
-        element: <ManagePage />,
+        element: <Manage />,
       },
     ],
   },
