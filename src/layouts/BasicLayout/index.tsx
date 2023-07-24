@@ -1,4 +1,4 @@
-import { ChunkLoading } from '@/components';
+import { PageLoading } from '@/components';
 import {
   AUTHENTICATION_PATHNAME,
   INTERVIEW_PATHNAME,
@@ -108,7 +108,7 @@ export const BasicLayout: FC = () => {
         <HasAuthorizationFeature />
       </Header>
       <Content className={classes.content}>
-        <Suspense key={location.key} fallback={<ChunkLoading />}>
+        <Suspense key={location.key} fallback={<PageLoading />}>
           <Outlet />
         </Suspense>
       </Content>
