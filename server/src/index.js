@@ -1,17 +1,19 @@
 require('module-alias/register');
-// .env
+// 加载通用环境配置文件`.env`
 require('dotenv').config();
 switch (process.env.NODE_ENV) {
-  // .env.development
+  // 加载开发环境配置文件`.env.development`
   case 'development':
     require('dotenv').config({
       path: '.env.development',
+      override: true,
     });
     break;
-  // .env.production
+  // 加载正式环境配置文件`.env.production`
   case 'production':
     require('dotenv').config({
       path: '.env.production',
+      override: true,
     });
     break;
 }
