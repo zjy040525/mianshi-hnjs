@@ -66,7 +66,7 @@ const Authentication: FC = () => {
         <Form
           scrollToFirstError
           autoComplete="off"
-          onFinish={values => {
+          onFinish={(values) => {
             run(values.username, values.password);
           }}
           disabled={loading}

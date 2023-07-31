@@ -103,7 +103,7 @@ export const BasicLayout: FC = () => {
             .concat(showInterview())
             .concat(showManage())}
           selectedKeys={[location.pathname]}
-          onSelect={selectInfo => navigate(selectInfo.key)}
+          onSelect={(selectInfo) => navigate(selectInfo.key)}
         />
         <HasAuthorizationFeature />
       </Header>

@@ -8,7 +8,7 @@ import type { InterviewStatus, Response, Student } from '@/typings';
  * @author Jia-Yao Zhao
  */
 export const studentSignSearchService = (
-  idCard?: string | null
+  idCard?: string | null,
 ): Promise<Response<Student[]>> => {
   return myAxios.get('/student/sign/search', { params: { idCard } });
 };
@@ -20,7 +20,7 @@ export const studentSignSearchService = (
  * @author Jia-Yao Zhao
  */
 export const studentSignService = (
-  studentId: number
+  studentId: number,
 ): Promise<Response<Student>> => {
   return myAxios.patch('/student/sign', { studentId });
 };
@@ -42,7 +42,7 @@ export const studentPrintService = (studentId: number): Promise<string> => {
  * @author Jia-Yao Zhao
  */
 export const studentInterviewSearchService = (
-  studentId: number | string
+  studentId: number | string,
 ): Promise<Response<Student[]>> => {
   return myAxios.get('/student/interview/search', { params: { studentId } });
 };
@@ -60,7 +60,7 @@ export const studentInterviewService = (
   studentId: number | string,
   xq: InterviewStatus,
   ly: InterviewStatus,
-  gd: InterviewStatus
+  gd: InterviewStatus,
 ): Promise<Response<Student>> => {
   return myAxios.patch('/student/interview', { studentId, xq, ly, gd });
 };

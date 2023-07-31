@@ -10,7 +10,7 @@ import type { Permission, Response } from '@/typings';
  */
 export const authenticationService = (
   username: string | null,
-  password: string | null
+  password: string | null,
 ): Promise<
   Response<{
     token: string;

@@ -89,7 +89,7 @@ const SignInOfStudent: FC = () => {
           content: err.message,
         });
       },
-    }
+    },
   );
   // 为指定学生签到
   const { run: runSign, loading: signing } = useRequest(studentSignService, {
@@ -195,13 +195,13 @@ const SignInOfStudent: FC = () => {
                   // 设置当前选择的学生
                   setChosenStudent(student);
                 }}
-                onSearch={idCard => {
+                onSearch={(idCard) => {
                   // 当关键字不为空时进行搜索服务
                   if (idCard) {
                     runSearch(idCard);
                   }
                 }}
-                options={students.map(student => {
+                options={students.map((student) => {
                   return {
                     value: student.id,
                     disabled:

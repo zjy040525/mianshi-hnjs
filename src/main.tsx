@@ -33,5 +33,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         </ConfigProvider>
       </HelmetProvider>
     </RecoilRoot>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

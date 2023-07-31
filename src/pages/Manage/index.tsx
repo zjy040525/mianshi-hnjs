@@ -122,7 +122,7 @@ const Manage: FC = () => {
     {
       title: '学前面试进度',
       dataIndex: 'interview_xq',
-      render: value => badge(value),
+      render: (value) => badge(value),
       filters: [
         { text: '已通过', value: 'Success' },
         { text: '未通过', value: 'Failed' },
@@ -139,7 +139,7 @@ const Manage: FC = () => {
     {
       title: '旅游面试进度',
       dataIndex: 'interview_ly',
-      render: value => badge(value),
+      render: (value) => badge(value),
       filters: [
         { text: '已通过', value: 'Success' },
         { text: '未通过', value: 'Failed' },
@@ -156,7 +156,7 @@ const Manage: FC = () => {
     {
       title: '轨道面试进度',
       dataIndex: 'interview_gd',
-      render: value => badge(value),
+      render: (value) => badge(value),
       filters: [
         { text: '已通过', value: 'Success' },
         { text: '未通过', value: 'Failed' },
@@ -265,7 +265,8 @@ const Manage: FC = () => {
         if (student.signed_operator && !map.has(student.signed_operator.id)) {
           map.set(
             student.signed_operator.id,
-            student.signed_operator.nickname ?? student.signed_operator.username
+            student.signed_operator.nickname ??
+              student.signed_operator.username,
           );
         }
         if (
@@ -275,7 +276,7 @@ const Manage: FC = () => {
           map2.set(
             student.interviewed_operator.id,
             student.interviewed_operator.nickname ??
-              student.interviewed_operator.username
+              student.interviewed_operator.username,
           );
         }
       }
@@ -397,7 +398,7 @@ const Manage: FC = () => {
           <Table
             bordered
             columns={columns}
-            rowKey={record => record.id_card}
+            rowKey={(record) => record.id_card}
             loading={statisticWs.readyState !== 1}
             dataSource={students}
             pagination={{

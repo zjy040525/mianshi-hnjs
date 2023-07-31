@@ -85,7 +85,7 @@ const Interview: FC = () => {
           content: err.message,
         });
       },
-    }
+    },
   );
   // 面试打分服务
   const { run: runInterview, loading: interviewing } = useRequest(
@@ -116,7 +116,7 @@ const Interview: FC = () => {
           content: err.message,
         });
       },
-    }
+    },
   );
   return (
     <Access permission="INTERVIEW">
@@ -161,12 +161,12 @@ const Interview: FC = () => {
                   setGd(student.interview_gd);
                   setChosenStudent(student);
                 }}
-                onSearch={studentId => {
+                onSearch={(studentId) => {
                   if (studentId) {
                     runSearch(studentId);
                   }
                 }}
-                options={students.map(student => {
+                options={students.map((student) => {
                   return {
                     value: student.id,
                     disabled:
@@ -227,7 +227,7 @@ const Interview: FC = () => {
                     <Badge
                       status="success"
                       text={`已签到（${dayjs(chosenStudent.signed_date).format(
-                        'YYYY-MM-DD HH:mm:ss'
+                        'YYYY-MM-DD HH:mm:ss',
                       )}）`}
                     />
                   }
@@ -253,7 +253,7 @@ const Interview: FC = () => {
                   if (card) {
                     const [status, setStatus] = card.state as [
                       InterviewStatus,
-                      Dispatch<SetStateAction<InterviewStatus>>
+                      Dispatch<SetStateAction<InterviewStatus>>,
                     ];
 
                     return (
@@ -266,7 +266,7 @@ const Interview: FC = () => {
                             </Space>
                           ) : (
                             <Radio.Group
-                              onChange={e => setStatus(e.target.value)}
+                              onChange={(e) => setStatus(e.target.value)}
                               value={status}
                             >
                               <Radio value="Success">通过</Radio>

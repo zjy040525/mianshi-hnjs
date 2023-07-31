@@ -7,7 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 export const HasManageFeature: FC = () => {
   const authorization = useRecoilValue(authorizationStateSelector);
   const [newMsgNotification, setNewMsgNotification] = useRecoilState(
-    newMsgNotificationOfAdmin
+    newMsgNotificationOfAdmin,
   );
   if (authorization.permission === 'MANAGE') {
     return (
