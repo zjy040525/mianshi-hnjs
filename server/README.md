@@ -12,10 +12,15 @@
 $ npm config set registry https://registry.npmmirror.com
 ```
 
-安装依赖。
+安装 pnpm。
 
 ```sh
 $ npm -g install pnpm
+```
+
+安装项目依赖。
+
+```sh
 $ pnpm install
 ```
 
@@ -24,9 +29,9 @@ $ pnpm install
 配置环境变量。在根目录新建`.env`、`.env.development`、`.env.production`。
 
 ```dotenv
-# .env
+# .env 通用环境变量
 
-JWT_SECRET=身份认证私钥
+JWT_SECRET=自定义密钥
 # 签到操作员的用户名，多个用`,`分隔；别名用`:`分隔
 SIGN_OPERATORS=sign1:一号签到员,sign2:二号签到员,sign3:三号签到员,sign4:四号签到员,sign5:五号签到员
 # 面试操作员的用户名，多个用`,`分隔；别名用`:`分隔
@@ -36,16 +41,20 @@ MANAGE_OPERATORS=admin1:管理员
 ```
 
 ```dotenv
-# .env.development
+# .env.development 开发环境变量
 
 MYSQL_ADDRESS=开发环境数据库地址
 MYSQL_USERNAME=用户名
 MYSQL_PASSWORD=密码
 MYSQL_DATABASE=要使用的数据库名字
+# 如果有需要，你可以覆盖.env通用环境中的变量
+# SIGN_OPERATORS=sign:签到员[DEV]
+# INTERVIEW_OPERATORS=score:面试员[DEV]
+# MANAGE_OPERATORS=admin:管理员[DEV]
 ```
 
 ```dotenv
-# .env.production
+# .env.production 正式环境变量
 
 MYSQL_ADDRESS=正式环境数据库地址
 MYSQL_USERNAME=用户名
@@ -61,7 +70,7 @@ MYSQL_DATABASE=要使用的数据库名字
 $ pnpm start:dev
 ```
 
-命令行启动（正式环境使用，推荐使用 PM2 启动）。
+命令行启动（正式环境使用，推荐正式环境使用 PM2 启动）。
 
 ```sh
 $ pnpm start:prod

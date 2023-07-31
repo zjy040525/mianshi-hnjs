@@ -12,16 +12,21 @@
 $ npm config set registry https://registry.npmmirror.com
 ```
 
-安装依赖。
+安装 pnpm。
 
 ```sh
 $ npm -g install pnpm
+```
+
+安装项目依赖。
+
+```sh
 $ pnpm install
 ```
 
 ## Usage
 
-配置环境变量。在根目录新建`.env.development`和`.env.production`文件，分别用于开发环境和生产环境。
+配置环境变量。在根目录新建`.env.development`和`.env.production`文件，分别用于开发环境和正式环境。
 
 后端的默认端口为 3000。
 
@@ -37,8 +42,8 @@ VITE_WS_URL=ws://localhost:3000
 ```dotenv
 # .env.production
 
-VITE_API_URL=https://生产环境地址
-VITE_WS_URL=wss://生产环境地址
+VITE_API_URL=https://正式环境地址
+VITE_WS_URL=wss://正式环境地址
 ```
 
 启动本地服务。
@@ -47,7 +52,7 @@ VITE_WS_URL=wss://生产环境地址
 $ pnpm dev
 ```
 
-构建生产环境资源。
+构建正式环境资源。
 
 构建完成后会创建名为 `dist` 的文件夹，可以把文件夹内的所有文件部署到服务器上。
 
