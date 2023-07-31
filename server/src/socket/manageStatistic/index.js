@@ -36,7 +36,7 @@ exports.main = async (ws, req) => {
         JSON.stringify({
           counts,
           students,
-        })
+        }),
       );
     } catch (error) {
       const message = {

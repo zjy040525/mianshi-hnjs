@@ -39,8 +39,8 @@ exports.main = async (req, res) => {
           nickname: operator.nickname,
           permission: operator.permission,
         },
-        'ok'
-      )
+        'ok',
+      ),
     );
   } catch (e) {
     console.error(e);

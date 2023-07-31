@@ -72,7 +72,7 @@ exports.main = async (req, res) => {
         where: {
           id: studentId,
         },
-      }
+      },
     );
 
     // 获取更新（签到）完成后的学生信息
@@ -93,9 +93,9 @@ exports.main = async (req, res) => {
               operator.nickname ?? operator.username
             }）`,
             description: `${student.name}（${student.id_card}）在${dayjs(
-              student.signed_date
+              student.signed_date,
             ).format(' HH:mm:ss ')}完成了签到。`,
-          })
+          }),
         );
       } else if (client._url.includes(WS_STATISTIC_PATHNAME)) {
         const counts = await studentCount();
@@ -105,7 +105,7 @@ exports.main = async (req, res) => {
           JSON.stringify({
             counts,
             students,
-          })
+          }),
         );
       }
     }

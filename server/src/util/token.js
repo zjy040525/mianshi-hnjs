@@ -20,7 +20,7 @@ const make = ({ username, nickname, password, permission }) =>
       expiresIn: '7d',
       audience: 'interview-management-system-app',
       issuer: 'interview-management-system-backend',
-    }
+    },
   );
 
 /**

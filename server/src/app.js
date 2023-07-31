@@ -52,7 +52,7 @@ const initOperators = async () => {
         ]);
       } catch (e) {
         authentications.push(
-          `CANNOT ADD OPERATOR \`${username}\`, BECAUSE IT ALREADY EXISTS!`
+          `CANNOT ADD OPERATOR \`${username}\`, BECAUSE IT ALREADY EXISTS!`,
         );
       }
     }
@@ -74,7 +74,7 @@ const Operator = app.define(
   },
   {
     timestamps: false,
-  }
+  },
 );
 const Student = app.define(
   'student',
@@ -106,7 +106,7 @@ const Student = app.define(
   },
   {
     timestamps: false,
-  }
+  },
 );
 
 // 初始化数据库

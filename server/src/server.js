@@ -20,7 +20,7 @@ class Server {
       'handlebars',
       engine({
         defaultLayout: false,
-      })
+      }),
     );
     Server.app.set('view engine', 'handlebars');
     Server.app.set('views', path.join(__dirname, '/views'));
@@ -29,13 +29,13 @@ class Server {
         // number类型的默认单位是bytes
         // 字符串需要带上数据单位
         limit: '500kb',
-      })
+      }),
     );
     Server.app.use(
       express.urlencoded({
         extended: true,
         limit: '500kb',
-      })
+      }),
     );
     Server.app.use(cors());
     Server.app.use(logger);

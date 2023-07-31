@@ -67,8 +67,8 @@ exports.main = async (req, res) => {
           resp(
             400,
             null,
-            `操作越权，请到${operator.nickname ?? operator.username}处操作！`
-          )
+            `操作越权，请到${operator.nickname ?? operator.username}处操作！`,
+          ),
         );
       return;
     }
@@ -87,7 +87,7 @@ exports.main = async (req, res) => {
         where: {
           id: studentId,
         },
-      }
+      },
     );
 
     // 获取更新完成后的学生信息
@@ -108,9 +108,9 @@ exports.main = async (req, res) => {
               operator.nickname ?? operator.username
             }）`,
             description: `${student.name}（${student.id_card}）在${dayjs(
-              student.interviewed_date
+              student.interviewed_date,
             ).format(' HH:mm:ss ')}完成了面试。`,
-          })
+          }),
         );
       } else if (client._url.includes(WS_STATISTIC_PATHNAME)) {
         const counts = await studentCount();
@@ -120,7 +120,7 @@ exports.main = async (req, res) => {
           JSON.stringify({
             counts,
             students,
-          })
+          }),
         );
       }
     }

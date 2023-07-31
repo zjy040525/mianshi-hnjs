@@ -41,8 +41,8 @@ exports.main = async (req, res) => {
           nickname: operator.nickname,
           permission: operator.permission,
         },
-        '认证成功！'
-      )
+        '认证成功！',
+      ),
     );
   } catch (e) {
     console.error(e);

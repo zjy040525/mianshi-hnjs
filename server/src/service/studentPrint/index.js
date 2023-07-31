@@ -60,8 +60,8 @@ exports.main = async (req, res) => {
           resp(
             400,
             null,
-            `操作越权，请到${operator.nickname ?? operator.username}处操作！`
-          )
+            `操作越权，请到${operator.nickname ?? operator.username}处操作！`,
+          ),
         );
       return;
     }

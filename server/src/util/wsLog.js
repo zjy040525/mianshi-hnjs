@@ -3,14 +3,14 @@ const wsLog = (ws, jwt, req) => {
     `[${new Date().toISOString()}]`,
     `"${jwt.nickname ?? jwt.username}"`,
     'connect to',
-    req.url
+    req.url,
   );
   ws.on('close', () => {
     console.log(
       `[${new Date().toISOString()}]`,
       `"${jwt.nickname ?? jwt.username}"`,
       'disconnect to',
-      req.url
+      req.url,
     );
   });
 };

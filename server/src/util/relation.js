@@ -33,7 +33,7 @@ const relation = async student => {
   // 多个数组格式返回
   if (Array.isArray(student)) {
     return Promise.all(
-      student.map(({ dataValues }) => parseValues(dataValues))
+      student.map(({ dataValues }) => parseValues(dataValues)),
     );
   }
   // 单个对象格式返回

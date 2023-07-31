@@ -39,37 +39,37 @@ app.post('/authentication', require('./service/authentication').main);
 app.post(
   '/authorization',
   token.required(),
-  require('./service/authorization').main
+  require('./service/authorization').main,
 );
 // 搜索已签到的学生
 app.get(
   '/student/interview/search',
   token.required(),
-  require('./service/studentInterviewSearch').main
+  require('./service/studentInterviewSearch').main,
 );
 // 搜索所有学生
 app.get(
   '/student/sign/search',
   token.required(),
-  require('./service/studentSignSearch').main
+  require('./service/studentSignSearch').main,
 );
 // 为学生签到
 app.patch(
   '/student/sign',
   token.required(),
-  require('./service/studentSign').main
+  require('./service/studentSign').main,
 );
 // 为学生打印，返回HTML用于打印
 app.post(
   '/student/print',
   token.required(),
-  require('./service/studentPrint').main
+  require('./service/studentPrint').main,
 );
 // 为学生面试
 app.patch(
   '/student/interview',
   token.required(),
-  require('./service/studentInterview').main
+  require('./service/studentInterview').main,
 );
 
 // 操作员的操作信息套接字
@@ -101,7 +101,7 @@ async function main() {
     res.status(404).send(null);
   });
   app.listen(port, () =>
-    console.log(`Server ready at: http://localhost:${port}`)
+    console.log(`Server ready at: http://localhost:${port}`),
   );
 }
 
