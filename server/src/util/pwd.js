@@ -1,4 +1,4 @@
-const shuffle = string => {
+const shuffle = (string) => {
   const a = string.split('');
   const n = a.length;
 

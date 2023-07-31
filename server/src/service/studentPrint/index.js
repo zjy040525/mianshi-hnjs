@@ -85,7 +85,7 @@ exports.main = async (req, res) => {
           ? { weight: 1, element: '幼儿教育' }
           : { weight: 0, element: null },
       ]
-        .filter(value => value.element)
+        .filter((value) => value.element)
         .sort((a, b) => b.weight - a.weight)
         .map((value, index, array) => {
           if (index === array.length - 1) {

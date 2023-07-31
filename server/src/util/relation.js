@@ -1,7 +1,7 @@
 const { Operator } = require('@/app');
 
-const relation = async student => {
-  const parseValues = async dataValues => {
+const relation = async (student) => {
+  const parseValues = async (dataValues) => {
     const signed_operator = await Operator.findOne({
       where: {
         id: dataValues.signed_operator,

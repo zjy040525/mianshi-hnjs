@@ -7,7 +7,7 @@ const { JsonWebTokenError } = require('jsonwebtoken');
 const { WS_STATISTIC_MESSAGE_KEY } = require('@/constant/socket');
 
 exports.main = async (ws, req) => {
-  ws.on('message', async msg => {
+  ws.on('message', async (msg) => {
     try {
       const data = JSON.parse(msg);
       // 验证token
