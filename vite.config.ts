@@ -20,7 +20,7 @@ export default defineConfig({
       output: {
         entryFileNames: 'assets/vendors.[hash].js',
         chunkFileNames: 'assets/app.[hash].js',
-        assetFileNames: chunkInfo => {
+        assetFileNames(chunkInfo) {
           let prefix = '[name]';
           if (chunkInfo.name.endsWith('.css')) {
             prefix = 'app';
