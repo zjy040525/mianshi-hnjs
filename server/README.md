@@ -47,10 +47,12 @@ MYSQL_ADDRESS=开发环境数据库地址
 MYSQL_USERNAME=用户名
 MYSQL_PASSWORD=密码
 MYSQL_DATABASE=要使用的数据库名字
-# 如果有需要，你可以覆盖.env通用环境中的变量
+# （可选）如果有需要，你可以覆盖.env通用环境中的变量
 # SIGN_OPERATORS=sign:签到员[DEV]
 # INTERVIEW_OPERATORS=score:面试员[DEV]
 # MANAGE_OPERATORS=admin:管理员[DEV]
+# （可选）开发环境独有，手动设置操作员的密码（不能小于8位），默认随机生成
+# OPERATORS_PASSWORD=88888888
 ```
 
 ```dotenv

@@ -16,6 +16,8 @@ const app = new Sequelize({
 
 // 初始化身份认证记录
 const initOperators = async () => {
+  const hasOverride =
+    process.env.NODE_ENV === 'development' && process.env.OPERATORS_PASSWORD;
   const signOperators = process.env.SIGN_OPERATORS?.split(',');
   const interviewOperators = process.env.INTERVIEW_OPERATORS?.split(',');
   const manageOperators = process.env.MANAGE_OPERATORS?.split(',');
@@ -36,7 +38,9 @@ const initOperators = async () => {
       const [username, nickname] = permissionOperator.split(':');
 
       try {
-        const pwd = shufflePassword();
+        const pwd = hasOverride
+          ? process.env.OPERATORS_PASSWORD
+          : shufflePassword();
 
         await Operator.create({
           username,
