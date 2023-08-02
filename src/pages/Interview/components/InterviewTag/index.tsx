@@ -1,15 +1,18 @@
 import type { InterviewStatus } from '@/typings';
-import { Badge } from 'antd';
+import { Tag } from 'antd';
 import { FC } from 'react';
 
-export const InterviewBadge: FC<{ status: InterviewStatus }> = ({ status }) => {
+export const InterviewTag: FC<{
+  status: InterviewStatus;
+  text: string;
+}> = ({ status, text }) => {
   switch (status) {
     case 'Processing':
-      return <Badge status="processing" text="未面试（进行中）" />;
+      return <Tag color="processing">{text}</Tag>;
     case 'Success':
-      return <Badge status="success" text="通过" />;
+      return <Tag color="success">{text}</Tag>;
     case 'Failed':
-      return <Badge status="error" text="不通过" />;
+      return <Tag color="error">{text}</Tag>;
     default:
       return null;
   }
