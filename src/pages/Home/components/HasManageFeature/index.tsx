@@ -1,4 +1,4 @@
-import { newMsgNotificationOfAdmin } from '@/atoms';
+import { adminNewMsgNotification } from '@/atoms';
 import { authorizationStateSelector } from '@/selectors';
 import { Card, Col, Space, Switch, Typography } from 'antd';
 import { FC } from 'react';
@@ -7,7 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 export const HasManageFeature: FC = () => {
   const authorization = useRecoilValue(authorizationStateSelector);
   const [newMsgNotification, setNewMsgNotification] = useRecoilState(
-    newMsgNotificationOfAdmin,
+    adminNewMsgNotification,
   );
   if (authorization.permission === 'MANAGE') {
     return (

@@ -1,4 +1,4 @@
-import { newMsgNotificationOfAdmin, tokenStateAtom } from '@/atoms';
+import { adminNewMsgNotification, tokenStateAtom } from '@/atoms';
 import { HeadTitle, PermissionGuard } from '@/components';
 import { operationSocket, statisticSocket } from '@/services';
 import type { Student } from '@/typings';
@@ -231,7 +231,7 @@ const Manage: FC = () => {
       }
     },
   });
-  const newMsgNotification = useRecoilValue(newMsgNotificationOfAdmin);
+  const newMsgNotification = useRecoilValue(adminNewMsgNotification);
   // 只有在`新消息通知`为启用状态下，才会连接到对应的socket
   useMount(() => {
     if (newMsgNotification) {
