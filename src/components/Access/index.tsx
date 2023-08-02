@@ -8,9 +8,9 @@ import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 /**
- * 权限
- * @param children 认证成功后显示的子组件
- * @param permission 指定访问该子组件的需要的权限
+ * 权限守卫
+ * @param children 有权限时的显示
+ * @param accessible 指定访问该子组件的需要的权限
  * @returns
  */
 export const Access: FC<PropsWithChildren<{ permission: Permission }>> = ({

@@ -1,5 +1,5 @@
 export * from './Access';
-export * from './Authorization';
+export * from './AuthorizationGuard';
 export * from './GlobalErrorBoundary';
 export * from './GlobalLoading';
 export * from './HeadTitle';

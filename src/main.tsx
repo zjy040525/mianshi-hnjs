@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
-import { Authorization, GlobalLoading } from './components';
+import { AuthorizationGuard, GlobalLoading } from './components';
 import routes from './routes';
 
 dayjs.extend(relativeTime);
@@ -19,16 +19,12 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <RecoilRoot>
       <HelmetProvider>
         <ConfigProvider locale={locale}>
-          <AppProvider
-            notification={{
-              maxCount: 5,
-            }}
-          >
-            <Authorization>
+          <AppProvider notification={{ maxCount: 5 }}>
+            <AuthorizationGuard>
               <React.Suspense fallback={<GlobalLoading />}>
                 <RouterProvider router={createBrowserRouter(routes)} />
               </React.Suspense>
-            </Authorization>
+            </AuthorizationGuard>
           </AppProvider>
         </ConfigProvider>
       </HelmetProvider>

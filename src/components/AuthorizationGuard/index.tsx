@@ -7,12 +7,11 @@ import { FC, PropsWithChildren } from 'react';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
 /**
- * 验证当前身份的有效性
- *
- * @param children 渲染子组件
+ * 授权守卫，对当前登录者的身份进行验证
+ * @param children 验证成功后的显示
  * @author Jia-Yao Zhao
  */
-export const Authorization: FC<PropsWithChildren> = ({ children }) => {
+export const AuthorizationGuard: FC<PropsWithChildren> = ({ children }) => {
   const { message } = AntdApp.useApp();
   const setAuthorization = useSetRecoilState(authorizationStateSelector);
   const resetRecoilState = useResetRecoilState(authorizationStateSelector);
