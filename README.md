@@ -6,21 +6,23 @@
 
 这个项目使用 [node](http://nodejs.org) 和 [pnpm](https://pnpm.io/)。请确保你本地安装了它们。
 
-配置阿里镜像源。
+Node.js的版本建议>=16。
 
-```sh
+配置国内镜像源。
+
+```shell
 $ npm config set registry https://registry.npmmirror.com
 ```
 
 安装 pnpm。
 
-```sh
+```shell
 $ npm -g install pnpm
 ```
 
 安装项目依赖。
 
-```sh
+```shell
 $ pnpm install
 ```
 
@@ -28,7 +30,7 @@ $ pnpm install
 
 配置环境变量。在根目录新建`.env.development`和`.env.production`文件，分别用于开发环境和正式环境。
 
-后端的默认端口为 3000。
+后端的默认端口为 **3000**。
 
 有关后端的使用教程请[点击这里](server/README.md)。
 
@@ -48,7 +50,7 @@ VITE_WS_URL=wss://正式环境地址
 
 启动本地服务。
 
-```sh
+```shell
 $ pnpm dev
 ```
 
@@ -56,7 +58,7 @@ $ pnpm dev
 
 构建完成后会创建名为 `dist` 的文件夹，可以把文件夹内的所有文件部署到服务器上。
 
-```sh
+```shell
 $ pnpm build
 ```
 

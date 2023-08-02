@@ -6,21 +6,23 @@
 
 这个项目使用 [node](http://nodejs.org) 和 [pnpm](https://pnpm.io/)。请确保你本地安装了它们。
 
-配置阿里镜像源。
+Node.js的版本建议>=16。
 
-```sh
+配置国内镜像源。
+
+```shell
 $ npm config set registry https://registry.npmmirror.com
 ```
 
 安装 pnpm。
 
-```sh
+```shell
 $ npm -g install pnpm
 ```
 
 安装项目依赖。
 
-```sh
+```shell
 $ pnpm install
 ```
 
@@ -51,7 +53,7 @@ MYSQL_DATABASE=要使用的数据库名字
 # SIGN_OPERATORS=sign:签到员[DEV]
 # INTERVIEW_OPERATORS=score:面试员[DEV]
 # MANAGE_OPERATORS=admin:管理员[DEV]
-# （可选）开发环境独有，手动设置操作员的密码（不能小于8位），默认随机生成
+# （可选）开发环境独有，手动设置所有操作员的密码（不能小于8位），默认随机生成
 # OPERATORS_PASSWORD=88888888
 ```
 
@@ -68,13 +70,17 @@ MYSQL_DATABASE=要使用的数据库名字
 
 命令行启动（开发环境推荐使用）。
 
-```sh
+操作员的密码将在第一次运行时随机生成，并且在控制台输出操作员对应的密码。
+
+**后续的运行将跳过该步骤，并且不再输出操作员对应的密码！**
+
+```shell
 $ pnpm start:dev
 ```
 
 命令行启动（正式环境使用，推荐正式环境使用 PM2 启动）。
 
-```sh
+```shell
 $ pnpm start:prod
 ```
 
@@ -82,7 +88,7 @@ $ pnpm start:prod
 
 一共启动 8 个服务，自动实现负载均衡，更多命令请前往 [PM2](https://pm2.keymetrics.io/docs/usage/quick-start/) 官网查看。
 
-```sh
+```shell
 $ npm -g install pm2
 $ pm2 start app.json
 ```
