@@ -134,9 +134,7 @@ const Interview: FC = () => {
                 style={{ width: '100%' }}
                 autoFocus
                 showSearch
-                allowClear
                 filterOption={false}
-                showArrow={false}
                 placeholder="输入系统序号进行搜索"
                 notFoundContent={
                   searching ? (

@@ -27,7 +27,7 @@ import {
   Steps,
   Tag,
 } from 'antd';
-import { FC, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import {
   PRINT_DOC_KEY,
@@ -65,7 +65,9 @@ const SignInOfStudent: FC = () => {
   const { message } = AntdApp.useApp();
   const idState = useRecoilValue(idStateAtom);
   // 步骤分段
-  const [STEP_1, STEP_2, STEP_3, STEP_4] = [0, 1, 2, 3];
+  const {
+    current: [STEP_1, STEP_2, STEP_3, STEP_4],
+  } = useRef([0, 1, 2, 3]);
   // 当前步骤
   const [currentStep, setCurrentStep] = useState(0);
   // 搜索学生
@@ -172,9 +174,7 @@ const SignInOfStudent: FC = () => {
                 disabled={signing}
                 autoFocus
                 showSearch
-                allowClear
                 filterOption={false}
-                showArrow={false}
                 placeholder="输入身份证号码进行搜索"
                 notFoundContent={
                   searching ? (
