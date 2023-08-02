@@ -1,5 +1,5 @@
 import { idStateAtom } from '@/atoms';
-import { Access, HeadTitle, StudentDescription } from '@/components';
+import { HeadTitle, PermissionGuard, StudentDescription } from '@/components';
 import {
   studentInterviewSearchService,
   studentInterviewService,
@@ -119,7 +119,7 @@ const Interview: FC = () => {
     },
   );
   return (
-    <Access permission="INTERVIEW">
+    <PermissionGuard permission="INTERVIEW">
       <HeadTitle titles={[chosenStudent?.name, '面试']} />
       <Card>
         <Steps
@@ -332,7 +332,7 @@ const Interview: FC = () => {
           </Col>
         </Row>
       </Card>
-    </Access>
+    </PermissionGuard>
   );
 };
 

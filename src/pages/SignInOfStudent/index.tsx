@@ -1,7 +1,7 @@
 import { idStateAtom } from '@/atoms';
 import {
-  Access,
   HeadTitle,
+  PermissionGuard,
   StudentDescription,
   StudentInterviewDoc,
 } from '@/components';
@@ -146,7 +146,7 @@ const SignInOfStudent: FC = () => {
     },
   });
   return (
-    <Access permission="SIGN">
+    <PermissionGuard permission="SIGN">
       <HeadTitle titles={[chosenStudent?.name, '签到']} />
       <iframe
         className={classes.printElement}
@@ -353,7 +353,7 @@ const SignInOfStudent: FC = () => {
           </Col>
         </Row>
       </Card>
-    </Access>
+    </PermissionGuard>
   );
 };
 

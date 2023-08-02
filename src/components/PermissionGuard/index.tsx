@@ -10,13 +10,12 @@ import { useRecoilValue } from 'recoil';
 /**
  * 权限守卫
  * @param children 有权限时的显示
- * @param accessible 指定访问该子组件的需要的权限
+ * @param permission 指定访问该子组件的需要的权限
  * @returns
  */
-export const Access: FC<PropsWithChildren<{ permission: Permission }>> = ({
-  children,
-  permission,
-}) => {
+export const PermissionGuard: FC<
+  PropsWithChildren<{ permission: Permission }>
+> = ({ children, permission }) => {
   const { message } = AntdApp.useApp();
   const authorization = useRecoilValue(authorizationStateSelector);
   useMount(() => {

@@ -1,5 +1,5 @@
 import { newMsgNotificationOfAdmin, tokenStateAtom } from '@/atoms';
-import { Access, HeadTitle } from '@/components';
+import { HeadTitle, PermissionGuard } from '@/components';
 import { operationSocket, statisticSocket } from '@/services';
 import type { Student } from '@/typings';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
@@ -298,7 +298,7 @@ const Manage: FC = () => {
     statisticWs.disconnect();
   });
   return (
-    <Access permission="MANAGE">
+    <PermissionGuard permission="MANAGE">
       <HeadTitle titles={['管理']} />
       <Row gutter={[16, 16]}>
         <Col span={12}>
@@ -408,7 +408,7 @@ const Manage: FC = () => {
           />
         </Col>
       </Row>
-    </Access>
+    </PermissionGuard>
   );
 };
 
