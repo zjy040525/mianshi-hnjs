@@ -88,9 +88,30 @@ $ pnpm start:prod
 
 一共启动 8 个服务，自动实现负载均衡，更多命令请前往 [PM2](https://pm2.keymetrics.io/docs/usage/quick-start/) 官网查看。
 
+安装PM2。
+
 ```shell
 $ npm -g install pm2
+```
+
+启动服务。
+
+```shell
 $ pm2 start app.json
+```
+
+如果是第一次从pm2运行正式环境，操作员对应的密码在第一个服务日志中可以找到。
+
+```shell
+$ pm2 log 1
+```
+
+```shell
+# 查看监控页面
+$ pm2 monit
+
+# 查看服务列表
+$ pm2 list
 ```
 
 ## Maintainers
