@@ -28,7 +28,7 @@ $ pnpm install
 
 ## Usage
 
-配置环境变量。在根目录新建`.env`、`.env.development`、`.env.production`。
+配置环境变量。在`server/`新建`.env`、`.env.development`、`.env.production`。
 
 ```dotenv
 # .env 通用环境变量
