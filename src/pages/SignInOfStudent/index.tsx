@@ -27,7 +27,7 @@ import {
   Steps,
   Tag,
 } from 'antd';
-import { FC, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import {
   PRINT_DOC_KEY,
@@ -147,11 +147,25 @@ const SignInOfStudent: FC = () => {
       });
     },
   });
+  // 打印相关的逻辑处理
+  const printRef = useRef<HTMLIFrameElement>(null);
+  const clearPrintDoc = useCallback(() => setPrintDoc(null), []);
+  useEffect(() => {
+    // 点击打印按钮或取消按钮之后清除打印模板，再次打印需要点击下方重新获取按钮
+    // 避免打印的资料不是最新获取的
+    if (printRef.current) {
+      window.addEventListener('afterprint', clearPrintDoc);
+    }
+    return () => {
+      window.removeEventListener('afterprint', clearPrintDoc);
+    };
+  }, []);
   return (
     <PermissionGuard permission="SIGN">
       <HeadTitle titles={[chosenStudent?.name, '签到']} />
       <iframe
         className={classes.printElement}
+        ref={printRef}
         srcDoc={printDoc ?? '请在打印步骤（步骤4）中点击下方按钮获取打印模板！'}
         onLoad={() => {
           // 模板载入完成后打开系统打印窗口
