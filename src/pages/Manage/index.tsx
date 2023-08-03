@@ -19,6 +19,7 @@ import dayjs from 'dayjs';
 import { FC, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { badge } from './components';
+import { filterMap } from './utils';
 
 /**
  * 管理组件
@@ -201,10 +202,7 @@ const Manage: FC = () => {
   const { notification } = AntdApp.useApp();
   const [students, setStudents] = useState<Student[]>([]);
   // 统计人数
-  const [
-    { signedCount, noSignedCount, noInterviewedCount, interviewedCount },
-    setCounts,
-  ] = useState({
+  const [counts, setCounts] = useState({
     signedCount: -1,
     noSignedCount: -1,
     interviewedCount: -1,
@@ -247,49 +245,26 @@ const Manage: FC = () => {
     },
     onMessage(msg) {
       const data = JSON.parse(msg.data);
-      // 发生错误，提示对应的通知消息
-      if (!data.counts || !data.students) {
+      // 如果有type属性，就是notification提示消息
+      if (data.type) {
         notification.open({
           ...data,
           placement: 'bottomRight',
         });
         return;
       }
-      setCounts(data.counts);
-      setStudents(data.students);
+      const values: {
+        counts: typeof counts;
+        students: Student[];
+      } = data;
+      // 更新数据
+      setCounts(values.counts);
+      setStudents(values.students);
       // 设置可筛选过滤的条件
-      const map = new Map<number, string>();
-      const map2 = new Map<number, string>();
-      // 遍历去重
-      for (const student of students as Student[]) {
-        if (student.signed_operator && !map.has(student.signed_operator.id)) {
-          map.set(
-            student.signed_operator.id,
-            student.signed_operator.nickname ??
-              student.signed_operator.username,
-          );
-        }
-        if (
-          student.interviewed_operator &&
-          !map2.has(student.interviewed_operator.id)
-        ) {
-          map2.set(
-            student.interviewed_operator.id,
-            student.interviewed_operator.nickname ??
-              student.interviewed_operator.username,
-          );
-        }
-      }
-      // 可过滤列表
-      const signedOperatorFilters = [...map]
-        .map(([value, text]) => ({ text, value }))
-        .sort((a, b) => a.value - b.value);
-      const interviewedOperatorFilters = [...map2]
-        .map(([value, text]) => ({ text, value }))
-        .sort((a, b) => a.value - b.value);
-      // 设置可过滤列表
-      setSignedOperatorFilters(signedOperatorFilters);
-      setInterviewedOperatorFilters(interviewedOperatorFilters);
+      setSignedOperatorFilters(filterMap('signed_operator', values.students));
+      setInterviewedOperatorFilters(
+        filterMap('interviewed_operator', values.students),
+      );
     },
   });
   // 组件卸载，需要断开WebSocket的连接
@@ -307,8 +282,10 @@ const Manage: FC = () => {
               <Card>
                 <Statistic
                   title="已签到人数"
-                  loading={statisticWs.readyState !== 1 || signedCount < 0}
-                  value={signedCount}
+                  loading={
+                    statisticWs.readyState !== 1 || counts.signedCount < 0
+                  }
+                  value={counts.signedCount}
                 />
               </Card>
             </Col>
@@ -316,8 +293,10 @@ const Manage: FC = () => {
               <Card>
                 <Statistic
                   title="未签到人数"
-                  loading={statisticWs.readyState !== 1 || noSignedCount < 0}
-                  value={noSignedCount}
+                  loading={
+                    statisticWs.readyState !== 1 || counts.noSignedCount < 0
+                  }
+                  value={counts.noSignedCount}
                 />
               </Card>
             </Col>
@@ -327,9 +306,9 @@ const Manage: FC = () => {
                   title="总人数"
                   loading={
                     statisticWs.readyState !== 1 ||
-                    signedCount + noSignedCount < 0
+                    counts.signedCount + counts.noSignedCount < 0
                   }
-                  value={signedCount + noSignedCount}
+                  value={counts.signedCount + counts.noSignedCount}
                 />
               </Card>
             </Col>
@@ -339,10 +318,12 @@ const Manage: FC = () => {
                   title="签到进度"
                   loading={
                     statisticWs.readyState !== 1 ||
-                    signedCount + noSignedCount < 0
+                    counts.signedCount + counts.noSignedCount < 0
                   }
                   value={
-                    (signedCount / (signedCount + noSignedCount)) * 100 || 0
+                    (counts.signedCount /
+                      (counts.signedCount + counts.noSignedCount)) *
+                      100 || 0
                   }
                   precision={3}
                   suffix="%"
@@ -358,8 +339,10 @@ const Manage: FC = () => {
               <Card>
                 <Statistic
                   title="已面试人数"
-                  loading={statisticWs.readyState !== 1 || interviewedCount < 0}
-                  value={interviewedCount}
+                  loading={
+                    statisticWs.readyState !== 1 || counts.interviewedCount < 0
+                  }
+                  value={counts.interviewedCount}
                 />
               </Card>
             </Col>
@@ -368,9 +351,10 @@ const Manage: FC = () => {
                 <Statistic
                   title="未面试人数"
                   loading={
-                    statisticWs.readyState !== 1 || noInterviewedCount < 0
+                    statisticWs.readyState !== 1 ||
+                    counts.noInterviewedCount < 0
                   }
-                  value={noInterviewedCount}
+                  value={counts.noInterviewedCount}
                 />
               </Card>
             </Col>
@@ -380,11 +364,11 @@ const Manage: FC = () => {
                   title="面试进度"
                   loading={
                     statisticWs.readyState !== 1 ||
-                    interviewedCount + noInterviewedCount < 0
+                    counts.interviewedCount + counts.noInterviewedCount < 0
                   }
                   value={
-                    (interviewedCount /
-                      (interviewedCount + noInterviewedCount)) *
+                    (counts.interviewedCount /
+                      (counts.interviewedCount + counts.noInterviewedCount)) *
                       100 || 0
                   }
                   precision={3}
