@@ -11,6 +11,7 @@ import {
   studentSignService,
 } from '@/services';
 import type { Student } from '@/typings';
+import { CloseCircleOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 import {
   App as AntdApp,
@@ -227,9 +228,9 @@ const SignInOfStudent: FC = () => {
                           {student.name}（{student.id_card}）
                         </span>
                         {student.sign_status ? (
-                          <>
-                            <Tag color="success">已签到</Tag>
-                            {student.signed_operator ? (
+                          student.signed_operator ? (
+                            <>
+                              <Tag color="success">已签到</Tag>
                               <Tag
                                 color={
                                   student.signed_operator.id === idState
@@ -249,8 +250,12 @@ const SignInOfStudent: FC = () => {
                                   }`}
                                 </span>
                               </Tag>
-                            ) : null}
-                          </>
+                            </>
+                          ) : (
+                            <Tag icon={<CloseCircleOutlined />} color="error">
+                              签到异常，请联系管理员！
+                            </Tag>
+                          )
                         ) : (
                           <Tag color="error">未签到</Tag>
                         )}

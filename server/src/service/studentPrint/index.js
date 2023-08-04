@@ -29,7 +29,7 @@ exports.main = async (req, res) => {
 
     // 操作员的权限验证
     if (operator.permission !== 'SIGN') {
-      res.status(400).send('Error');
+      res.status(400).json(resp(400, null, '权限不足！'));
       return;
     }
 
@@ -53,14 +53,31 @@ exports.main = async (req, res) => {
     }
 
     // 操作越权，不能对其他操作员处签到的学生进行处理
-    if (student.signed_operator && student.signed_operator !== operator.id) {
+    if (student.signed_operator !== operator.id) {
+      const signedOperator = await Operator.findOne({
+        where: {
+          id: student.signed_operator,
+        },
+      });
+      // 异常情况判断
+      if (!signedOperator) {
+        res
+          .status(400)
+          .json(
+            resp(400, null, '该学生对应的签到操作员不存在，请联系管理员！'),
+          );
+        return;
+      }
+
       res
         .status(404)
         .json(
           resp(
             400,
             null,
-            `操作越权，请到${operator.nickname ?? operator.username}处操作！`,
+            `操作越权，请到${
+              signedOperator.nickname ?? signedOperator.username
+            }处操作！`,
           ),
         );
       return;

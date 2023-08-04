@@ -57,17 +57,31 @@ exports.main = async (req, res) => {
     }
 
     // 操作越权，不能对其他操作员处签到的学生进行处理
-    if (
-      originalStudent.interviewed_operator &&
-      originalStudent.interviewed_operator !== operator.id
-    ) {
+    if (originalStudent.interviewed_operator !== operator.id) {
+      const interviewedOperator = await Operator.findOne({
+        where: {
+          id: originalStudent.interviewed_operator,
+        },
+      });
+
+      if (!interviewedOperator) {
+        res
+          .status(400)
+          .json(
+            resp(400, null, '该学生对应的面试操作员不存在，请联系管理员！'),
+          );
+        return;
+      }
+
       res
         .status(404)
         .json(
           resp(
             400,
             null,
-            `操作越权，请到${operator.nickname ?? operator.username}处操作！`,
+            `操作越权，请到${
+              interviewedOperator.nickname ?? interviewedOperator.username
+            }处操作！`,
           ),
         );
       return;

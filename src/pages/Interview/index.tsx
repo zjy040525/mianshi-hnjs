@@ -5,6 +5,7 @@ import {
   studentInterviewService,
 } from '@/services';
 import type { InterviewStatus, Student } from '@/typings';
+import { CloseCircleOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 import {
   App as AntdApp,
@@ -175,18 +176,28 @@ const Interview: FC = () => {
                         <span style={{ marginInlineEnd: 8 }}>
                           {student.name}（{student.id}）
                         </span>
-                        <InterviewTag
-                          status={student.interview_xq}
-                          text="学前"
-                        />
-                        <InterviewTag
-                          status={student.interview_ly}
-                          text="旅游"
-                        />
-                        <InterviewTag
-                          status={student.interview_gd}
-                          text="轨道"
-                        />
+                        {!student.interviewed_operator &&
+                        student.interviewed_date ? (
+                          // 这里渲染的条件是处于异常状态（异常状态：操作员不存在但是又有过面试记录）
+                          <Tag icon={<CloseCircleOutlined />} color="error">
+                            面试异常，请联系管理员！
+                          </Tag>
+                        ) : (
+                          <>
+                            <InterviewTag
+                              status={student.interview_xq}
+                              text="学前"
+                            />
+                            <InterviewTag
+                              status={student.interview_ly}
+                              text="旅游"
+                            />
+                            <InterviewTag
+                              status={student.interview_gd}
+                              text="轨道"
+                            />
+                          </>
+                        )}
                         {student.interviewed_operator ? (
                           <Tag
                             color={
