@@ -1,5 +1,11 @@
 import type { Student } from '@/typings';
 
+/**
+ * 用于过滤重复项
+ * @param filterable 过滤的字段
+ * @param students 学生列表
+ * @author Jia-Yao Zhao
+ */
 export const filterMap = (filterable: keyof Student, students: Student[]) => {
   const map = new Map<number, string>();
   for (const student of students) {
