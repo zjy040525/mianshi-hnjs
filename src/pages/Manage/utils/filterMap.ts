@@ -10,10 +10,7 @@ export const filterMap = (filterable: keyof Student, students: Student[]) => {
   const map = new Map<number, string>();
   for (const student of students) {
     const obj = student[filterable];
-    if (!obj) {
-      break;
-    }
-    if (typeof obj !== 'object') {
+    if (!obj || typeof obj !== 'object') {
       break;
     }
     // 用于过滤重复项
