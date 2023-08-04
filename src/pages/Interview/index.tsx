@@ -74,7 +74,7 @@ const Interview: FC = () => {
     studentInterviewSearchService,
     {
       manual: true,
-      throttleWait: 500,
+      debounceWait: 500,
       onSuccess({ data }) {
         setStudents(data);
         message.destroy(STUDENT_INTERVIEW_SEARCH_KEY);

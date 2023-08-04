@@ -36,16 +36,17 @@ exports.main = async (req, res) => {
     }
 
     // 根据条件查询学生
+    const minId =
+      isNaN(parseInt(studentId)) || parseInt(studentId) < 1
+        ? 1
+        : parseInt(studentId);
     const rawStudents = await Student.findAll({
       where: {
         // 已完成签到
         sign_status: true,
         // 根据学生Id的范围查询
         id: {
-          [Op.between]: [
-            isNaN(parseInt(studentId)) ? 0 : parseInt(studentId),
-            isNaN(parseInt(studentId)) ? 0 : parseInt(studentId) + 24,
-          ],
+          [Op.between]: [minId, minId + 24],
         },
       },
       order: [

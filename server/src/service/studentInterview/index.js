@@ -57,7 +57,11 @@ exports.main = async (req, res) => {
     }
 
     // 操作越权，不能对其他操作员处签到的学生进行处理
-    if (originalStudent.interviewed_operator !== operator.id) {
+    // 学生有操作员操作过的情况下，判断是否是同一个操作员
+    if (
+      originalStudent.interviewed_operator &&
+      originalStudent.interviewed_operator !== operator.id
+    ) {
       const interviewedOperator = await Operator.findOne({
         where: {
           id: originalStudent.interviewed_operator,
