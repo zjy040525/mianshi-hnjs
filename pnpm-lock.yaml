@@ -6,14 +6,14 @@ settings:
 
 dependencies:
   '@ant-design/icons':
-    specifier: ^5.2.4
-    version: 5.2.4(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^5.2.5
+    version: 5.2.5(react-dom@18.2.0)(react@18.2.0)
   ahooks:
     specifier: ^3.7.8
     version: 3.7.8(react@18.2.0)
   antd:
-    specifier: ^5.8.1
-    version: 5.8.1(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^5.8.2
+    version: 5.8.2(react-dom@18.2.0)(react@18.2.0)
   axios:
     specifier: ^1.4.0
     version: 1.4.0
@@ -62,14 +62,14 @@ devDependencies:
     specifier: ^8.46.0
     version: 8.46.0
   eslint-config-prettier:
-    specifier: ^8.9.0
-    version: 8.9.0(eslint@8.46.0)
+    specifier: ^9.0.0
+    version: 9.0.0(eslint@8.46.0)
   eslint-define-config:
-    specifier: ^1.22.0
-    version: 1.22.0
+    specifier: ^1.23.0
+    version: 1.23.0
   eslint-plugin-prettier:
     specifier: ^5.0.0
-    version: 5.0.0(eslint-config-prettier@8.9.0)(eslint@8.46.0)(prettier@3.0.0)
+    version: 5.0.0(eslint-config-prettier@9.0.0)(eslint@8.46.0)(prettier@3.0.1)
   eslint-plugin-react:
     specifier: ^7.33.1
     version: 7.33.1(eslint@8.46.0)
@@ -89,14 +89,14 @@ devDependencies:
     specifier: ^13.2.3
     version: 13.2.3
   prettier:
-    specifier: 3.0.0
-    version: 3.0.0
+    specifier: 3.0.1
+    version: 3.0.1
   prettier-plugin-organize-imports:
     specifier: ^3.2.3
-    version: 3.2.3(prettier@3.0.0)(typescript@5.0.2)
+    version: 3.2.3(prettier@3.0.1)(typescript@5.0.2)
   prettier-plugin-packagejson:
     specifier: ^2.4.5
-    version: 2.4.5(prettier@3.0.0)
+    version: 2.4.5(prettier@3.0.1)
   typescript:
     specifier: 5.0.2
     version: 5.0.2
@@ -138,8 +138,8 @@ packages:
     resolution: {integrity: sha512-WOgvdH/1Wl8Z7VXigRbCa5djO14zxrNTzvrAQzhWiBQtEKT0uTc8K1ltjKZ8U1gPn/wXhMA8/jE39SJl0WNxSg==}
     dev: false
 
-  /@ant-design/icons@5.2.4(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-WFPLMLiLaTcw7Vzwuglgm7aViI9DJ8SdrLt6r1rI1oxA1yjp02/ZRB4b+OFlFy2F91JMq3FnAQ9K6irq9QiSvw==}
+  /@ant-design/icons@5.2.5(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-9Jc59v5fl5dzmxqLWtRev3dJwU7Ya9ZheoI6XmZjZiQ7PRtk77rC+Rbt7GJzAPPg43RQ4YO53RE1u8n+Et97vQ==}
     engines: {node: '>=8'}
     peerDependencies:
       react: '>=16.0.0'
@@ -957,15 +957,15 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /antd@5.8.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-6BEc6QDLzk01RrUjzIQ50oW2+mpscfBU1tusECi4OwEKgZmvmaW8ErvEDWtTHezIdr7dEMOEJlOZaOl8eXuaIw==}
+  /antd@5.8.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-kkC2BSBde1JzJxk2wNYj/NXgNZQZ2yu6avJoCKleSi32nsjiadi7FFu1AyGxIzoJ9CrxoLacjGvrwbKJQ6kCvw==}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     dependencies:
       '@ant-design/colors': 7.0.0
       '@ant-design/cssinjs': 1.16.1(react-dom@18.2.0)(react@18.2.0)
-      '@ant-design/icons': 5.2.4(react-dom@18.2.0)(react@18.2.0)
+      '@ant-design/icons': 5.2.5(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/react-slick': 1.0.1(react@18.2.0)
       '@babel/runtime': 7.22.5
       '@ctrl/tinycolor': 3.6.0
@@ -1475,8 +1475,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /eslint-config-prettier@8.9.0(eslint@8.46.0):
-    resolution: {integrity: sha512-+sbni7NfVXnOpnRadUA8S28AUlsZt9GjgFvABIRL9Hkn8KqNzOp+7Lw4QWtrwn20KzU3wqu1QoOj2m+7rKRqkA==}
+  /eslint-config-prettier@9.0.0(eslint@8.46.0):
+    resolution: {integrity: sha512-IcJsTkJae2S35pRsRAwoCE+925rJJStOdkKnLVgtE+tEpqU0EVVM7OqrwxqgptKdX29NUwC82I5pXsGFIgSevw==}
     hasBin: true
     peerDependencies:
       eslint: '>=7.0.0'
@@ -1484,12 +1484,12 @@ packages:
       eslint: 8.46.0
     dev: true
 
-  /eslint-define-config@1.22.0:
-    resolution: {integrity: sha512-pckNJppFwC4AX+AGK63aa4sX5BluPwWwHES3fq/ER0jDR2U2czwlngg38B4EQ2ibvofufc+R5QfmdPKI6+74vQ==}
+  /eslint-define-config@1.23.0:
+    resolution: {integrity: sha512-4mMyu0JuBkQHsCtR+42irIQdFLmLIW+pMAVcyOV/gZRL4O1R8iuH0eMG3oL3Cbi1eo9fDAfT5CIHVHgdyxcf6w==}
     engines: {node: ^16.13.0 || >=18.0.0, npm: '>=7.0.0', pnpm: '>= 8.6.0'}
     dev: true
 
-  /eslint-plugin-prettier@5.0.0(eslint-config-prettier@8.9.0)(eslint@8.46.0)(prettier@3.0.0):
+  /eslint-plugin-prettier@5.0.0(eslint-config-prettier@9.0.0)(eslint@8.46.0)(prettier@3.0.1):
     resolution: {integrity: sha512-AgaZCVuYDXHUGxj/ZGu1u8H8CYgDY3iG6w5kUFw4AzMVXzB7VvbKgYR4nATIN+OvUrghMbiDLeimVjVY5ilq3w==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -1504,8 +1504,8 @@ packages:
         optional: true
     dependencies:
       eslint: 8.46.0
-      eslint-config-prettier: 8.9.0(eslint@8.46.0)
-      prettier: 3.0.0
+      eslint-config-prettier: 9.0.0(eslint@8.46.0)
+      prettier: 3.0.1
       prettier-linter-helpers: 1.0.0
       synckit: 0.8.5
     dev: true
@@ -2688,7 +2688,7 @@ packages:
       fast-diff: 1.3.0
     dev: true
 
-  /prettier-plugin-organize-imports@3.2.3(prettier@3.0.0)(typescript@5.0.2):
+  /prettier-plugin-organize-imports@3.2.3(prettier@3.0.1)(typescript@5.0.2):
     resolution: {integrity: sha512-KFvk8C/zGyvUaE3RvxN2MhCLwzV6OBbFSkwZ2OamCrs9ZY4i5L77jQ/w4UmUr+lqX8qbaqVq6bZZkApn+IgJSg==}
     peerDependencies:
       '@volar/vue-language-plugin-pug': ^1.0.4
@@ -2701,11 +2701,11 @@ packages:
       '@volar/vue-typescript':
         optional: true
     dependencies:
-      prettier: 3.0.0
+      prettier: 3.0.1
       typescript: 5.0.2
     dev: true
 
-  /prettier-plugin-packagejson@2.4.5(prettier@3.0.0):
+  /prettier-plugin-packagejson@2.4.5(prettier@3.0.1):
     resolution: {integrity: sha512-glG71jE1gO3y5+JNAhC8X+4yrlN28rub6Aj461SKbaPie9RgMiHKcInH2Moi2VGOfkTXaEHBhg4uVMBqa+kBUA==}
     peerDependencies:
       prettier: '>= 1.16.0'
@@ -2713,13 +2713,13 @@ packages:
       prettier:
         optional: true
     dependencies:
-      prettier: 3.0.0
+      prettier: 3.0.1
       sort-package-json: 2.5.1
       synckit: 0.8.5
     dev: true
 
-  /prettier@3.0.0:
-    resolution: {integrity: sha512-zBf5eHpwHOGPC47h0zrPyNn+eAEIdEzfywMoYn2XPi0P44Zp0tSq64rq0xAREh4auw2cJZHo9QUob+NqCQky4g==}
+  /prettier@3.0.1:
+    resolution: {integrity: sha512-fcOWSnnpCrovBsmFZIGIy9UqK2FaI7Hqax+DIO0A9UxeVoY4iweyaFjS5TavZN97Hfehph0nhsZnjlVKzEQSrQ==}
     engines: {node: '>=14'}
     hasBin: true
     dev: true
