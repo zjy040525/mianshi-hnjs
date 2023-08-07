@@ -1,6 +1,6 @@
 import type { Student } from '@/typings';
 import { Descriptions } from 'antd';
-import { FC, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { InterviewStatusIcon } from './components';
 
 export const StudentDescription: FC<{

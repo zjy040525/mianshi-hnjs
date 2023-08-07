@@ -1,7 +1,7 @@
-import { InterviewStatus } from '@/typings';
+import type { InterviewStatus } from '@/typings';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { Typography } from 'antd';
-import { FC } from 'react';
+import type { FC } from 'react';
 
 export const InterviewStatusIcon: FC<{ cond: InterviewStatus }> = ({
   cond,

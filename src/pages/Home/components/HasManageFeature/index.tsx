@@ -1,7 +1,7 @@
 import { adminNewMsgNotification } from '@/atoms';
 import { authorizationStateSelector } from '@/selectors';
 import { Card, Col, Space, Switch, Typography } from 'antd';
-import { FC } from 'react';
+import type { FC } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 export const HasManageFeature: FC = () => {

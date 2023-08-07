@@ -21,6 +21,7 @@ module.exports = defineConfig({
   plugins: ['@typescript-eslint', 'react', 'react-refresh'],
   rules: {
     '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/consistent-type-imports': 'warn',
     'react/react-in-jsx-scope': 'off',
     'react-refresh/only-export-components': 'warn',
     'no-restricted-imports': [

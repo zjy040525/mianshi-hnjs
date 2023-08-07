@@ -1,6 +1,6 @@
 import type { Student } from '@/typings';
 import { Descriptions } from 'antd';
-import { FC } from 'react';
+import type { FC } from 'react';
 import { DescriptionTitle, DocDescription, interviewItems } from './components';
 
 export const StudentInterviewDoc: FC<{ student: Student }> = ({ student }) => {

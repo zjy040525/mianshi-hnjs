@@ -3,7 +3,7 @@ import { authorizationService } from '@/services';
 import { getAuthorizationToken } from '@/utils';
 import { useMount, useRequest } from 'ahooks';
 import { App as AntdApp } from 'antd';
-import { FC, PropsWithChildren } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 
 /**

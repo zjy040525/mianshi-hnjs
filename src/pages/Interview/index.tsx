@@ -7,6 +7,7 @@ import {
 import type { InterviewStatus, Student } from '@/typings';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
+import type { StepProps } from 'antd';
 import {
   App as AntdApp,
   Badge,
@@ -19,13 +20,13 @@ import {
   Select,
   Space,
   Spin,
-  StepProps,
   Steps,
   Tag,
   Typography,
 } from 'antd';
 import dayjs from 'dayjs';
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import type { Dispatch, FC, SetStateAction } from 'react';
+import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { InterviewBadge, InterviewTag } from './components';
 import {

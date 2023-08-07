@@ -5,7 +5,7 @@ import {
   CloseOutlined,
 } from '@ant-design/icons';
 import { Descriptions, Space, Typography } from 'antd';
-import { FC } from 'react';
+import type { FC } from 'react';
 
 export const DocDescription: FC<{
   student: Student;

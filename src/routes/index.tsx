@@ -7,7 +7,7 @@ import {
 } from '@/constants';
 import { BasicLayout } from '@/layouts';
 import { lazy } from 'react';
-import { RouteObject } from 'react-router-dom';
+import type { RouteObject } from 'react-router-dom';
 
 // 主页面
 // eslint-disable-next-line react-refresh/only-export-components

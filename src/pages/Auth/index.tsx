@@ -11,7 +11,7 @@ import {
   Input,
   Typography,
 } from 'antd';
-import { FC } from 'react';
+import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { CheckAuthentication } from './components';

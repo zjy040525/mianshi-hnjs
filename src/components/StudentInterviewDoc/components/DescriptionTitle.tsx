@@ -1,7 +1,7 @@
 import type { Student } from '@/typings';
 import { Typography } from 'antd';
 import dayjs from 'dayjs';
-import { FC } from 'react';
+import type { FC } from 'react';
 
 export const DescriptionTitle: FC<{ student: Student }> = ({ student }) => {
   return (

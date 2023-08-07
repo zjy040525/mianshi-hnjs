@@ -14,7 +14,8 @@ import {
   SolutionOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Typography, theme } from 'antd';
-import { FC, Suspense, useCallback } from 'react';
+import type { FC } from 'react';
+import { Suspense, useCallback } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { HasAuthorizationFeature } from './components';

@@ -13,10 +13,11 @@ import {
   Table,
   Typography,
 } from 'antd';
-import { ColumnsType } from 'antd/es/table';
-import { ColumnFilterItem } from 'antd/es/table/interface';
+import type { ColumnsType } from 'antd/es/table';
+import type { ColumnFilterItem } from 'antd/es/table/interface';
 import dayjs from 'dayjs';
-import { FC, useState } from 'react';
+import type { FC } from 'react';
+import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { badge } from './components';
 import { filterMap } from './utils';

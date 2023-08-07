@@ -13,6 +13,7 @@ import {
 import type { Student } from '@/typings';
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { useRequest } from 'ahooks';
+import type { StepProps } from 'antd';
 import {
   App as AntdApp,
   Badge,
@@ -24,11 +25,11 @@ import {
   Select,
   Space,
   Spin,
-  StepProps,
   Steps,
   Tag,
 } from 'antd';
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import type { FC } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import {
   PRINT_DOC_KEY,
@@ -160,7 +161,7 @@ const SignInOfStudent: FC = () => {
     return () => {
       window.removeEventListener('afterprint', clearPrintDoc);
     };
-  }, []);
+  }, [clearPrintDoc]);
   return (
     <PermissionGuard permission="SIGN">
       <HeadTitle titles={[chosenStudent?.name, '签到']} />

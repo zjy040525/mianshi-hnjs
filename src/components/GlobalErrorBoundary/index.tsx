@@ -1,5 +1,5 @@
 import { Button, Result, Typography } from 'antd';
-import { FC } from 'react';
+import type { FC } from 'react';
 import { useRouteError } from 'react-router-dom';
 import classes from './index.module.less';
 
