@@ -1,5 +1,5 @@
 {
-  "*": "prettier --write",
+  "!(*.editorconfig)": "prettier --write",
   "*.js?(x)": "eslint --fix",
   "*.ts?(x)": "eslint --fix"
 }
