@@ -1,29 +1,23 @@
-# Interview Management System Backend
+# 海宁技师学院面试管理系统后端
 
-海宁技师学院面试管理系统 IMS（Interview Management System）后端
+面试管理系统后端项目。
 
 ## Install
 
-这个项目使用 [node](http://nodejs.org) 和 [pnpm](https://pnpm.io/)。请确保你本地安装了它们。
+该项目使用[node](http://nodejs.org)，请确保你安装了它们。
 
-Node.js的版本建议>=16。
+Node.js版本建议>=16。
 
-配置国内镜像源。
+配置npm国内镜像源。
 
 ```shell
 $ npm config set registry https://registry.npmmirror.com
 ```
 
-安装 pnpm。
-
-```shell
-$ npm -g install pnpm
-```
-
 安装项目依赖。
 
 ```shell
-$ pnpm install
+$ npm install
 ```
 
 ## Usage
@@ -31,8 +25,7 @@ $ pnpm install
 配置环境变量。在`server/`新建`.env`、`.env.development`、`.env.production`。
 
 ```dotenv
-# .env 通用环境变量
-
+# .env
 JWT_SECRET=自定义密钥
 # 签到操作员的用户名，多个用`,`分隔；别名用`:`分隔
 SIGN_OPERATORS=sign1:一号签到员,sign2:二号签到员,sign3:三号签到员,sign4:四号签到员,sign5:五号签到员
@@ -43,8 +36,7 @@ MANAGE_OPERATORS=admin1:管理员
 ```
 
 ```dotenv
-# .env.development 开发环境变量
-
+# .env.development
 MYSQL_ADDRESS=开发环境数据库地址
 MYSQL_USERNAME=用户名
 MYSQL_PASSWORD=密码
@@ -58,8 +50,7 @@ MYSQL_DATABASE=要使用的数据库名字
 ```
 
 ```dotenv
-# .env.production 正式环境变量
-
+# .env.production
 MYSQL_ADDRESS=正式环境数据库地址
 MYSQL_USERNAME=用户名
 MYSQL_PASSWORD=密码
@@ -75,13 +66,13 @@ MYSQL_DATABASE=要使用的数据库名字
 **后续的运行将跳过该步骤，并且不再输出操作员对应的密码！**
 
 ```shell
-$ pnpm start:dev
+$ npm run start:dev
 ```
 
 命令行启动（正式环境使用，推荐正式环境使用 PM2 启动）。
 
 ```shell
-$ pnpm start:prod
+$ npm run start:prod
 ```
 
 通过 PM2 启动（正式环境推荐使用）。
