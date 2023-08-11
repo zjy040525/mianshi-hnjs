@@ -1,6 +1,6 @@
 {
-  "name": "interview-management-system-backend",
-  "version": "0.1.0",
+  "name": "mianshi-hnjs-backend",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start:dev": "cross-env NODE_ENV=development nodemon src/index.js",
