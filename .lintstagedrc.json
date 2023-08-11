@@ -1,5 +1,5 @@
 {
-  "!(.editorconfig)": "prettier --write",
-  "*.js": "eslint --fix",
-  "*.ts": "eslint --fix"
+  "^.+\\..+$": "prettier --cache --write",
+  "*.js?(x)": ["eslint --fix", "prettier --cache --write"],
+  "*.ts?(x)": ["eslint --fix", "prettier --cache --parser=typescript --write"]
 }
