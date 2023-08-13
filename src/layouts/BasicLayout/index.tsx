@@ -91,7 +91,7 @@ export const BasicLayout: FC = () => {
               height={32}
             />
             <Typography.Title className={classes.title} level={5}>
-              海宁技师学院面试管理系统
+              {import.meta.env.VITE_APP_NAME}
             </Typography.Title>
           </span>
         </div>

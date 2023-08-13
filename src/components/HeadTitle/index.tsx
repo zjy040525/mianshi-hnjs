@@ -13,7 +13,7 @@ export const HeadTitle: FC<{ titles?: (string | null | undefined)[] }> = ({
   <Helmet>
     <title>
       {titles ? `${titles.filter(Boolean).join('-')}-` : ''}
-      海宁技师学院面试管理系统
+      {import.meta.env.VITE_APP_NAME}
     </title>
   </Helmet>
 );

@@ -7,7 +7,7 @@ export const DescriptionTitle: FC<{ student: Student }> = ({ student }) => {
   return (
     <>
       <Typography.Title style={{ textAlign: 'center' }}>
-        2023年海宁技师学院招生面试单
+        {import.meta.env.VITE_DOCUMENT_NAME}
       </Typography.Title>
       <div
         style={{

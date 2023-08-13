@@ -9,7 +9,7 @@ export const StudentDescription: FC<{
 }> = ({ student, signStatus }) => {
   return (
     <Descriptions
-      title="2023年海宁技师学院招生面试单"
+      title={import.meta.env.VITE_DOCUMENT_NAME}
       bordered
       items={[
         {
