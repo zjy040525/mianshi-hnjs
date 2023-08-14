@@ -21,7 +21,7 @@ export const Access: FC<PropsWithChildren<{ role: Role }>> = ({
   const authorization = useRecoilValue(authorizationStateSelector);
   useMount(() => {
     if (!authorization.token) {
-      message.error('请先认证！');
+      message.error('请先登录！');
     } else if (authorization.role !== role) {
       message.error('权限不足！');
     }

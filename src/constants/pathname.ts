@@ -1,4 +1,4 @@
-// 认证页面
+// 认证（登录）页面
 export const AUTHENTICATION_PATHNAME = '/authentication';
 
 // 签到页面

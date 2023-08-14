@@ -36,7 +36,7 @@ export default [
         path: '/',
         element: <Home />,
       },
-      // 认证页面
+      // （登录）页面
       {
         path: AUTHENTICATION_PATHNAME,
         element: <Auth />,

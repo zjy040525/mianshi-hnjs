@@ -37,7 +37,7 @@ const Home: FC = () => {
                 icon={<LoginOutlined />}
                 onClick={() => navigate(AUTHENTICATION_PATHNAME)}
               >
-                前往认证
+                前往登录
               </Button>
             )}
           </Card>
