@@ -9,7 +9,7 @@ import { authorizationStateSelector } from '@/selectors';
 import {
   EditOutlined,
   HomeOutlined,
-  LockOutlined,
+  LoginOutlined,
   SettingOutlined,
   SolutionOutlined,
 } from '@ant-design/icons';
@@ -25,15 +25,15 @@ const { Content, Header } = Layout;
 
 export const BasicLayout: FC = () => {
   const authorization = useRecoilValue(authorizationStateSelector);
-  // 是否显示`认证`菜单选项
+  // 是否显示`登录`菜单选项
   const showAuthentication = useCallback(() => {
     if (authorization.token) {
       return [];
     }
     return {
-      icon: <LockOutlined />,
+      icon: <LoginOutlined />,
       key: AUTHENTICATION_PATHNAME,
-      label: '认证',
+      label: '登录',
     };
   }, [authorization]);
   // 是否显示`签到`菜单选项

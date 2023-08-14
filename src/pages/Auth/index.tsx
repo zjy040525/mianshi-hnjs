@@ -61,7 +61,7 @@ const Authentication: FC = () => {
     <CheckAuthentication>
       <HeadTitle titles={['登录']} />
       <Card className={classes.card}>
-        <Typography.Title level={3}>用户登录</Typography.Title>
+        <Typography.Title level={3}>登录</Typography.Title>
         <Divider />
         <Form
           scrollToFirstError
@@ -74,7 +74,7 @@ const Authentication: FC = () => {
           <Form.Item
             name="username"
             colon={false}
-            label="用户名"
+            label={<div className={classes.label}>用户名</div>}
             rules={[
               { required: true, message: '请填写用户名' },
               { whitespace: true, message: '请填写用户名' },
@@ -87,7 +87,7 @@ const Authentication: FC = () => {
           <Form.Item
             name="password"
             colon={false}
-            label="密码"
+            label={<div className={classes.label}>密码</div>}
             rules={[
               { required: true, message: '请填写密码' },
               { whitespace: true, message: '请填写密码' },
