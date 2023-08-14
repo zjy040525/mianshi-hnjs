@@ -38,7 +38,7 @@ export const BasicLayout: FC = () => {
   }, [authorization]);
   // 是否显示`签到`菜单选项
   const showSign = useCallback(() => {
-    if (authorization.token && authorization.permission === 'SIGN') {
+    if (authorization.token && authorization.role === 'sign-all') {
       return {
         icon: <SolutionOutlined />,
         key: STUDENT_SIGN_IN_PATHNAME,
@@ -49,7 +49,7 @@ export const BasicLayout: FC = () => {
   }, [authorization]);
   // 是否显示`面试`菜单选项
   const showInterview = useCallback(() => {
-    if (authorization.token && authorization.permission === 'INTERVIEW') {
+    if (authorization.token && authorization.role === 'interview-all') {
       return {
         icon: <EditOutlined />,
         key: INTERVIEW_PATHNAME,
@@ -60,7 +60,7 @@ export const BasicLayout: FC = () => {
   }, [authorization]);
   // 是否显示`管理`菜单选项
   const showManage = useCallback(() => {
-    if (authorization.token && authorization.permission === 'MANAGE') {
+    if (authorization.token && authorization.role === 'admin-all') {
       return {
         icon: <SettingOutlined />,
         key: MANAGE_PATHNAME,

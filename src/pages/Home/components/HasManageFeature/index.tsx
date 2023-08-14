@@ -9,7 +9,7 @@ export const HasManageFeature: FC = () => {
   const [newMsgNotification, setNewMsgNotification] = useRecoilState(
     adminNewMsgNotification,
   );
-  if (authorization.permission === 'MANAGE') {
+  if (authorization.role === 'admin-all') {
     return (
       <Col>
         <Card title="设置">

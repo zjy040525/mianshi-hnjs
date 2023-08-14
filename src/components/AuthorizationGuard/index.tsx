@@ -19,7 +19,7 @@ export const AuthorizationGuard: FC<PropsWithChildren> = ({ children }) => {
   const { run: runAuthorization } = useRequest(authorizationService, {
     manual: true,
     onSuccess({ data }) {
-      // 保存正确的操作员信息
+      // 保存正确的用户信息
       setAuthorization({ ...data, token });
     },
     onError(err) {

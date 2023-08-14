@@ -1,7 +1,7 @@
 import {
   idStateAtom,
   nicknameStateAtom,
-  permissionStateAtom,
+  roleStateAtom,
   tokenStateAtom,
   usernameStateAtom,
 } from '@/atoms';
@@ -15,7 +15,7 @@ export const authorizationStateSelector = selector({
     token: get(tokenStateAtom),
     username: get(usernameStateAtom),
     nickname: get(nicknameStateAtom),
-    permission: get(permissionStateAtom),
+    role: get(roleStateAtom),
   }),
   set({ set }, newValue) {
     if (newValue instanceof DefaultValue) {
@@ -24,14 +24,14 @@ export const authorizationStateSelector = selector({
       set(tokenStateAtom, null);
       set(usernameStateAtom, null);
       set(nicknameStateAtom, null);
-      set(permissionStateAtom, null);
+      set(roleStateAtom, null);
     } else {
       set(idStateAtom, newValue.id);
       setAuthorizationToken(newValue.token);
       set(tokenStateAtom, newValue.token);
       set(usernameStateAtom, newValue.username);
       set(nicknameStateAtom, newValue.nickname);
-      set(permissionStateAtom, newValue.permission);
+      set(roleStateAtom, newValue.role);
     }
   },
 });

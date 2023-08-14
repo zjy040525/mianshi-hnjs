@@ -1,5 +1,5 @@
 import { idStateAtom } from '@/atoms';
-import { HeadTitle, PermissionGuard, StudentDescription } from '@/components';
+import { Access, HeadTitle, StudentDescription } from '@/components';
 import {
   studentInterviewSearchService,
   studentInterviewService,
@@ -98,7 +98,7 @@ const Interview: FC = () => {
         message.open({
           key: STUDENT_INTERVIEW_KEY,
           type: 'loading',
-          content: '操作中…',
+          content: '进行中…',
           duration: 0,
         });
       },
@@ -121,7 +121,7 @@ const Interview: FC = () => {
     },
   );
   return (
-    <PermissionGuard permission="INTERVIEW">
+    <Access role="interview-all">
       <HeadTitle titles={[chosenStudent?.name, '面试']} />
       <Card>
         <Steps
@@ -179,9 +179,9 @@ const Interview: FC = () => {
                         </span>
                         {!student.interviewed_operator &&
                         student.interviewed_date ? (
-                          // 这里渲染的条件是处于异常状态（异常状态：操作员不存在但是又有过面试记录）
+                          // 这里渲染的条件是处于异常状态（异常状态：拥有指定权限的用户不存在，但是又有过面试记录）
                           <Tag icon={<CloseCircleOutlined />} color="error">
-                            面试异常，请联系管理员！
+                            面试异常，请联系上级！
                           </Tag>
                         ) : (
                           <>
@@ -342,7 +342,7 @@ const Interview: FC = () => {
           </Col>
         </Row>
       </Card>
-    </PermissionGuard>
+    </Access>
   );
 };
 

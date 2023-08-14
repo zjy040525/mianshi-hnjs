@@ -1,5 +1,5 @@
 import myAxios from '@/lib/myAxios';
-import type { Permission, Response } from '@/typings';
+import type { Response, Role } from '@/typings';
 
 /**
  * 认证服务
@@ -17,7 +17,7 @@ export const authenticationService = (
     id: number;
     username: string;
     nickname: string | null;
-    permission: Permission;
+    role: Role;
   }>
 > => {
   return myAxios.post('/authentication', { username, password });
@@ -33,7 +33,7 @@ export const authorizationService = async (): Promise<
     id: number;
     username: string;
     nickname: string | null;
-    permission: Permission;
+    role: Role;
   }>
 > => {
   return await myAxios.post('/authorization');

@@ -1,7 +1,7 @@
 import { idStateAtom } from '@/atoms';
 import {
+  Access,
   HeadTitle,
-  PermissionGuard,
   StudentDescription,
   StudentInterviewDoc,
 } from '@/components';
@@ -163,7 +163,7 @@ const SignInOfStudent: FC = () => {
     };
   }, [clearPrintDoc]);
   return (
-    <PermissionGuard permission="SIGN">
+    <Access role="sign-all">
       <HeadTitle titles={[chosenStudent?.name, '签到']} />
       <iframe
         className={classes.printElement}
@@ -254,7 +254,7 @@ const SignInOfStudent: FC = () => {
                             </>
                           ) : (
                             <Tag icon={<CloseCircleOutlined />} color="error">
-                              签到异常，请联系管理员！
+                              签到异常，请联系上级！
                             </Tag>
                           )
                         ) : (
@@ -373,7 +373,7 @@ const SignInOfStudent: FC = () => {
           </Col>
         </Row>
       </Card>
-    </PermissionGuard>
+    </Access>
   );
 };
 

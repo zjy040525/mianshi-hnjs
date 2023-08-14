@@ -19,7 +19,7 @@ export const HasAuthorizationFeature: FC = () => {
           menu={{
             items: [
               {
-                key: 'operator',
+                key: 'user',
                 label: (
                   <>
                     当前身份

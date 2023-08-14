@@ -1,5 +1,5 @@
 import { RECOIL_PERSIST_LOCAL_STORAGE_KEY } from '@/constants';
-import type { Permission } from '@/typings';
+import type { Role } from '@/typings';
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
@@ -25,16 +25,16 @@ export const usernameStateAtom = atom<string | null>({
   default: null,
 });
 
-// 操作者的昵称，没有昵称则会显示`用户名`
+// 用户昵称，没有昵称则会显示`用户名`
 export const nicknameStateAtom = atom<string | null>({
   key: 'nicknameStateAtom',
   effects_UNSTABLE: [persistAtom],
   default: null,
 });
 
-// 操作者访问的权限
-export const permissionStateAtom = atom<Permission | null>({
-  key: 'permissionStateAtom',
+// 用户访问权限
+export const roleStateAtom = atom<Role | null>({
+  key: 'roleStateAtom',
   effects_UNSTABLE: [persistAtom],
   default: null,
 });

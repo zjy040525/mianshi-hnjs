@@ -35,7 +35,7 @@ const Authentication: FC = () => {
       message.open({
         key: AUTHENTICATION_MESSAGE_KEY,
         type: 'loading',
-        content: '认证中…',
+        content: '登录中…',
         duration: 0,
       });
     },
@@ -53,15 +53,15 @@ const Authentication: FC = () => {
       message.open({
         key: AUTHENTICATION_MESSAGE_KEY,
         type: 'error',
-        content: `认证失败，${err.message}`,
+        content: `登录失败，${err.message}`,
       });
     },
   });
   return (
     <CheckAuthentication>
-      <HeadTitle titles={['认证']} />
+      <HeadTitle titles={['登录']} />
       <Card className={classes.card}>
-        <Typography.Title level={3}>身份认证</Typography.Title>
+        <Typography.Title level={3}>用户登录</Typography.Title>
         <Divider />
         <Form
           scrollToFirstError
@@ -74,11 +74,11 @@ const Authentication: FC = () => {
           <Form.Item
             name="username"
             colon={false}
-            label="用户名称"
+            label="用户名"
             rules={[
-              { required: true, message: '请填写用户名称' },
-              { whitespace: true, message: '请填写用户名称' },
-              { max: 50, message: '用户名称长度不得大于50个字符' },
+              { required: true, message: '请填写用户名' },
+              { whitespace: true, message: '请填写用户名' },
+              { max: 50, message: '用户名长度不得大于50个字符' },
             ]}
             hasFeedback
           >
@@ -87,12 +87,12 @@ const Authentication: FC = () => {
           <Form.Item
             name="password"
             colon={false}
-            label="认证密码"
+            label="密码"
             rules={[
-              { required: true, message: '请填写认证密码' },
-              { whitespace: true, message: '请填写认证密码' },
-              { min: 8, message: '认证密码长度不得少于8个字符' },
-              { max: 32, message: '认证密码长度不得大于32个字符' },
+              { required: true, message: '请填写密码' },
+              { whitespace: true, message: '请填写密码' },
+              { min: 8, message: '密码长度不得少于8个字符' },
+              { max: 32, message: '密码长度不得大于32个字符' },
             ]}
             hasFeedback
           >
@@ -100,7 +100,7 @@ const Authentication: FC = () => {
           </Form.Item>
           <Form.Item className={classes.submit}>
             <Button htmlType="submit" type="primary">
-              {loading ? '认证中…' : '认证'}
+              {loading ? '登录中…' : '登录'}
             </Button>
           </Form.Item>
         </Form>

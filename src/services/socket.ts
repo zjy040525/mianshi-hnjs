@@ -1,5 +1,5 @@
 /**
- * 操作员的操作信息套接字
+ * 用户操作的即时信息
  *
  * @author Jia-Yao Zhao
  */
@@ -8,7 +8,7 @@ export const operationSocket = () => {
 };
 
 /**
- * 统计信息套接字
+ * 统计信息
  *
  * @author Jia-Yao Zhao
  */

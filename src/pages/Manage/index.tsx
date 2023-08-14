@@ -1,5 +1,5 @@
 import { adminNewMsgNotification, tokenStateAtom } from '@/atoms';
-import { HeadTitle, PermissionGuard } from '@/components';
+import { Access, HeadTitle } from '@/components';
 import { operationSocket, statisticSocket } from '@/services';
 import type { Student } from '@/typings';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
@@ -108,7 +108,7 @@ const Manage: FC = () => {
         (b.signed_date ? Date.parse(b.signed_date) : 0),
     },
     {
-      title: '签到操作员',
+      title: '签到员',
       dataIndex: 'signed_operator',
       render(signedOperator) {
         if (signedOperator) {
@@ -186,7 +186,7 @@ const Manage: FC = () => {
         (b.interviewed_date ? Date.parse(b.interviewed_date) : 0),
     },
     {
-      title: '面试操作员',
+      title: '面试员',
       dataIndex: 'interviewed_operator',
       render(interviewedOperator) {
         if (interviewedOperator) {
@@ -210,7 +210,7 @@ const Manage: FC = () => {
     noInterviewedCount: -1,
   });
   const token = useRecoilValue(tokenStateAtom);
-  // 操作信息socket
+  // 接收不同用户操作的即时信息
   const operationWs = useWebSocket(operationSocket(), {
     // 需要手动连接
     manual: true,
@@ -274,7 +274,7 @@ const Manage: FC = () => {
     statisticWs.disconnect();
   });
   return (
-    <PermissionGuard permission="MANAGE">
+    <Access role="admin-all">
       <HeadTitle titles={['管理']} />
       <Row gutter={[16, 16]}>
         <Col span={12}>
@@ -393,7 +393,7 @@ const Manage: FC = () => {
           />
         </Col>
       </Row>
-    </PermissionGuard>
+    </Access>
   );
 };
 

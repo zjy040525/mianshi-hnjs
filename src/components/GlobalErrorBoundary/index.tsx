@@ -16,7 +16,7 @@ export const GlobalErrorBoundary: FC = () => {
       className={classes.globalErrorBoundary}
       status="error"
       title="未知错误"
-      subTitle="网站在运行时发生了未知的错误，请重试或向管理员报告此问题！"
+      subTitle="网站在运行时发生了未知的错误，请重试或向上级报告此问题！"
       extra={[
         <Button
           type="primary"

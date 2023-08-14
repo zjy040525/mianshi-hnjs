@@ -16,7 +16,7 @@ export interface Student {
   sign_status: boolean;
   // 签到时间
   signed_date: string | null;
-  // 签到操作员
+  // 签到员
   signed_operator: Operator | null;
   // 学前专业
   interview_xq: InterviewStatus;
@@ -26,7 +26,7 @@ export interface Student {
   interview_gd: InterviewStatus;
   // 面试时间
   interviewed_date: string | null;
-  // 面试操作员
+  // 面试员
   interviewed_operator: Operator | null;
 }
 
