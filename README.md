@@ -43,7 +43,7 @@ VITE_WS_URL=开发环境后端地址
 `.env.production`
 
 ```dotenv
-# 正式环境下的变量（正式环境）
+# 正式环境下的变量（仅在正式环境下有效）
 
 VITE_API_URL=正式环境后端地址
 VITE_WS_URL=正式环境后端地址
