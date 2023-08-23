@@ -43,10 +43,10 @@ VITE_WS_URL=开发环境后端地址
 `.env.production`
 
 ```dotenv
-# 构建过程中使用的变量（正式环境）
+# 正式环境下的变量（正式环境）
 
-VITE_API_URL=开发环境后端地址
-VITE_WS_URL=开发环境后端地址
+VITE_API_URL=正式环境后端地址
+VITE_WS_URL=正式环境后端地址
 ```
 
 环境变量配置完成后，启动服务
