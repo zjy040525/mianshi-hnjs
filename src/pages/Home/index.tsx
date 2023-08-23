@@ -20,7 +20,7 @@ const Home: FC = () => {
         <HasManageFeature />
         <Col>
           <Card
-            title={authorization.nickname ?? authorization.username ?? '未登录'}
+            title={authorization.nickname || authorization.username || '未登录'}
           >
             {authorization.token ? (
               <Button

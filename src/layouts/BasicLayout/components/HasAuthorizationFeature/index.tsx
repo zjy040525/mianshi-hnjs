@@ -24,7 +24,7 @@ export const HasAuthorizationFeature: FC = () => {
                   <>
                     当前身份
                     <strong style={{ paddingInlineStart: 8 }}>
-                      {authorization.nickname ?? authorization.username}
+                      {authorization.nickname || authorization.username}
                     </strong>
                   </>
                 ),

@@ -3,8 +3,8 @@
  *
  * @author Jia-Yao Zhao
  */
-export const operationSocket = () => {
-  return import.meta.env.VITE_WS_URL + '/manage/operation';
+export const userSocket = () => {
+  return import.meta.env.VITE_WS_URL + '/manage/user';
 };
 
 /**
@@ -12,6 +12,6 @@ export const operationSocket = () => {
  *
  * @author Jia-Yao Zhao
  */
-export const statisticSocket = () => {
-  return import.meta.env.VITE_WS_URL + '/manage/statistic';
+export const studentSocket = () => {
+  return import.meta.env.VITE_WS_URL + '/manage/student';
 };

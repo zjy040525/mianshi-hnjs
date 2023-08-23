@@ -1,6 +1,6 @@
 import { adminNewMsgNotification, tokenStateAtom } from '@/atoms';
 import { Access, HeadTitle } from '@/components';
-import { operationSocket, statisticSocket } from '@/services';
+import { studentSocket, userSocket } from '@/services';
 import type { Student } from '@/typings';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { useMount, useUnmount, useWebSocket } from 'ahooks';
@@ -29,10 +29,10 @@ import { filterMap } from './utils';
  */
 const Manage: FC = () => {
   // 筛选过滤条件
-  const [signedOperatorFilters, setSignedOperatorFilters] = useState<
+  const [signedUserFilters, setSignedUserFilters] = useState<
     ColumnFilterItem[]
   >([]);
-  const [interviewedOperatorFilters, setInterviewedOperatorFilters] = useState<
+  const [interviewedUserFilters, setInterviewedUserFilters] = useState<
     ColumnFilterItem[]
   >([]);
   // 表格设置
@@ -51,23 +51,23 @@ const Manage: FC = () => {
     },
     {
       title: '身份证',
-      dataIndex: 'id_card',
+      dataIndex: 'idCard',
     },
     {
-      title: '初中就读学校',
-      dataIndex: 'graduated_school',
+      title: '初中学校',
+      dataIndex: 'graduatedSchool',
     },
     {
       title: '手机号',
-      dataIndex: 'telephone_number',
+      dataIndex: 'telephoneNumber',
     },
     {
       title: '中考报名序号',
-      dataIndex: 'registration_number',
+      dataIndex: 'registrationNumber',
     },
     {
       title: '签到状态',
-      dataIndex: 'sign_status',
+      dataIndex: 'signStatus',
       render(status) {
         return status ? (
           <Typography.Text type="success">
@@ -91,12 +91,12 @@ const Manage: FC = () => {
       ],
       filterMultiple: false,
       onFilter(value, record) {
-        return record.sign_status === value;
+        return record.signStatus === value;
       },
     },
     {
       title: '签到时间',
-      dataIndex: 'signed_date',
+      dataIndex: 'signedDate',
       render(dateTime) {
         if (dateTime) {
           return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
@@ -104,26 +104,26 @@ const Manage: FC = () => {
         return '-';
       },
       sorter: (a, b) =>
-        (a.signed_date ? Date.parse(a.signed_date) : 0) -
-        (b.signed_date ? Date.parse(b.signed_date) : 0),
+        (a.signedDate ? Date.parse(a.signedDate) : 0) -
+        (b.signedDate ? Date.parse(b.signedDate) : 0),
     },
     {
-      title: '签到员',
-      dataIndex: 'signed_operator',
-      render(signedOperator) {
-        if (signedOperator) {
-          return signedOperator.nickname ?? signedOperator.username;
+      title: '签到管理员',
+      dataIndex: 'signedUser',
+      render(signedUser) {
+        if (signedUser) {
+          return signedUser.nickname || signedUser.username;
         }
         return '-';
       },
-      filters: signedOperatorFilters,
+      filters: signedUserFilters,
       onFilter(value, record) {
-        return record.signed_operator?.id === value;
+        return record.signedUserId === value;
       },
     },
     {
       title: '学前面试进度',
-      dataIndex: 'interview_xq',
+      dataIndex: 'earlyChildhoodEducationInterview',
       render: (value) => badge(value),
       filters: [
         { text: '已通过', value: 'Success' },
@@ -133,14 +133,14 @@ const Manage: FC = () => {
       ],
       onFilter(value, record) {
         if (value) {
-          return record.interview_xq === value;
+          return record.earlyChildhoodEducationInterview === value;
         }
-        return record.interview_xq === null;
+        return record.earlyChildhoodEducationInterview === null;
       },
     },
     {
       title: '旅游面试进度',
-      dataIndex: 'interview_ly',
+      dataIndex: 'tourismManagementInterview',
       render: (value) => badge(value),
       filters: [
         { text: '已通过', value: 'Success' },
@@ -150,14 +150,14 @@ const Manage: FC = () => {
       ],
       onFilter(value, record) {
         if (value) {
-          return record.interview_ly === value;
+          return record.tourismManagementInterview === value;
         }
-        return record.interview_ly === null;
+        return record.tourismManagementInterview === null;
       },
     },
     {
-      title: '轨道面试进度',
-      dataIndex: 'interview_gd',
+      title: '城轨面试进度',
+      dataIndex: 'urbanRailTransitInterview',
       render: (value) => badge(value),
       filters: [
         { text: '已通过', value: 'Success' },
@@ -167,14 +167,14 @@ const Manage: FC = () => {
       ],
       onFilter(value, record) {
         if (value) {
-          return record.interview_gd === value;
+          return record.urbanRailTransitInterview === value;
         }
-        return record.interview_gd === null;
+        return record.urbanRailTransitInterview === null;
       },
     },
     {
       title: '面试时间',
-      dataIndex: 'interviewed_date',
+      dataIndex: 'interviewedDate',
       render(dateTime) {
         if (dateTime) {
           return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
@@ -182,21 +182,21 @@ const Manage: FC = () => {
         return '-';
       },
       sorter: (a, b) =>
-        (a.interviewed_date ? Date.parse(a.interviewed_date) : 0) -
-        (b.interviewed_date ? Date.parse(b.interviewed_date) : 0),
+        (a.interviewedDate ? Date.parse(a.interviewedDate) : 0) -
+        (b.interviewedDate ? Date.parse(b.interviewedDate) : 0),
     },
     {
-      title: '面试员',
-      dataIndex: 'interviewed_operator',
-      render(interviewedOperator) {
-        if (interviewedOperator) {
-          return interviewedOperator.nickname ?? interviewedOperator.username;
+      title: '面试管理员',
+      dataIndex: 'interviewedUser',
+      render(interviewedUser) {
+        if (interviewedUser) {
+          return interviewedUser.nickname || interviewedUser.username;
         }
         return '-';
       },
-      filters: interviewedOperatorFilters,
+      filters: interviewedUserFilters,
       onFilter(value, record) {
-        return record.interviewed_operator?.id === value;
+        return record.interviewedUserId === value;
       },
     },
   ];
@@ -211,13 +211,14 @@ const Manage: FC = () => {
   });
   const token = useRecoilValue(tokenStateAtom);
   // 接收不同用户操作的即时信息
-  const operationWs = useWebSocket(operationSocket(), {
+  const userWs = useWebSocket(userSocket(), {
     // 需要手动连接
     manual: true,
+    // 关闭重连
+    reconnectLimit: 0,
     onOpen(_event, instance) {
-      const msg = { token };
       // 连接成功后发送token进行验证
-      instance.send(JSON.stringify(msg));
+      instance.send(JSON.stringify({ token }));
     },
     onMessage(msg) {
       if (newMsgNotification) {
@@ -234,11 +235,13 @@ const Manage: FC = () => {
   // 只有在`新消息通知`为启用状态下，才会连接到对应的socket
   useMount(() => {
     if (newMsgNotification) {
-      operationWs.connect();
+      userWs.connect();
     }
   });
   // 统计信息socket
-  const statisticWs = useWebSocket(statisticSocket(), {
+  const studentWs = useWebSocket(studentSocket(), {
+    // 关闭重连
+    reconnectLimit: 0,
     onOpen(_event, instance) {
       const msg = { token };
       // 连接成功后发送token进行验证
@@ -262,16 +265,14 @@ const Manage: FC = () => {
       setCounts(values.counts);
       setStudents(values.students);
       // 设置可筛选过滤的条件
-      setSignedOperatorFilters(filterMap('signed_operator', values.students));
-      setInterviewedOperatorFilters(
-        filterMap('interviewed_operator', values.students),
-      );
+      setSignedUserFilters(filterMap('signedUser', values.students));
+      setInterviewedUserFilters(filterMap('signedUser', values.students));
     },
   });
   // 组件卸载，需要断开WebSocket的连接
   useUnmount(() => {
-    operationWs.disconnect();
-    statisticWs.disconnect();
+    userWs.disconnect();
+    studentWs.disconnect();
   });
   return (
     <Access role="admin-all">
@@ -283,9 +284,7 @@ const Manage: FC = () => {
               <Card>
                 <Statistic
                   title="已签到人数"
-                  loading={
-                    statisticWs.readyState !== 1 || counts.signedCount < 0
-                  }
+                  loading={studentWs.readyState !== 1 || counts.signedCount < 0}
                   value={counts.signedCount}
                 />
               </Card>
@@ -295,7 +294,7 @@ const Manage: FC = () => {
                 <Statistic
                   title="未签到人数"
                   loading={
-                    statisticWs.readyState !== 1 || counts.noSignedCount < 0
+                    studentWs.readyState !== 1 || counts.noSignedCount < 0
                   }
                   value={counts.noSignedCount}
                 />
@@ -306,7 +305,7 @@ const Manage: FC = () => {
                 <Statistic
                   title="总人数"
                   loading={
-                    statisticWs.readyState !== 1 ||
+                    studentWs.readyState !== 1 ||
                     counts.signedCount + counts.noSignedCount < 0
                   }
                   value={counts.signedCount + counts.noSignedCount}
@@ -318,7 +317,7 @@ const Manage: FC = () => {
                 <Statistic
                   title="签到进度"
                   loading={
-                    statisticWs.readyState !== 1 ||
+                    studentWs.readyState !== 1 ||
                     counts.signedCount + counts.noSignedCount < 0
                   }
                   value={
@@ -341,7 +340,7 @@ const Manage: FC = () => {
                 <Statistic
                   title="已面试人数"
                   loading={
-                    statisticWs.readyState !== 1 || counts.interviewedCount < 0
+                    studentWs.readyState !== 1 || counts.interviewedCount < 0
                   }
                   value={counts.interviewedCount}
                 />
@@ -352,8 +351,7 @@ const Manage: FC = () => {
                 <Statistic
                   title="未面试人数"
                   loading={
-                    statisticWs.readyState !== 1 ||
-                    counts.noInterviewedCount < 0
+                    studentWs.readyState !== 1 || counts.noInterviewedCount < 0
                   }
                   value={counts.noInterviewedCount}
                 />
@@ -364,7 +362,7 @@ const Manage: FC = () => {
                 <Statistic
                   title="面试进度"
                   loading={
-                    statisticWs.readyState !== 1 ||
+                    studentWs.readyState !== 1 ||
                     counts.interviewedCount + counts.noInterviewedCount < 0
                   }
                   value={
@@ -383,8 +381,8 @@ const Manage: FC = () => {
           <Table
             bordered
             columns={columns}
-            rowKey={(record) => record.id_card}
-            loading={statisticWs.readyState !== 1}
+            rowKey={(record) => record.idCard}
+            loading={studentWs.readyState !== 1}
             dataSource={students}
             pagination={{
               defaultPageSize: 20,

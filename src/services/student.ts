@@ -51,16 +51,21 @@ export const studentInterviewSearchService = (
  * 为学生打分服务
  *
  * @param studentId 学生Id
- * @param xq 学前
- * @param ly 旅游
- * @param gd 轨道
+ * @param earlyChildhoodEducation 学前
+ * @param tourismManagement 旅游
+ * @param urbanRailTransit 城轨
  * @author Jia-Yao Zhao
  */
 export const studentInterviewService = (
   studentId: number | string,
-  xq: InterviewStatus,
-  ly: InterviewStatus,
-  gd: InterviewStatus,
+  earlyChildhoodEducation: InterviewStatus,
+  tourismManagement: InterviewStatus,
+  urbanRailTransit: InterviewStatus,
 ): Promise<Response<Student>> => {
-  return myAxios.patch('/student/interview', { studentId, xq, ly, gd });
+  return myAxios.patch('/student/interview', {
+    studentId,
+    earlyChildhoodEducation,
+    tourismManagement,
+    urbanRailTransit,
+  });
 };

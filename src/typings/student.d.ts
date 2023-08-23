@@ -4,36 +4,40 @@ export interface Student {
   name: string;
   // 性别
   gender: string;
-  // 身份证号码
-  id_card: string;
+  // 身份证号
+  idCard: string;
   // 毕业学校
-  graduated_school: string;
-  // 手机号码
-  telephone_number: string;
+  graduatedSchool: string;
+  // 手机号
+  telephoneNumber: string;
   // 中考报名序号
-  registration_number: string;
+  registrationNumber: string;
   // 签到状态
-  sign_status: boolean;
+  signStatus: boolean;
   // 签到时间
-  signed_date: string | null;
-  // 签到员
-  signed_operator: Operator | null;
-  // 学前专业
-  interview_xq: InterviewStatus;
-  // 旅游专业
-  interview_ly: InterviewStatus;
-  // 轨道专业
-  interview_gd: InterviewStatus;
+  signedDate: string;
+  // 执行签到的用户
+  signedUserId: null | number;
+  signedUser: null | User;
+  // 学前专业面试
+  earlyChildhoodEducationInterview: InterviewStatus;
+  // 旅游专业面试
+  tourismManagementInterview: InterviewStatus;
+  // 城轨专业面试
+  urbanRailTransitInterview: InterviewStatus;
   // 面试时间
-  interviewed_date: string | null;
-  // 面试员
-  interviewed_operator: Operator | null;
+  interviewedDate: string;
+  // 执行面试的用户
+  interviewedUserId: null | number;
+  interviewedUser: null | User;
 }
 
 export type InterviewStatus = 'Processing' | 'Success' | 'Failed' | null;
 
-interface Operator {
+interface User {
   id: number;
+  // 用户名
   username: string;
+  // 用户昵称
   nickname: string | null;
 }

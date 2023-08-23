@@ -6,4 +6,4 @@ export * from './HeadTitle';
 export * from './PageLoading';
 export * from './PageNotFound';
 export * from './StudentDescription';
-export * from './StudentInterviewDoc';
+export * from './StudentPrintDescription';

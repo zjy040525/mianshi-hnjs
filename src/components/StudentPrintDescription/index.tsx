@@ -1,15 +1,23 @@
 import type { Student } from '@/typings';
 import { Descriptions, Tag } from 'antd';
-import type { FC, ReactNode } from 'react';
+import dayjs from 'dayjs';
+import type { FC } from 'react';
 
-export const StudentDescription: FC<{
+export const StudentPrintDescription: FC<{
   student: Student;
-  signStatus?: ReactNode;
-}> = ({ student, signStatus }) => {
+}> = ({ student }) => {
   return (
     <Descriptions
-      title="学生信息"
+      title={import.meta.env.VITE_DOCUMENT_NAME}
       items={[
+        {
+          label: '签到时间',
+          children: dayjs(student.signedDate).format('YYYY-MM-DD HH:mm:ss'),
+        },
+        {
+          label: '系统序号',
+          children: student.id,
+        },
         {
           label: '姓名',
           children: student.name,
@@ -60,10 +68,6 @@ export const StudentDescription: FC<{
               </Tag>
             </div>
           ),
-        },
-        {
-          label: '签到状态',
-          children: signStatus,
         },
       ]}
     />

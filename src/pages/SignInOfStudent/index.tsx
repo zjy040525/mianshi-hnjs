@@ -3,7 +3,7 @@ import {
   Access,
   HeadTitle,
   StudentDescription,
-  StudentInterviewDoc,
+  StudentPrintDescription,
 } from '@/components';
 import {
   studentPrintService,
@@ -11,7 +11,11 @@ import {
   studentSignService,
 } from '@/services';
 import type { Student } from '@/typings';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import {
+  CloseCircleOutlined,
+  StopOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 import type { StepProps } from 'antd';
 import {
@@ -168,7 +172,7 @@ const SignInOfStudent: FC = () => {
       <iframe
         className={classes.printElement}
         ref={printRef}
-        srcDoc={printDoc ?? '请在打印步骤（步骤4）中点击下方按钮获取打印模板！'}
+        srcDoc={printDoc || '请在打印步骤（步骤4）中点击下方按钮获取打印模板！'}
         onLoad={() => {
           // 模板载入完成后打开系统打印窗口
           if (printDoc) {
@@ -221,35 +225,36 @@ const SignInOfStudent: FC = () => {
                   return {
                     value: student.id,
                     disabled:
-                      !!student.signed_operator &&
-                      student.signed_operator.id !== idState,
+                      !!student.signedUserId &&
+                      student.signedUserId !== idState,
                     label: (
                       <span className={classes.selectItem}>
                         <span style={{ marginInlineEnd: 8 }}>
-                          {student.name}（{student.id_card}）
+                          {student.name}（{student.idCard}）
                         </span>
-                        {student.sign_status ? (
-                          student.signed_operator ? (
+                        {student.signStatus ? (
+                          student.signedUser ? (
                             <>
                               <Tag color="success">已签到</Tag>
                               <Tag
+                                style={{
+                                  marginInlineEnd: 0,
+                                }}
+                                icon={
+                                  student.signedUserId === idState ? (
+                                    <UserOutlined />
+                                  ) : (
+                                    <StopOutlined />
+                                  )
+                                }
                                 color={
-                                  student.signed_operator.id === idState
-                                    ? 'success'
-                                    : 'warning'
+                                  student.signedUserId === idState
+                                    ? 'green'
+                                    : 'red'
                                 }
                               >
-                                隶属于
-                                <span style={{ paddingInlineStart: 8 }}>
-                                  {`${
-                                    student.signed_operator.nickname ??
-                                    student.signed_operator.username
-                                  }${
-                                    student.signed_operator.id === idState
-                                      ? '（我）'
-                                      : ''
-                                  }`}
-                                </span>
+                                {student.signedUser.nickname ||
+                                  student.signedUser.username}
                               </Tag>
                             </>
                           ) : (
@@ -270,7 +275,7 @@ const SignInOfStudent: FC = () => {
           ) : null}
           {chosenStudent && currentStep > STEP_3 ? (
             <Col>
-              <StudentInterviewDoc student={chosenStudent} />
+              <StudentPrintDescription student={chosenStudent} />
             </Col>
           ) : null}
           {chosenStudent &&
@@ -317,7 +322,7 @@ const SignInOfStudent: FC = () => {
                     disabled={signing || !chosenStudent}
                     onClick={() => {
                       // 如果选择的是一个已签到的同学，那么直接到打印步骤
-                      if (chosenStudent?.sign_status) {
+                      if (chosenStudent?.signStatus) {
                         setCurrentStep(STEP_4);
                       } else {
                         setCurrentStep(currentStep + 1);

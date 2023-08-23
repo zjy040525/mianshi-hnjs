@@ -5,7 +5,7 @@ import type { FC } from 'react';
 export const InterviewBadge: FC<{ status: InterviewStatus }> = ({ status }) => {
   switch (status) {
     case 'Processing':
-      return <Badge status="processing" text="未面试（进行中）" />;
+      return <Badge status="processing" text="进行中" />;
     case 'Success':
       return <Badge status="success" text="通过" />;
     case 'Failed':

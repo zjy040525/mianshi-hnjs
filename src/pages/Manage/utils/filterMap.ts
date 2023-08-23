@@ -15,7 +15,7 @@ export const filterMap = (filterable: keyof Student, students: Student[]) => {
     }
     // 用于过滤重复项
     if (!map.has(obj.id)) {
-      map.set(obj.id, obj.nickname ?? obj.username);
+      map.set(obj.id, obj.nickname || obj.username);
     }
   }
   // 排序

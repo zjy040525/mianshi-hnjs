@@ -5,7 +5,11 @@ import {
   studentInterviewService,
 } from '@/services';
 import type { InterviewStatus, Student } from '@/typings';
-import { CloseCircleOutlined } from '@ant-design/icons';
+import {
+  CloseCircleOutlined,
+  StopOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { useRequest } from 'ahooks';
 import type { StepProps } from 'antd';
 import {
@@ -156,9 +160,9 @@ const Interview: FC = () => {
                   setChosenStudent(null);
                 }}
                 onSelect={(_value, { student }) => {
-                  setXq(student.interview_xq);
-                  setLy(student.interview_ly);
-                  setGd(student.interview_gd);
+                  setXq(student.earlyChildhoodEducationInterview);
+                  setLy(student.tourismManagementInterview);
+                  setGd(student.urbanRailTransitInterview);
                   setChosenStudent(student);
                 }}
                 onSearch={(studentId) => {
@@ -170,15 +174,15 @@ const Interview: FC = () => {
                   return {
                     value: student.id,
                     disabled:
-                      !!student.interviewed_operator &&
-                      student.interviewed_operator.id !== idState,
+                      !!student.interviewedUserId &&
+                      student.interviewedUserId !== idState,
                     label: (
                       <span className={classes.selectItem}>
                         <span style={{ marginInlineEnd: 8 }}>
                           {student.name}（{student.id}）
                         </span>
-                        {!student.interviewed_operator &&
-                        student.interviewed_date ? (
+                        {!student.interviewedUserId &&
+                        student.interviewedDate ? (
                           // 这里渲染的条件是处于异常状态（异常状态：拥有指定权限的用户不存在，但是又有过面试记录）
                           <Tag icon={<CloseCircleOutlined />} color="error">
                             面试异常，请联系上级！
@@ -186,38 +190,40 @@ const Interview: FC = () => {
                         ) : (
                           <>
                             <InterviewTag
-                              status={student.interview_xq}
-                              text="学前"
+                              status={student.urbanRailTransitInterview}
+                              text="城轨"
                             />
                             <InterviewTag
-                              status={student.interview_ly}
+                              status={student.tourismManagementInterview}
                               text="旅游"
                             />
                             <InterviewTag
-                              status={student.interview_gd}
-                              text="轨道"
+                              status={student.earlyChildhoodEducationInterview}
+                              text="学前"
                             />
                           </>
                         )}
-                        {student.interviewed_operator ? (
+                        {student.interviewedUserId &&
+                        student.interviewedUser ? (
                           <Tag
+                            style={{
+                              marginInlineEnd: 0,
+                            }}
+                            icon={
+                              student.interviewedUserId === idState ? (
+                                <UserOutlined />
+                              ) : (
+                                <StopOutlined />
+                              )
+                            }
                             color={
-                              student.interviewed_operator.id === idState
-                                ? 'success'
-                                : 'warning'
+                              student.interviewedUserId === idState
+                                ? 'green'
+                                : 'red'
                             }
                           >
-                            隶属于
-                            <span style={{ paddingInlineStart: 8 }}>
-                              {`${
-                                student.interviewed_operator.nickname ??
-                                student.interviewed_operator.username
-                              }${
-                                student.interviewed_operator.id === idState
-                                  ? '（我）'
-                                  : ''
-                              }`}
-                            </span>
+                            {student.interviewedUser.nickname ||
+                              student.interviewedUser.username}
                           </Tag>
                         ) : null}
                       </span>
@@ -236,7 +242,7 @@ const Interview: FC = () => {
                   signStatus={
                     <Badge
                       status="success"
-                      text={`已签到（${dayjs(chosenStudent.signed_date).format(
+                      text={`已签到（${dayjs(chosenStudent.signedDate).format(
                         'YYYY-MM-DD HH:mm:ss',
                       )}）`}
                     />
@@ -244,13 +250,13 @@ const Interview: FC = () => {
                 />
               </Col>
               {[
-                chosenStudent.interview_xq
+                chosenStudent.earlyChildhoodEducationInterview
                   ? { weight: 3, title: '幼儿教育', state: [xq, setXq] }
                   : null,
-                chosenStudent.interview_ly
+                chosenStudent.tourismManagementInterview
                   ? { weight: 2, title: '旅游服务与管理', state: [ly, setLy] }
                   : null,
-                chosenStudent.interview_gd
+                chosenStudent.urbanRailTransitInterview
                   ? {
                       weight: 1,
                       title: '城市轨道交通运输与管理',
@@ -258,7 +264,7 @@ const Interview: FC = () => {
                     }
                   : null,
               ]
-                .sort((a, b) => (b?.weight ?? 0) - (a?.weight ?? 0))
+                .sort((a, b) => (b?.weight || 0) - (a?.weight || 0))
                 .map((card, index) => {
                   if (card) {
                     const [status, setStatus] = card.state as [
@@ -281,7 +287,7 @@ const Interview: FC = () => {
                             >
                               <Radio value="Success">通过</Radio>
                               <Radio value="Failed">不通过</Radio>
-                              <Radio value="Processing">未面试（进行中）</Radio>
+                              <Radio value="Processing">进行中</Radio>
                             </Radio.Group>
                           )}
                         </Card>
