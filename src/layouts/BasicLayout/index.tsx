@@ -1,8 +1,8 @@
 import { PageLoading } from '@/components';
 import {
   AUTHENTICATION_PATHNAME,
-  INTERVIEW_PATHNAME,
   MANAGE_PATHNAME,
+  STUDENT_INTERVIEW_PATHNAME,
   STUDENT_SIGN_IN_PATHNAME,
 } from '@/constants';
 import { authorizationStateSelector } from '@/selectors';
@@ -52,7 +52,7 @@ export const BasicLayout: FC = () => {
     if (authorization.token && authorization.role === 'interview-all') {
       return {
         icon: <EditOutlined />,
-        key: INTERVIEW_PATHNAME,
+        key: STUDENT_INTERVIEW_PATHNAME,
         label: '面试',
       };
     }

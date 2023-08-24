@@ -1,8 +1,8 @@
 import { GlobalErrorBoundary, PageNotFound } from '@/components';
 import {
   AUTHENTICATION_PATHNAME,
-  INTERVIEW_PATHNAME,
   MANAGE_PATHNAME,
+  STUDENT_INTERVIEW_PATHNAME,
   STUDENT_SIGN_IN_PATHNAME,
 } from '@/constants';
 import { BasicLayout } from '@/layouts';
@@ -23,7 +23,7 @@ const StudentSignIn = lazy(() => import('@/pages/Student/SignIn'));
 
 // 面试页面
 // eslint-disable-next-line react-refresh/only-export-components
-const Interview = lazy(() => import('@/pages/Interview'));
+const StudentInterview = lazy(() => import('@/pages/Student/Interview'));
 
 // 管理页面
 // eslint-disable-next-line react-refresh/only-export-components
@@ -52,8 +52,8 @@ export default [
       },
       // 面试页面
       {
-        path: INTERVIEW_PATHNAME,
-        element: <Interview />,
+        path: STUDENT_INTERVIEW_PATHNAME,
+        element: <StudentInterview />,
       },
       // 管理页面
       {
