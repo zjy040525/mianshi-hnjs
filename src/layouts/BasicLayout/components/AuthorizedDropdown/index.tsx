@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import classes from './index.module.less';
 
-export const HasAuthorizationFeature: FC = () => {
+export const AuthorizedDropdown: FC = () => {
   const navigate = useNavigate();
   const authorization = useRecoilValue(authorizationStateSelector);
   const resetRecoilState = useResetRecoilState(authorizationStateSelector);

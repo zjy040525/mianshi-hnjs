@@ -18,7 +18,7 @@ import type { FC } from 'react';
 import { Suspense, useCallback } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { HasAuthorizationFeature } from './components';
+import { AuthorizedDropdown } from './components';
 import classes from './index.module.less';
 
 const { Content, Header } = Layout;
@@ -106,7 +106,7 @@ export const BasicLayout: FC = () => {
           selectedKeys={[location.pathname]}
           onSelect={(selectInfo) => navigate(selectInfo.key)}
         />
-        <HasAuthorizationFeature />
+        <AuthorizedDropdown />
       </Header>
       <Content className={classes.content}>
         <Suspense key={location.key} fallback={<PageLoading />}>

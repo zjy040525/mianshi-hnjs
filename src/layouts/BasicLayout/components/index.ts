@@ -1,1 +1,1 @@
-export * from './HasAuthorizationFeature';
+export * from './AuthorizedDropdown';
