@@ -66,20 +66,7 @@ const Manage: FC = () => {
           <Tag color="error">未签到</Tag>
         );
       },
-      filters: [
-        {
-          text: '已签到',
-          value: true,
-        },
-        {
-          text: '未签到',
-          value: false,
-        },
-      ],
-      filterMultiple: false,
-      onFilter(value, record) {
-        return record.signStatus === value;
-      },
+      sorter: (a, b) => Number(a.signStatus) - Number(b.signStatus),
     },
     {
       title: '签到时间',
