@@ -3,7 +3,7 @@ import { Access, HeadTitle } from '@/components';
 import { studentSocket, userSocket } from '@/services';
 import type { Student } from '@/typings';
 import { useMount, useUnmount, useWebSocket } from 'ahooks';
-import { App as AntdApp, Card, Col, Row, Statistic, Table, Tag } from 'antd';
+import { App as AntdApp, Badge, Card, Col, Row, Statistic, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import type { ColumnFilterItem } from 'antd/es/table/interface';
 import dayjs from 'dayjs';
@@ -61,9 +61,9 @@ const Manage: FC = () => {
       dataIndex: 'signStatus',
       render(value) {
         return value ? (
-          <Tag color="success">已签到</Tag>
+          <Badge status="success" text="已签到" />
         ) : (
-          <Tag color="error">未签到</Tag>
+          <Badge status="error" text="未签到" />
         );
       },
       sorter: (a, b) => Number(a.signStatus) - Number(b.signStatus),
