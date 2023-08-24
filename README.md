@@ -36,8 +36,8 @@ VITE_DOCUMENT_NAME=打印预览组件的标题
 ```dotenv
 # 开发环境下的变量（仅在开发环境下有效）
 
-VITE_API_URL=开发环境后端地址
-VITE_WS_URL=开发环境后端地址
+VITE_API_URL=http://开发环境后端地址
+VITE_WS_URL=ws://开发环境后端地址
 ```
 
 `.env.production`
@@ -45,8 +45,8 @@ VITE_WS_URL=开发环境后端地址
 ```dotenv
 # 正式环境下的变量（仅在正式环境下有效）
 
-VITE_API_URL=正式环境后端地址
-VITE_WS_URL=正式环境后端地址
+VITE_API_URL=https://正式环境后端地址
+VITE_WS_URL=wss://正式环境后端地址
 ```
 
 环境变量配置完成后，启动服务
