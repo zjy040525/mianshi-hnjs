@@ -258,15 +258,15 @@ const Manage: FC = () => {
         return;
       }
       const values: {
-        counts: typeof counts;
-        students: Student[];
+        countList: typeof counts;
+        studentList: Student[];
       } = data;
       // 更新数据
-      setCounts(values.counts);
-      setStudents(values.students);
+      setCounts(values.countList);
+      setStudents(values.studentList);
       // 设置可筛选过滤的条件
-      setSignedUserFilters(filterMap('signedUser', values.students));
-      setInterviewedUserFilters(filterMap('signedUser', values.students));
+      setSignedUserFilters(filterMap('signedUser', values.studentList));
+      setInterviewedUserFilters(filterMap('signedUser', values.studentList));
     },
   });
   // 组件卸载，需要断开WebSocket的连接
