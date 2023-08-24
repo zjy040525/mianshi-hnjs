@@ -6,7 +6,7 @@ import { Button, Card, Col, Row } from 'antd';
 import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
-import { HasManageFeature } from './components';
+import { ManageSettings } from './components';
 
 const Home: FC = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Home: FC = () => {
     <>
       <HeadTitle />
       <Row gutter={[16, 16]}>
-        <HasManageFeature />
+        <ManageSettings />
         <Col>
           <Card
             title={authorization.nickname || authorization.username || '未登录'}

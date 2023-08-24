@@ -4,7 +4,7 @@ import { Card, Col, Space, Switch, Typography } from 'antd';
 import type { FC } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-export const HasManageFeature: FC = () => {
+export const ManageSettings: FC = () => {
   const authorization = useRecoilValue(authorizationStateSelector);
   const [newMsgNotification, setNewMsgNotification] = useRecoilState(
     adminNewMsgNotification,

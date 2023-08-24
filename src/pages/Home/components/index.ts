@@ -1,1 +1,1 @@
-export * from './HasManageFeature';
+export * from './ManageSettings';
