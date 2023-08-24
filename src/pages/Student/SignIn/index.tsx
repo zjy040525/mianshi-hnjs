@@ -67,7 +67,7 @@ const steps: StepProps[] = [
  *
  * @author Jia-Yao Zhao
  */
-const SignInOfStudent: FC = () => {
+const StudentSignIn: FC = () => {
   const { message } = AntdApp.useApp();
   const idState = useRecoilValue(idStateAtom);
   // 步骤分段
@@ -382,4 +382,4 @@ const SignInOfStudent: FC = () => {
   );
 };
 
-export default SignInOfStudent;
+export default StudentSignIn;

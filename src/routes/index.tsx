@@ -12,15 +12,19 @@ import type { RouteObject } from 'react-router-dom';
 // 主页面
 // eslint-disable-next-line react-refresh/only-export-components
 const Home = lazy(() => import('@/pages/Home'));
+
 // 认证页面
 // eslint-disable-next-line react-refresh/only-export-components
 const Auth = lazy(() => import('@/pages/Auth'));
+
 // 签到页面
 // eslint-disable-next-line react-refresh/only-export-components
-const SignInOfStudent = lazy(() => import('@/pages/SignInOfStudent'));
+const StudentSignIn = lazy(() => import('@/pages/Student/SignIn'));
+
 // 面试页面
 // eslint-disable-next-line react-refresh/only-export-components
 const Interview = lazy(() => import('@/pages/Interview'));
+
 // 管理页面
 // eslint-disable-next-line react-refresh/only-export-components
 const Manage = lazy(() => import('@/pages/Manage'));
@@ -44,7 +48,7 @@ export default [
       // 签到页面
       {
         path: STUDENT_SIGN_IN_PATHNAME,
-        element: <SignInOfStudent />,
+        element: <StudentSignIn />,
       },
       // 面试页面
       {
