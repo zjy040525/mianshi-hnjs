@@ -20,7 +20,7 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { badge } from './components';
-import { filterMap } from './utils';
+import { filterUser } from './utils';
 
 /**
  * 管理组件
@@ -257,16 +257,21 @@ const Manage: FC = () => {
         });
         return;
       }
+
       const values: {
-        counts: typeof counts;
-        students: Student[];
+        countList: typeof counts;
+        studentList: Student[];
       } = data;
       // 更新数据
-      setCounts(values.counts);
-      setStudents(values.students);
+      setCounts(values.countList);
+      setStudents(values.studentList);
       // 设置可筛选过滤的条件
-      setSignedUserFilters(filterMap('signedUser', values.students));
-      setInterviewedUserFilters(filterMap('signedUser', values.students));
+      setSignedUserFilters(
+        filterUser(values.studentList, 'signedUser', 'signedUserId'),
+      );
+      setInterviewedUserFilters(
+        filterUser(values.studentList, 'interviewedUser', 'interviewedUserId'),
+      );
     },
   });
   // 组件卸载，需要断开WebSocket的连接

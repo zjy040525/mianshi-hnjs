@@ -6,16 +6,21 @@ import type { Student } from '@/typings';
  * @param students 学生列表
  * @author Jia-Yao Zhao
  */
-export const filterMap = (filterable: keyof Student, students: Student[]) => {
-  const map = new Map<number, string>();
-  for (const student of students) {
+export const filterUser = (
+  studentList: Student[],
+  filterable: keyof Student,
+  iteratee: keyof Student,
+) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const map = new Map<any, string>();
+  for (const student of studentList) {
     const obj = student[filterable];
     if (!obj || typeof obj !== 'object') {
-      break;
+      continue;
     }
     // 用于过滤重复项
-    if (!map.has(obj.id)) {
-      map.set(obj.id, obj.nickname || obj.username);
+    if (!map.has(student[iteratee])) {
+      map.set(student[iteratee], obj.nickname || obj.username);
     }
   }
   // 排序
