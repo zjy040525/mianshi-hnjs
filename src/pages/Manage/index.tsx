@@ -2,17 +2,8 @@ import { adminNewMsgNotification, tokenStateAtom } from '@/atoms';
 import { Access, HeadTitle } from '@/components';
 import { studentSocket, userSocket } from '@/services';
 import type { Student } from '@/typings';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
 import { useMount, useUnmount, useWebSocket } from 'ahooks';
-import {
-  App as AntdApp,
-  Card,
-  Col,
-  Row,
-  Statistic,
-  Table,
-  Typography,
-} from 'antd';
+import { App as AntdApp, Card, Col, Row, Statistic, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import type { ColumnFilterItem } from 'antd/es/table/interface';
 import dayjs from 'dayjs';
@@ -68,15 +59,11 @@ const Manage: FC = () => {
     {
       title: '签到状态',
       dataIndex: 'signStatus',
-      render(status) {
-        return status ? (
-          <Typography.Text type="success">
-            <CheckCircleFilled />
-          </Typography.Text>
+      render(value) {
+        return value ? (
+          <Tag color="success">已签到</Tag>
         ) : (
-          <Typography.Text type="danger">
-            <CloseCircleFilled />
-          </Typography.Text>
+          <Tag color="error">未签到</Tag>
         );
       },
       filters: [
@@ -97,9 +84,9 @@ const Manage: FC = () => {
     {
       title: '签到时间',
       dataIndex: 'signedDate',
-      render(dateTime) {
-        if (dateTime) {
-          return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
+      render(value) {
+        if (value) {
+          return dayjs(value).format('YYYY-MM-DD HH:mm:ss');
         }
         return '-';
       },
@@ -110,49 +97,15 @@ const Manage: FC = () => {
     {
       title: '签到管理员',
       dataIndex: 'signedUser',
-      render(signedUser) {
-        if (signedUser) {
-          return signedUser.nickname || signedUser.username;
+      render(value) {
+        if (value) {
+          return value.nickname || value.username;
         }
         return '-';
       },
       filters: signedUserFilters,
       onFilter(value, record) {
         return record.signedUserId === value;
-      },
-    },
-    {
-      title: '学前面试进度',
-      dataIndex: 'earlyChildhoodEducationInterview',
-      render: (value) => badge(value),
-      filters: [
-        { text: '已通过', value: 'Success' },
-        { text: '未通过', value: 'Failed' },
-        { text: '进行中', value: 'Processing' },
-        { text: '-', value: false },
-      ],
-      onFilter(value, record) {
-        if (value) {
-          return record.earlyChildhoodEducationInterview === value;
-        }
-        return record.earlyChildhoodEducationInterview === null;
-      },
-    },
-    {
-      title: '旅游面试进度',
-      dataIndex: 'tourismManagementInterview',
-      render: (value) => badge(value),
-      filters: [
-        { text: '已通过', value: 'Success' },
-        { text: '未通过', value: 'Failed' },
-        { text: '进行中', value: 'Processing' },
-        { text: '-', value: false },
-      ],
-      onFilter(value, record) {
-        if (value) {
-          return record.tourismManagementInterview === value;
-        }
-        return record.tourismManagementInterview === null;
       },
     },
     {
@@ -163,7 +116,7 @@ const Manage: FC = () => {
         { text: '已通过', value: 'Success' },
         { text: '未通过', value: 'Failed' },
         { text: '进行中', value: 'Processing' },
-        { text: '-', value: false },
+        { text: '未报名', value: false },
       ],
       onFilter(value, record) {
         if (value) {
@@ -173,11 +126,45 @@ const Manage: FC = () => {
       },
     },
     {
+      title: '旅游面试进度',
+      dataIndex: 'tourismManagementInterview',
+      render: (value) => badge(value),
+      filters: [
+        { text: '已通过', value: 'Success' },
+        { text: '未通过', value: 'Failed' },
+        { text: '进行中', value: 'Processing' },
+        { text: '未报名', value: false },
+      ],
+      onFilter(value, record) {
+        if (value) {
+          return record.tourismManagementInterview === value;
+        }
+        return record.tourismManagementInterview === null;
+      },
+    },
+    {
+      title: '学前面试进度',
+      dataIndex: 'earlyChildhoodEducationInterview',
+      render: (value) => badge(value),
+      filters: [
+        { text: '已通过', value: 'Success' },
+        { text: '未通过', value: 'Failed' },
+        { text: '进行中', value: 'Processing' },
+        { text: '未报名', value: false },
+      ],
+      onFilter(value, record) {
+        if (value) {
+          return record.earlyChildhoodEducationInterview === value;
+        }
+        return record.earlyChildhoodEducationInterview === null;
+      },
+    },
+    {
       title: '面试时间',
       dataIndex: 'interviewedDate',
-      render(dateTime) {
-        if (dateTime) {
-          return dayjs(dateTime).format('YYYY-MM-DD HH:mm:ss');
+      render(value) {
+        if (value) {
+          return dayjs(value).format('YYYY-MM-DD HH:mm:ss');
         }
         return '-';
       },
@@ -188,9 +175,9 @@ const Manage: FC = () => {
     {
       title: '面试管理员',
       dataIndex: 'interviewedUser',
-      render(interviewedUser) {
-        if (interviewedUser) {
-          return interviewedUser.nickname || interviewedUser.username;
+      render(value) {
+        if (value) {
+          return value.nickname || value.username;
         }
         return '-';
       },
@@ -389,10 +376,6 @@ const Manage: FC = () => {
             rowKey={(record) => record.idCard}
             loading={studentWs.readyState !== 1}
             dataSource={students}
-            pagination={{
-              defaultPageSize: 20,
-              showQuickJumper: true,
-            }}
           />
         </Col>
       </Row>
