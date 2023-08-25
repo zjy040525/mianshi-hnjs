@@ -25,9 +25,9 @@ const StudentSignIn = lazy(() => import('@/pages/Student/SignIn'));
 // eslint-disable-next-line react-refresh/only-export-components
 const StudentInterview = lazy(() => import('@/pages/Student/Interview'));
 
-// 管理页面
+// 学生管理页面
 // eslint-disable-next-line react-refresh/only-export-components
-const Manage = lazy(() => import('@/pages/Manage'));
+const ManageStudent = lazy(() => import('@/pages/Manage/Student'));
 
 export default [
   {
@@ -58,7 +58,7 @@ export default [
       // 管理页面
       {
         path: MANAGE_STUDENT_PATHNAME,
-        element: <Manage />,
+        element: <ManageStudent />,
       },
     ],
   },
