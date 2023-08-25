@@ -255,7 +255,7 @@ const ManageStudent: FC = () => {
   });
   return (
     <Access role="admin-all">
-      <HeadTitle titles={['管理']} />
+      <HeadTitle titles={['学生管理']} />
       <Row gutter={[16, 16]}>
         <Col span={12}>
           <Row gutter={[16, 16]}>
