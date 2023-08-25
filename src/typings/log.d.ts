@@ -1,9 +1,12 @@
+import type { Student, User } from '.';
+
 export interface Log {
   id: number;
-  message: string;
   recordDate: string;
-  recordUserId: number;
+  recordUserId: number | null;
+  recordUser: User | null;
   recordStudentId: string | null;
+  recordStudent: Student | null;
   recordType: RecordType;
 }
 

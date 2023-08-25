@@ -1,11 +1,13 @@
 import type { InterviewStatus } from '@/typings';
+import { StopOutlined } from '@ant-design/icons';
 import { Tag } from 'antd';
 import type { FC } from 'react';
 
 export const InterviewTag: FC<{
   status: InterviewStatus;
   text: string;
-}> = ({ status, text }) => {
+  showNull?: boolean;
+}> = ({ status, text, showNull }) => {
   switch (status) {
     case 'Processing':
       return <Tag color="processing">{text}</Tag>;
@@ -13,7 +15,7 @@ export const InterviewTag: FC<{
       return <Tag color="success">{text}</Tag>;
     case 'Failed':
       return <Tag color="error">{text}</Tag>;
-    default:
-      return null;
+    case null:
+      return showNull ? <Tag icon={<StopOutlined />}>{text}</Tag> : null;
   }
 };

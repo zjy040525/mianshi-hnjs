@@ -1,7 +1,8 @@
 import type { Student } from '@/typings';
-import { Descriptions, Tag } from 'antd';
+import { Descriptions } from 'antd';
 import dayjs from 'dayjs';
 import type { FC } from 'react';
+import { InterviewTag } from '..';
 
 export const StudentPrintDescription: FC<{
   student: Student;
@@ -45,28 +46,20 @@ export const StudentPrintDescription: FC<{
         {
           label: '面试专业',
           children: (
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              <Tag
-                style={{ marginInlineEnd: 0 }}
-                color={student.urbanRailTransitInterview ? 'success' : 'error'}
-              >
-                城轨
-              </Tag>
-              <Tag
-                style={{ marginInlineEnd: 0 }}
-                color={student.tourismManagementInterview ? 'success' : 'error'}
-              >
-                旅游
-              </Tag>
-              <Tag
-                style={{ marginInlineEnd: 0 }}
-                color={
-                  student.earlyChildhoodEducationInterview ? 'success' : 'error'
-                }
-              >
-                学前
-              </Tag>
-            </div>
+            <>
+              <InterviewTag
+                status={student.urbanRailTransitInterview}
+                text="城轨"
+              />
+              <InterviewTag
+                status={student.tourismManagementInterview}
+                text="旅游"
+              />
+              <InterviewTag
+                status={student.urbanRailTransitInterview}
+                text="学前"
+              />
+            </>
           ),
         },
       ]}
