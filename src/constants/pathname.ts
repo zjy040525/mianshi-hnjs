@@ -7,5 +7,8 @@ export const STUDENT_SIGN_IN_PATHNAME = '/student/sign-in';
 // 面试页面
 export const STUDENT_INTERVIEW_PATHNAME = '/student/interview';
 
-// 管理页面
-export const MANAGE_PATHNAME = '/manage';
+// 学生管理页面
+export const MANAGE_STUDENT_PATHNAME = '/manage/student';
+
+// 日志管理页面
+export const MANAGE_LOG_PATHNAME = '/manage/log';

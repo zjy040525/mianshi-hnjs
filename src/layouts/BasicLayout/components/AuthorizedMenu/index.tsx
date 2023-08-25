@@ -1,6 +1,7 @@
 import {
   AUTHENTICATION_PATHNAME,
-  MANAGE_PATHNAME,
+  MANAGE_LOG_PATHNAME,
+  MANAGE_STUDENT_PATHNAME,
   STUDENT_INTERVIEW_PATHNAME,
   STUDENT_SIGN_IN_PATHNAME,
 } from '@/constants';
@@ -56,11 +57,18 @@ export const AuthorizedMenu: FC = () => {
   // 是否显示`管理`菜单选项
   const showManage = useCallback(() => {
     if (authorization.token && authorization.role === 'admin-all') {
-      return {
-        icon: <SettingOutlined />,
-        key: MANAGE_PATHNAME,
-        label: '管理',
-      };
+      return [
+        {
+          icon: <SettingOutlined />,
+          key: MANAGE_STUDENT_PATHNAME,
+          label: '学生管理',
+        },
+        {
+          icon: <FileTextOutlined />,
+          key: MANAGE_LOG_PATHNAME,
+          label: '日志管理',
+        },
+      ];
     }
     return [];
   }, [authorization]);

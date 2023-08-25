@@ -1,7 +1,7 @@
 import { GlobalErrorBoundary, PageNotFound } from '@/components';
 import {
   AUTHENTICATION_PATHNAME,
-  MANAGE_PATHNAME,
+  MANAGE_STUDENT_PATHNAME,
   STUDENT_INTERVIEW_PATHNAME,
   STUDENT_SIGN_IN_PATHNAME,
 } from '@/constants';
@@ -57,7 +57,7 @@ export default [
       },
       // 管理页面
       {
-        path: MANAGE_PATHNAME,
+        path: MANAGE_STUDENT_PATHNAME,
         element: <Manage />,
       },
     ],
