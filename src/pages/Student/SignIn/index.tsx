@@ -188,7 +188,7 @@ const StudentSignIn: FC = () => {
           items={steps}
           style={{ marginBlockEnd: 50 }}
         />
-        <Row gutter={[0, 24]} justify="center">
+        <Row justify="center">
           {currentStep === STEP_1 ? (
             <Col xxl={8} xl={12} lg={16} md={20} sm={24} xs={24}>
               <Select
@@ -294,7 +294,13 @@ const StudentSignIn: FC = () => {
               />
             </Col>
           ) : null}
-          <Col span={24} style={{ textAlign: 'center' }}>
+          <Col
+            span={24}
+            style={{
+              textAlign: 'center',
+              marginBlockStart: 24,
+            }}
+          >
             <Space size={16}>
               {chosenStudent && currentStep > STEP_1 && currentStep < STEP_4 ? (
                 <Button
