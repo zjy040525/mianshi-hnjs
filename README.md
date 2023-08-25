@@ -69,6 +69,34 @@ $ npm run preview
 
 预览正式环境，可以测试正式环境下是否有bug
 
+### Deployment
+
+注意：项目有使用路由作为页面导航，如果你使用的是Apache或Nginx部署，请务必配置好重定向，否则刷新页面会出现404的错误。
+
+你可以在public/目录下新建对应服务的配置文件名，这样在build时会自动打包到dist中，方便上传。
+
+#### nginx.conf
+
+```text
+location / {
+  try_files $uri.html $uri $uri/ /index.html;
+}
+```
+
+#### .htaccess
+
+```text
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteRule . /index.html [L]
+</IfModule>
+```
+
 ## Maintainers
 
 [@zjy040525](https://github.com/zjy040525)
