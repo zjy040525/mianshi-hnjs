@@ -6,11 +6,10 @@ import {
 } from '@/constants';
 import { authorizationStateSelector } from '@/selectors';
 import {
-  EditOutlined,
+  FileTextOutlined,
   HomeOutlined,
   LoginOutlined,
   SettingOutlined,
-  SolutionOutlined,
 } from '@ant-design/icons';
 import { Menu } from 'antd';
 import type { FC } from 'react';
@@ -36,7 +35,7 @@ export const AuthorizedMenu: FC = () => {
   const showSign = useCallback(() => {
     if (authorization.token && authorization.role === 'sign-all') {
       return {
-        icon: <SolutionOutlined />,
+        icon: <LoginOutlined />,
         key: STUDENT_SIGN_IN_PATHNAME,
         label: '签到',
       };
@@ -47,7 +46,7 @@ export const AuthorizedMenu: FC = () => {
   const showInterview = useCallback(() => {
     if (authorization.token && authorization.role === 'interview-all') {
       return {
-        icon: <EditOutlined />,
+        icon: <FileTextOutlined />,
         key: STUDENT_INTERVIEW_PATHNAME,
         label: '面试',
       };

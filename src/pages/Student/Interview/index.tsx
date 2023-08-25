@@ -7,6 +7,7 @@ import {
 import type { InterviewStatus, Student } from '@/typings';
 import {
   CloseCircleOutlined,
+  FileTextOutlined,
   StopOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -312,6 +313,7 @@ const Interview: FC = () => {
                   type="primary"
                   disabled={!chosenStudent || interviewing}
                   loading={interviewing}
+                  icon={<FileTextOutlined />}
                   onClick={() => {
                     runInterview(chosenStudent.id, xq, ly, gd);
                   }}

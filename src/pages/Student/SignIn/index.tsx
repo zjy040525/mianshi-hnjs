@@ -13,6 +13,8 @@ import {
 import type { Student } from '@/typings';
 import {
   CloseCircleOutlined,
+  LoginOutlined,
+  PrinterOutlined,
   StopOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -285,7 +287,7 @@ const StudentSignIn: FC = () => {
                 student={chosenStudent}
                 signStatus={
                   <Badge
-                    status={currentStep > STEP_2 ? 'processing' : 'default'}
+                    status={currentStep === STEP_3 ? 'processing' : 'default'}
                     text="未签到"
                   />
                 }
@@ -306,8 +308,8 @@ const StudentSignIn: FC = () => {
                 currentStep === STEP_3 ? (
                   <Button
                     type="primary"
-                    danger
                     loading={signing}
+                    icon={<LoginOutlined />}
                     onClick={() => {
                       if (chosenStudent) {
                         runSign(chosenStudent.id);
@@ -337,6 +339,7 @@ const StudentSignIn: FC = () => {
                 <Button
                   type="primary"
                   disabled={signing}
+                  icon={<PrinterOutlined />}
                   loading={printing}
                   onClick={() => {
                     if (chosenStudent) {
@@ -351,6 +354,7 @@ const StudentSignIn: FC = () => {
                 <>
                   <Button
                     disabled={signing}
+                    icon={<PrinterOutlined />}
                     loading={printing}
                     onClick={() => {
                       if (chosenStudent) {
