@@ -1,1 +1,1 @@
-export * from './dot';
+export * from './recordItems';

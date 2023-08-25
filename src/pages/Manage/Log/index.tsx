@@ -13,14 +13,13 @@ import {
   Skeleton,
   Timeline,
 } from 'antd';
-import * as dayjs from 'dayjs';
 import { useState, type FC } from 'react';
 import { useRecoilValue } from 'recoil';
-import { dot } from './components';
+import { recordItems } from './components';
 import { LOG_REMOVE_KEY } from './constants';
 
 const ManageLog: FC = () => {
-  const [timelineItems, setTimelineItems] = useState<Log[]>([]);
+  const [logList, setLogList] = useState<Log[]>([]);
   const [loading, setLoading] = useState(true);
   const { notification, message } = AntdApp.useApp();
   const token = useRecoilValue(tokenStateAtom);
@@ -44,7 +43,7 @@ const ManageLog: FC = () => {
         logList: Log[];
       } = data;
       // 更新数据
-      setTimelineItems(values.logList);
+      setLogList(values.logList);
       setLoading(false);
     },
   });
@@ -69,7 +68,7 @@ const ManageLog: FC = () => {
     <Access role="admin-all">
       <HeadTitle titles={['日志管理']} />
       <Row gutter={[16, 16]}>
-        <Col span={12}>
+        <Col span={24}>
           <Card
             title="最新动态"
             extra={
@@ -77,7 +76,7 @@ const ManageLog: FC = () => {
                 danger
                 icon={<ClearOutlined />}
                 onClick={runRemoveAll}
-                disabled={!timelineItems.length}
+                disabled={!logList.length}
                 loading={removing}
                 type="text"
                 shape="circle"
@@ -90,14 +89,7 @@ const ManageLog: FC = () => {
               <Timeline
                 reverse
                 pending="动态实时更新中…"
-                items={timelineItems.map((item) => {
-                  return {
-                    children: `${dayjs(item.recordDate).format(
-                      'YYYY-MM-DD HH:mm:ss',
-                    )} ${item.message}`,
-                    dot: dot(item.recordType),
-                  };
-                })}
+                items={recordItems(logList)}
               />
             )}
           </Card>

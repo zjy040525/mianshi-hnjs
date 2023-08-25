@@ -3,6 +3,7 @@ export * from './AuthorizationGuard';
 export * from './GlobalErrorBoundary';
 export * from './GlobalLoading';
 export * from './HeadTitle';
+export * from './InterviewTag';
 export * from './PageLoading';
 export * from './PageNotFound';
 export * from './StudentDescription';

@@ -1,5 +1,10 @@
 import { idStateAtom } from '@/atoms';
-import { Access, HeadTitle, StudentDescription } from '@/components';
+import {
+  Access,
+  HeadTitle,
+  InterviewTag,
+  StudentDescription,
+} from '@/components';
 import {
   studentInterviewSearchService,
   studentInterviewService,
@@ -33,7 +38,7 @@ import dayjs from 'dayjs';
 import type { Dispatch, FC, SetStateAction } from 'react';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { InterviewBadge, InterviewTag } from './components';
+import { InterviewBadge } from './components';
 import {
   STUDENT_INTERVIEW_KEY,
   STUDENT_INTERVIEW_SEARCH_KEY,
