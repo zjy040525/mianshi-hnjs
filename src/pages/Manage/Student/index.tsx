@@ -14,11 +14,11 @@ import { badge } from './components';
 import { filterUser } from './utils';
 
 /**
- * 管理组件
+ * 学生管理组件
  *
  * @author Jia-Yao Zhao
  */
-const Manage: FC = () => {
+const ManageStudent: FC = () => {
   // 筛选过滤条件
   const [signedUserFilters, setSignedUserFilters] = useState<
     ColumnFilterItem[]
@@ -370,4 +370,4 @@ const Manage: FC = () => {
   );
 };
 
-export default Manage;
+export default ManageStudent;

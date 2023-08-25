@@ -1,6 +1,7 @@
 import { GlobalErrorBoundary, PageNotFound } from '@/components';
 import {
   AUTHENTICATION_PATHNAME,
+  MANAGE_LOG_PATHNAME,
   MANAGE_STUDENT_PATHNAME,
   STUDENT_INTERVIEW_PATHNAME,
   STUDENT_SIGN_IN_PATHNAME,
@@ -29,6 +30,10 @@ const StudentInterview = lazy(() => import('@/pages/Student/Interview'));
 // eslint-disable-next-line react-refresh/only-export-components
 const ManageStudent = lazy(() => import('@/pages/Manage/Student'));
 
+// 日志管理页面
+// eslint-disable-next-line react-refresh/only-export-components
+const ManageLog = lazy(() => import('@/pages/Manage/Log'));
+
 export default [
   {
     path: '/',
@@ -55,10 +60,15 @@ export default [
         path: STUDENT_INTERVIEW_PATHNAME,
         element: <StudentInterview />,
       },
-      // 管理页面
+      // 学生管理页面
       {
         path: MANAGE_STUDENT_PATHNAME,
         element: <ManageStudent />,
+      },
+      // 日志管理页面
+      {
+        path: MANAGE_LOG_PATHNAME,
+        element: <ManageLog />,
       },
     ],
   },
