@@ -2,7 +2,7 @@ import { InterviewTag } from '@/components';
 import type { Student } from '@/typings';
 import { datetimeFormat } from '@/utils';
 import { Badge, Descriptions, Divider, Drawer, Typography } from 'antd';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs/esm';
 import { useState, type FC } from 'react';
 
 export const DetailAction: FC<{ student: Student }> = ({ student }) => {
