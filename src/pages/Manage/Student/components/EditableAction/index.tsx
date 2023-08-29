@@ -21,12 +21,26 @@ import {
 } from 'antd';
 import type { FormInstance } from 'antd/es';
 import type { BaseOptionType, DefaultOptionType } from 'antd/es/select';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs/esm';
+import advancedFormat from 'dayjs/esm/plugin/advancedFormat';
+import customParseFormat from 'dayjs/esm/plugin/customParseFormat';
+import localeData from 'dayjs/esm/plugin/localeData';
+import weekOfYear from 'dayjs/esm/plugin/weekOfYear';
+import weekYear from 'dayjs/esm/plugin/weekYear';
+import weekday from 'dayjs/esm/plugin/weekday';
 import type { FC } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { InterviewFormItem } from './components';
 import { UPDATE_STUDENT_KEY } from './constants';
 
+// https://github.com/react-component/picker/issues/123
+// https://blog.csdn.net/weixin_47287832/article/details/129270953
+dayjs.extend(customParseFormat);
+dayjs.extend(advancedFormat);
+dayjs.extend(weekday);
+dayjs.extend(localeData);
+dayjs.extend(weekOfYear);
+dayjs.extend(weekYear);
 export const EditableAction: FC<{ student: Student }> = ({ student }) => {
   const [open, setOpen] = useState(false);
   const { message } = AntdApp.useApp();

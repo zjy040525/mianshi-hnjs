@@ -1,11 +1,11 @@
 import { App as AppProvider, ConfigProvider } from 'antd';
 import 'antd/dist/reset.css';
 import locale from 'antd/locale/zh_CN';
-import * as dayjs from 'dayjs';
-import 'dayjs/locale/zh-cn';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
+import dayjs from 'dayjs/esm';
+import 'dayjs/esm/locale/zh-cn';
+import relativeTime from 'dayjs/esm/plugin/relativeTime';
+import timezone from 'dayjs/esm/plugin/timezone';
+import utc from 'dayjs/esm/plugin/utc';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
