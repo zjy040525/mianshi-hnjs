@@ -1,5 +1,5 @@
 import myAxios from '@/lib/myAxios';
-import type { Response } from '@/typings';
+import type { InterviewStatus, Response, User } from '@/typings';
 
 /**
  * 用户的即时信息
@@ -34,4 +34,38 @@ export const logSocket = () => {
  */
 export const logRemoveAllService = (): Promise<Response<null>> => {
   return myAxios.delete('/manage/log');
+};
+
+/**
+ * 获取所有签到管理员的信息
+ * @author Jia-Yao Zhao
+ */
+export const signUserListService = (): Promise<Response<User[]>> => {
+  return myAxios.get('/manage/user/sign');
+};
+
+/**
+ * 获取所有面试管理员的信息
+ * @author Jia-Yao Zhao
+ */
+export const interviewUserListService = (): Promise<Response<User[]>> => {
+  return myAxios.get('/manage/user/interview');
+};
+
+/**
+ * 更新学生面试信息
+ * @author Jia-Yao Zhao
+ */
+export const updateStudentService: (data: {
+  studentId: number;
+  earlyChildhoodEducationInterview: InterviewStatus;
+  interviewedDate: string;
+  interviewedUserId: number;
+  signStatus: boolean;
+  signedDate: string;
+  signedUserId: number;
+  tourismManagementInterview: InterviewStatus;
+  urbanRailTransitInterview: InterviewStatus;
+}) => Promise<Response<null>> = (data) => {
+  return myAxios.patch('/manage/student/update', data);
 };

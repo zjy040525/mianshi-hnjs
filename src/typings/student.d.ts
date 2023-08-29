@@ -1,10 +1,12 @@
+import type { User } from '.';
+
 export interface Student {
   id: number;
   // 姓名
   name: string;
   // 性别
   gender: string;
-  // 身份证号
+  // 身份证号码
   idCard: string;
   // 毕业学校
   graduatedSchool: string;
@@ -33,11 +35,3 @@ export interface Student {
 }
 
 export type InterviewStatus = 'Processing' | 'Success' | 'Failed' | null;
-
-interface User {
-  id: number;
-  // 用户名
-  username: string;
-  // 用户昵称
-  nickname: string | null;
-}

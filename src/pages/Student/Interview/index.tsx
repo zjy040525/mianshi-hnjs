@@ -10,6 +10,7 @@ import {
   studentInterviewService,
 } from '@/services';
 import type { InterviewStatus, Student } from '@/typings';
+import { datetimeFormat } from '@/utils';
 import {
   CloseCircleOutlined,
   FileTextOutlined,
@@ -34,7 +35,6 @@ import {
   Tag,
   Typography,
 } from 'antd';
-import dayjs from 'dayjs';
 import type { Dispatch, FC, SetStateAction } from 'react';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
@@ -248,8 +248,8 @@ const Interview: FC = () => {
                   signStatus={
                     <Badge
                       status="success"
-                      text={`已签到（${dayjs(chosenStudent.signedDate).format(
-                        'YYYY-MM-DD HH:mm:ss',
+                      text={`已签到（${datetimeFormat(
+                        chosenStudent.signedDate,
                       )}）`}
                     />
                   }
