@@ -1,5 +1,6 @@
 import { InterviewTag } from '@/components';
 import type { Log } from '@/typings';
+import { datetimeFormat } from '@/utils';
 import {
   FileTextOutlined,
   LoginOutlined,
@@ -8,7 +9,6 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { Space, Typography } from 'antd';
-import * as dayjs from 'dayjs';
 
 export const propsRender = (log: Log) => {
   switch (log.recordType) {
@@ -18,7 +18,7 @@ export const propsRender = (log: Log) => {
         children: (
           <Space size={4}>
             <Typography.Text style={{ paddingInlineEnd: 12 }}>
-              {dayjs(log.recordDate).format('YYYY-MM-DD HH:mm:ss')}
+              {datetimeFormat(log.recordDate)}
             </Typography.Text>
             <Typography.Text type="secondary">
               {log.recordUser?.nickname || log.recordUser?.username}
@@ -36,7 +36,7 @@ export const propsRender = (log: Log) => {
         children: (
           <Space size={4}>
             <Typography.Text style={{ paddingInlineEnd: 12 }}>
-              {dayjs(log.recordDate).format('YYYY-MM-DD HH:mm:ss')}
+              {datetimeFormat(log.recordDate)}
             </Typography.Text>
             <Typography.Text type="secondary">
               {log.recordUser?.nickname || log.recordUser?.username}
@@ -60,7 +60,7 @@ export const propsRender = (log: Log) => {
         children: (
           <Space size={4}>
             <Typography.Text style={{ paddingInlineEnd: 12 }}>
-              {dayjs(log.recordDate).format('YYYY-MM-DD HH:mm:ss')}
+              {datetimeFormat(log.recordDate)}
             </Typography.Text>
             <Typography.Text type="secondary">
               {log.recordUser?.nickname || log.recordUser?.username}
@@ -85,7 +85,7 @@ export const propsRender = (log: Log) => {
           <div style={{ display: 'flex', gap: 8, flexDirection: 'column' }}>
             <Space size={4}>
               <Typography.Text style={{ paddingInlineEnd: 12 }}>
-                {dayjs(log.recordDate).format('YYYY-MM-DD HH:mm:ss')}
+                {datetimeFormat(log.recordDate)}
               </Typography.Text>
               <Typography.Text type="secondary">
                 {log.recordUser?.nickname || log.recordUser?.username}
