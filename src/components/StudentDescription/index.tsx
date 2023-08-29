@@ -48,7 +48,7 @@ export const StudentDescription: FC<{
                 text="旅游"
               />
               <InterviewTag
-                status={student.urbanRailTransitInterview}
+                status={student.earlyChildhoodEducationInterview}
                 text="学前"
               />
             </>

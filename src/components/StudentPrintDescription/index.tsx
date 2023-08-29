@@ -1,6 +1,6 @@
 import type { Student } from '@/typings';
+import { datetimeFormat } from '@/utils';
 import { Descriptions } from 'antd';
-import dayjs from 'dayjs';
 import type { FC } from 'react';
 import { InterviewTag } from '..';
 
@@ -13,7 +13,7 @@ export const StudentPrintDescription: FC<{
       items={[
         {
           label: '签到时间',
-          children: dayjs(student.signedDate).format('YYYY-MM-DD HH:mm:ss'),
+          children: datetimeFormat(student.signedDate),
         },
         {
           label: '系统序号',
@@ -56,7 +56,7 @@ export const StudentPrintDescription: FC<{
                 text="旅游"
               />
               <InterviewTag
-                status={student.urbanRailTransitInterview}
+                status={student.earlyChildhoodEducationInterview}
                 text="学前"
               />
             </>

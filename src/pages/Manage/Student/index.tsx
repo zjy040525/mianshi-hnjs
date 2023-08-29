@@ -2,15 +2,24 @@ import { adminNewMsgNotification, tokenStateAtom } from '@/atoms';
 import { Access, HeadTitle } from '@/components';
 import { studentSocket, userSocket } from '@/services';
 import type { Student } from '@/typings';
+import { datetimeFormat } from '@/utils';
 import { useMount, useUnmount, useWebSocket } from 'ahooks';
-import { App as AntdApp, Badge, Card, Col, Row, Statistic, Table } from 'antd';
+import {
+  App as AntdApp,
+  Badge,
+  Card,
+  Col,
+  Row,
+  Space,
+  Statistic,
+  Table,
+} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import type { ColumnFilterItem } from 'antd/es/table/interface';
-import dayjs from 'dayjs';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { badge } from './components';
+import { DetailAction, EditableAction, badge } from './components';
 import { filterUser } from './utils';
 
 /**
@@ -73,7 +82,7 @@ const ManageStudent: FC = () => {
       dataIndex: 'signedDate',
       render(value) {
         if (value) {
-          return dayjs(value).format('YYYY-MM-DD HH:mm:ss');
+          return datetimeFormat(value);
         }
         return '-';
       },
@@ -151,7 +160,7 @@ const ManageStudent: FC = () => {
       dataIndex: 'interviewedDate',
       render(value) {
         if (value) {
-          return dayjs(value).format('YYYY-MM-DD HH:mm:ss');
+          return datetimeFormat(value);
         }
         return '-';
       },
@@ -171,6 +180,18 @@ const ManageStudent: FC = () => {
       filters: interviewedUserFilters,
       onFilter(value, record) {
         return record.interviewedUserId === value;
+      },
+    },
+    {
+      title: '操作',
+      dataIndex: 'action',
+      render(_value, record) {
+        return (
+          <Space>
+            <EditableAction student={record} />
+            <DetailAction student={record} />
+          </Space>
+        );
       },
     },
   ];
