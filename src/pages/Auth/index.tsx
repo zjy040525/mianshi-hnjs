@@ -1,16 +1,9 @@
 import { HeadTitle } from '@/components';
 import { authorizationStateSelector } from '@/selectors';
 import { authenticationService } from '@/services';
-import { useRequest } from 'ahooks';
-import {
-  App as AntdApp,
-  Button,
-  Card,
-  Divider,
-  Form,
-  Input,
-  Typography,
-} from 'antd';
+import { LoginOutlined } from '@ant-design/icons';
+import { useRequest, useUnmount } from 'ahooks';
+import { App as AntdApp, Button, Card, Form, Input } from 'antd';
 import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
@@ -29,7 +22,11 @@ const Authentication: FC = () => {
   const { message } = AntdApp.useApp();
   const navigate = useNavigate();
   // 身份认证服务
-  const { run, loading } = useRequest(authenticationService, {
+  const {
+    run: runLogin,
+    loading,
+    cancel: cancelLogin,
+  } = useRequest(authenticationService, {
     manual: true,
     onBefore() {
       message.open({
@@ -41,11 +38,9 @@ const Authentication: FC = () => {
     },
     onSuccess(res) {
       setAuthorization({ ...res.data });
-      message.open({
-        key: AUTHENTICATION_MESSAGE_KEY,
-        type: 'success',
-        content: res.message,
-      });
+      // 登录成功用独立的message提示，因为用同一个message key会导致三个情况（登录中/登录成功/登录失败）都会因为离开页面而关闭，即不会显示登录成功的消息了
+      message.destroy(AUTHENTICATION_MESSAGE_KEY);
+      message.success(res.message);
       navigate('/');
     },
     onError(err) {
@@ -57,52 +52,73 @@ const Authentication: FC = () => {
       });
     },
   });
+  // 登录中/在登录中前往了其他页面，需要取消登录和关闭消息
+  useUnmount(() => {
+    cancelLogin();
+    message.destroy(AUTHENTICATION_MESSAGE_KEY);
+  });
   return (
     <CheckAuthentication>
       <HeadTitle titles={['登录']} />
-      <Card className={classes.card}>
-        <Typography.Title level={3}>登录</Typography.Title>
-        <Divider />
+      <Card className={classes.cardBox} title="用户登录" bordered={false}>
         <Form
-          scrollToFirstError
           autoComplete="off"
-          onFinish={(values) => {
-            run(values.username, values.password);
-          }}
-          disabled={loading}
+          colon={false}
+          onFinish={(values) => runLogin(values.username, values.password)}
         >
           <Form.Item
             name="username"
-            colon={false}
-            label={<div className={classes.label}>用户名</div>}
             rules={[
-              { required: true, message: '请填写用户名' },
-              { whitespace: true, message: '请填写用户名' },
-              { max: 50, message: '用户名长度不得大于50个字符' },
+              {
+                required: true,
+                message: '请输入用户名',
+              },
+              {
+                whitespace: true,
+                message: '请输入用户名',
+              },
             ]}
-            hasFeedback
           >
-            <Input autoFocus maxLength={50} showCount />
+            <Input
+              disabled={loading}
+              autoFocus
+              maxLength={50}
+              allowClear
+              placeholder="用户名"
+            />
           </Form.Item>
           <Form.Item
             name="password"
-            colon={false}
-            label={<div className={classes.label}>密码</div>}
             rules={[
-              { required: true, message: '请填写密码' },
-              { whitespace: true, message: '请填写密码' },
-              { min: 8, message: '密码长度不得少于8个字符' },
-              { max: 32, message: '密码长度不得大于32个字符' },
+              {
+                required: true,
+                message: '请输入密码',
+              },
+              {
+                whitespace: true,
+                message: '请输入密码',
+              },
             ]}
-            hasFeedback
           >
-            <Input.Password maxLength={32} showCount />
+            <Input.Password
+              disabled={loading}
+              maxLength={32}
+              placeholder="密码"
+            />
           </Form.Item>
-          <Form.Item className={classes.submit}>
-            <Button htmlType="submit" type="primary">
-              {loading ? '登录中…' : '登录'}
-            </Button>
-          </Form.Item>
+          <Button
+            htmlType="submit"
+            type="primary"
+            block
+            size="large"
+            style={{
+              marginBlockStart: 24,
+            }}
+            loading={loading}
+            icon={<LoginOutlined />}
+          >
+            登录
+          </Button>
         </Form>
       </Card>
     </CheckAuthentication>
