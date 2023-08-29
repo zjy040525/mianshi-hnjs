@@ -281,7 +281,7 @@ const ManageStudent: FC = () => {
         <Col span={12}>
           <Row gutter={[16, 16]}>
             <Col span={6}>
-              <Card>
+              <Card bordered={false}>
                 <Statistic
                   title="已签到人数"
                   loading={studentWs.readyState !== 1 || counts.signedCount < 0}
@@ -290,7 +290,7 @@ const ManageStudent: FC = () => {
               </Card>
             </Col>
             <Col span={6}>
-              <Card>
+              <Card bordered={false}>
                 <Statistic
                   title="未签到人数"
                   loading={
@@ -301,7 +301,7 @@ const ManageStudent: FC = () => {
               </Card>
             </Col>
             <Col span={6}>
-              <Card>
+              <Card bordered={false}>
                 <Statistic
                   title="总人数"
                   loading={
@@ -313,7 +313,7 @@ const ManageStudent: FC = () => {
               </Card>
             </Col>
             <Col span={6}>
-              <Card>
+              <Card bordered={false}>
                 <Statistic
                   title="签到进度"
                   loading={
@@ -336,7 +336,7 @@ const ManageStudent: FC = () => {
           <Row gutter={[16, 16]}>
             <Col span={6}></Col>
             <Col span={6}>
-              <Card>
+              <Card bordered={false}>
                 <Statistic
                   title="已面试人数"
                   loading={
@@ -347,7 +347,7 @@ const ManageStudent: FC = () => {
               </Card>
             </Col>
             <Col span={6}>
-              <Card>
+              <Card bordered={false}>
                 <Statistic
                   title="未面试人数"
                   loading={
@@ -358,7 +358,7 @@ const ManageStudent: FC = () => {
               </Card>
             </Col>
             <Col span={6}>
-              <Card>
+              <Card bordered={false}>
                 <Statistic
                   title="面试进度"
                   loading={

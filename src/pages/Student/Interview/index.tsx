@@ -133,7 +133,7 @@ const Interview: FC = () => {
   return (
     <Access role="interview-all">
       <HeadTitle titles={[chosenStudent?.name, '面试']} />
-      <Card>
+      <Card bordered={false}>
         <Steps
           items={steps}
           current={currentStep}
@@ -280,7 +280,7 @@ const Interview: FC = () => {
 
                     return (
                       <Col key={index} span={8}>
-                        <Card type="inner" title={card.title}>
+                        <Card type="inner" title={card.title} size="small">
                           {currentStep > STEP_2 ? (
                             <Space size={16}>
                               <Typography.Text>面试结果</Typography.Text>

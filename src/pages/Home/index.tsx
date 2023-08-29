@@ -21,6 +21,7 @@ const Home: FC = () => {
         <Col>
           <Card
             title={authorization.nickname || authorization.username || '未登录'}
+            bordered={false}
           >
             {authorization.token ? (
               <Button
