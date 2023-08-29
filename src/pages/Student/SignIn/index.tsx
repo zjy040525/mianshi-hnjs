@@ -182,7 +182,7 @@ const StudentSignIn: FC = () => {
           }
         }}
       />
-      <Card>
+      <Card bordered={false}>
         <Steps
           current={currentStep}
           items={steps}

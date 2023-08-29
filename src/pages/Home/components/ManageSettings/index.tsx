@@ -12,7 +12,7 @@ export const ManageSettings: FC = () => {
   if (authorization.role === 'admin-all') {
     return (
       <Col>
-        <Card title="设置">
+        <Card title="设置" bordered={false}>
           <Space direction="vertical">
             <Space size={16}>
               <Typography.Text>接收新消息通知</Typography.Text>

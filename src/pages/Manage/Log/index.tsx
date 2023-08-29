@@ -82,6 +82,7 @@ const ManageLog: FC = () => {
                 shape="circle"
               />
             }
+            bordered={false}
           >
             {loading ? (
               <Skeleton active />

@@ -215,6 +215,7 @@ export const EditableAction: FC<{ student: Student }> = ({ student }) => {
         ) : null}
         <Form
           layout="vertical"
+          autoComplete="off"
           ref={formRef}
           onFinish={onFinish}
           style={{
