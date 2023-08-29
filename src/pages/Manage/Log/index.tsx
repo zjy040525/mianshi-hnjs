@@ -70,7 +70,7 @@ const ManageLog: FC = () => {
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <Card
-            title="最新动态"
+            title="最新动态（实时更新）"
             extra={
               <Button
                 danger
@@ -87,11 +87,7 @@ const ManageLog: FC = () => {
             {loading ? (
               <Skeleton active />
             ) : (
-              <Timeline
-                reverse
-                pending="动态实时更新中…"
-                items={recordItems(logList)}
-              />
+              <Timeline reverse items={recordItems(logList)} pending />
             )}
           </Card>
         </Col>

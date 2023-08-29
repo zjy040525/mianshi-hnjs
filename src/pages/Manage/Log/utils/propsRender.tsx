@@ -1,126 +1,95 @@
 import { InterviewTag } from '@/components';
 import type { Log } from '@/typings';
 import { datetimeFormat } from '@/utils';
-import {
-  FileTextOutlined,
-  LoginOutlined,
-  PrinterOutlined,
-  RightOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import { Space, Typography } from 'antd';
+import { Typography } from 'antd';
 
 export const propsRender = (log: Log) => {
   switch (log.recordType) {
     case 'Auth':
       return {
-        dot: <UserOutlined />,
         children: (
-          <Space size={4}>
-            <Typography.Text style={{ paddingInlineEnd: 12 }}>
+          <>
+            <Typography.Text style={{ paddingInlineEnd: 16 }}>
               {datetimeFormat(log.recordDate)}
             </Typography.Text>
             <Typography.Text type="secondary">
               {log.recordUser?.nickname || log.recordUser?.username}
-            </Typography.Text>
-            <Typography.Text>
-              <RightOutlined />
-            </Typography.Text>
-            <Typography.Text type="secondary">登录系统</Typography.Text>
-          </Space>
+            </Typography.Text>{' '}
+            <Typography.Text>登录系统</Typography.Text>
+          </>
         ),
       };
     case 'Sign':
       return {
-        dot: <LoginOutlined />,
         children: (
-          <Space size={4}>
-            <Typography.Text style={{ paddingInlineEnd: 12 }}>
+          <>
+            <Typography.Text style={{ paddingInlineEnd: 16 }}>
               {datetimeFormat(log.recordDate)}
             </Typography.Text>
             <Typography.Text type="secondary">
-              {log.recordUser?.nickname || log.recordUser?.username}
-            </Typography.Text>
-            <Typography.Text>
-              <RightOutlined />
-            </Typography.Text>
-            <Typography.Text type="secondary">学生签到</Typography.Text>
-            <Typography.Text>
-              <RightOutlined />
-            </Typography.Text>
-            <Typography.Text type="secondary">
               {log.recordStudent?.name}（{log.recordStudent?.idCard}）
-            </Typography.Text>
-          </Space>
+            </Typography.Text>{' '}
+            <Typography.Text>在</Typography.Text>{' '}
+            <Typography.Text type="secondary">
+              {log.recordUser?.nickname || log.recordUser?.username}
+            </Typography.Text>{' '}
+            <Typography.Text>完成签到</Typography.Text>
+          </>
         ),
       };
     case 'Print':
       return {
-        dot: <PrinterOutlined />,
         children: (
-          <Space size={4}>
-            <Typography.Text style={{ paddingInlineEnd: 12 }}>
+          <>
+            <Typography.Text style={{ paddingInlineEnd: 16 }}>
               {datetimeFormat(log.recordDate)}
             </Typography.Text>
             <Typography.Text type="secondary">
-              {log.recordUser?.nickname || log.recordUser?.username}
-            </Typography.Text>
-            <Typography.Text>
-              <RightOutlined />
-            </Typography.Text>
-            <Typography.Text type="secondary">资料打印</Typography.Text>
-            <Typography.Text>
-              <RightOutlined />
-            </Typography.Text>
-            <Typography.Text type="secondary">
               {log.recordStudent?.name}#{log.recordStudent?.id}
-            </Typography.Text>
-          </Space>
+            </Typography.Text>{' '}
+            <Typography.Text>在</Typography.Text>{' '}
+            <Typography.Text type="secondary">
+              {log.recordUser?.nickname || log.recordUser?.username}
+            </Typography.Text>{' '}
+            <Typography.Text>完成打印</Typography.Text>
+          </>
         ),
       };
     case 'Interview':
       return {
-        dot: <FileTextOutlined />,
         children: (
-          <div style={{ display: 'flex', gap: 8, flexDirection: 'column' }}>
-            <Space size={4}>
-              <Typography.Text style={{ paddingInlineEnd: 12 }}>
-                {datetimeFormat(log.recordDate)}
-              </Typography.Text>
-              <Typography.Text type="secondary">
-                {log.recordUser?.nickname || log.recordUser?.username}
-              </Typography.Text>
-              <Typography.Text>
-                <RightOutlined />
-              </Typography.Text>
-              <Typography.Text type="secondary">学生面试</Typography.Text>
-              <Typography.Text>
-                <RightOutlined />
-              </Typography.Text>
-              <Typography.Text type="secondary">
-                {log.recordStudent?.name}#{log.recordStudent?.id}
-              </Typography.Text>
-            </Space>
+          <>
+            <Typography.Text style={{ paddingInlineEnd: 16 }}>
+              {datetimeFormat(log.recordDate)}
+            </Typography.Text>
+            <Typography.Text type="secondary">
+              {log.recordStudent?.name}#{log.recordStudent?.id}
+            </Typography.Text>{' '}
+            <Typography.Text>在</Typography.Text>{' '}
+            <Typography.Text type="secondary">
+              {log.recordUser?.nickname || log.recordUser?.username}
+            </Typography.Text>{' '}
+            <Typography.Text>完成面试</Typography.Text>
             {log.recordStudent ? (
-              <div>
+              <span style={{ paddingInlineStart: 8 }}>
                 <InterviewTag
-                  showNull
-                  status={log.recordStudent.urbanRailTransitInterview}
+                  status={log.recordUrbanRailTransitInterview}
                   text="城轨"
+                  showNull
                 />
                 <InterviewTag
-                  showNull
-                  status={log.recordStudent.tourismManagementInterview}
+                  status={log.recordTourismManagementInterview}
                   text="旅游"
+                  showNull
                 />
                 <InterviewTag
-                  showNull
-                  status={log.recordStudent.earlyChildhoodEducationInterview}
+                  status={log.recordEarlyChildhoodEducationInterview}
                   text="学前"
+                  showNull
                 />
-              </div>
+              </span>
             ) : null}
-          </div>
+          </>
         ),
       };
   }
