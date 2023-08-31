@@ -109,6 +109,7 @@ export const EditableAction: FC<{ student: Student }> = ({ student }) => {
         ? dayjs(student.interviewedDate, 'YYYY-MM-DD HH:mm:ss')
         : null,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
   // 更新学生信息服务
   const { run: runUpdateStudentService, loading: updateStudentServiceLoading } =
@@ -183,6 +184,7 @@ export const EditableAction: FC<{ student: Student }> = ({ student }) => {
       ...params,
       studentId: student.id,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signStatus]);
   return (
     <>
