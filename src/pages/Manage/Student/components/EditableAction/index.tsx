@@ -102,11 +102,9 @@ export const EditableAction: FC<{ student: Student }> = ({ student }) => {
       earlyChildhoodEducationInterview:
         student.earlyChildhoodEducationInterview || 'SetNull',
       // 需要转换Day.js的格式
-      signedDate: student.signedDate
-        ? dayjs(student.signedDate, 'YYYY-MM-DD HH:mm:ss')
-        : null,
+      signedDate: student.signedDate ? dayjs(student.signedDate) : null,
       interviewedDate: student.interviewedDate
-        ? dayjs(student.interviewedDate, 'YYYY-MM-DD HH:mm:ss')
+        ? dayjs(student.interviewedDate)
         : null,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
