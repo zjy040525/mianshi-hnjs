@@ -15,7 +15,7 @@ import {
 } from 'antd';
 import { useState, type FC } from 'react';
 import { useRecoilValue } from 'recoil';
-import { recordItems } from './components';
+import { logsRender } from './components';
 import { LOG_REMOVE_KEY } from './constants';
 
 const ManageLog: FC = () => {
@@ -87,7 +87,7 @@ const ManageLog: FC = () => {
             {loading ? (
               <Skeleton active />
             ) : (
-              <Timeline reverse items={recordItems(logList)} pending />
+              <Timeline reverse items={logsRender(logList)} pending />
             )}
           </Card>
         </Col>

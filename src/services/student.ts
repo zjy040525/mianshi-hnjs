@@ -1,5 +1,5 @@
 import myAxios from '@/lib/myAxios';
-import type { InterviewStatus, Response, Student } from '@/typings';
+import type { InterviewStatus, PromiseType, Student } from '@/typings';
 
 /**
  * 搜索学生服务
@@ -9,7 +9,7 @@ import type { InterviewStatus, Response, Student } from '@/typings';
  */
 export const studentSignSearchService = (
   idCard?: string | null,
-): Promise<Response<Student[]>> => {
+): PromiseType<Student[]> => {
   return myAxios.get('/student/sign/search', { params: { idCard } });
 };
 
@@ -19,9 +19,7 @@ export const studentSignSearchService = (
  * @param studentId 学生Id
  * @author Jia-Yao Zhao
  */
-export const studentSignService = (
-  studentId: number,
-): Promise<Response<Student>> => {
+export const studentSignService = (studentId: number): PromiseType<Student> => {
   return myAxios.patch('/student/sign', { studentId });
 };
 
@@ -43,7 +41,7 @@ export const studentPrintService = (studentId: number): Promise<string> => {
  */
 export const studentInterviewSearchService = (
   studentId: number | string,
-): Promise<Response<Student[]>> => {
+): PromiseType<Student[]> => {
   return myAxios.get('/student/interview/search', { params: { studentId } });
 };
 
@@ -61,7 +59,7 @@ export const studentInterviewService = (
   earlyChildhoodEducation: InterviewStatus,
   tourismManagement: InterviewStatus,
   urbanRailTransit: InterviewStatus,
-): Promise<Response<Student>> => {
+): PromiseType<Student> => {
   return myAxios.patch('/student/interview', {
     studentId,
     earlyChildhoodEducation,

@@ -1,1 +1,2 @@
-export * from './recordItems';
+export * from './logsRender';
+export * from './propsRender';
