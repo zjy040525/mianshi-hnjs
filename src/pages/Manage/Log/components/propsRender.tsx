@@ -70,25 +70,23 @@ export const propsRender = (log: Log) => {
               {log.recordUser?.nickname || log.recordUser?.username}
             </Typography.Text>{' '}
             <Typography.Text>完成面试</Typography.Text>
-            {log.recordStudent ? (
-              <span style={{ paddingInlineStart: 8 }}>
-                <InterviewTag
-                  status={log.recordUrbanRailTransitInterview}
-                  text="城轨"
-                  showNull
-                />
-                <InterviewTag
-                  status={log.recordTourismManagementInterview}
-                  text="旅游"
-                  showNull
-                />
-                <InterviewTag
-                  status={log.recordEarlyChildhoodEducationInterview}
-                  text="学前"
-                  showNull
-                />
-              </span>
-            ) : null}
+            <span style={{ paddingInlineStart: 8 }}>
+              <InterviewTag
+                status={log.recordUrbanRailTransitInterview}
+                text="城轨"
+                showNull
+              />
+              <InterviewTag
+                status={log.recordTourismManagementInterview}
+                text="旅游"
+                showNull
+              />
+              <InterviewTag
+                status={log.recordEarlyChildhoodEducationInterview}
+                text="学前"
+                showNull
+              />
+            </span>
           </>
         ),
       };

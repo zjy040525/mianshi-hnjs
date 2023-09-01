@@ -1,5 +1,5 @@
 import myAxios from '@/lib/myAxios';
-import type { InterviewStatus, Response, User } from '@/typings';
+import type { InterviewStatus, PromiseType, User } from '@/typings';
 
 /**
  * 用户的即时信息
@@ -32,7 +32,7 @@ export const logSocket = () => {
  * 删除全部日志
  * @author Jia-Yao Zhao
  */
-export const logRemoveAllService = (): Promise<Response<null>> => {
+export const logRemoveAllService = (): PromiseType<null> => {
   return myAxios.delete('/manage/log');
 };
 
@@ -40,7 +40,7 @@ export const logRemoveAllService = (): Promise<Response<null>> => {
  * 获取所有签到管理员的信息
  * @author Jia-Yao Zhao
  */
-export const signUserListService = (): Promise<Response<User[]>> => {
+export const signUserListService = (): PromiseType<User[]> => {
   return myAxios.get('/manage/user/sign');
 };
 
@@ -48,7 +48,7 @@ export const signUserListService = (): Promise<Response<User[]>> => {
  * 获取所有面试管理员的信息
  * @author Jia-Yao Zhao
  */
-export const interviewUserListService = (): Promise<Response<User[]>> => {
+export const interviewUserListService = (): PromiseType<User[]> => {
   return myAxios.get('/manage/user/interview');
 };
 
@@ -66,6 +66,6 @@ export const updateStudentService: (data: {
   signedUserId: number;
   tourismManagementInterview: InterviewStatus;
   urbanRailTransitInterview: InterviewStatus;
-}) => Promise<Response<null>> = (data) => {
+}) => PromiseType<null> = (data) => {
   return myAxios.patch('/manage/student/update', data);
 };

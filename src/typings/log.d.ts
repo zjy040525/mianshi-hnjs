@@ -5,7 +5,7 @@ type CommonType = {
   recordDate: string;
   recordUserId: number | null;
   recordUser: User | null;
-  recordStudentId: string | null;
+  recordStudentId: number | null;
   recordStudent: Student | null;
 };
 
