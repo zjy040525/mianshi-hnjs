@@ -12,9 +12,7 @@ COPY package*.json /app/
 
 RUN npm install --registry=https://mirrors.cloud.tencent.com/npm/ \
   && printenv | grep VITE_ > /app/.env \
-  && printenv | grep VITE_ > /app/.env.production \
-  && cat /app/.env \
-  && cat /app/.env.production
+  && printenv | grep VITE_ > /app/.env.production
 
 COPY . /app
 
