@@ -9,6 +9,8 @@ export default defineConfig(({ mode }) => {
 
   // 加载process.env的变量
   dotenv.config();
+
+  // 加载其他环境的变量，这里是用于本地开发，云环境中没有.env/.env.production这样的文件
   dotenv.config({
     path: `./.env.${mode}`,
   });
