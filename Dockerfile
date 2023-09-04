@@ -12,7 +12,7 @@ COPY package*.json /app/
 
 RUN npm install --registry=https://mirrors.cloud.tencent.com/npm/ \
   && printenv > /app/.env \
-  && printenv > /app/.env.production
+  && echo VITE_APP_NAME=海宁技师学院面试管理系统 > /app/.env.production
 
 COPY . /app
 
