@@ -11,8 +11,10 @@ WORKDIR /app
 COPY package*.json /app/
 
 RUN npm install --registry=https://mirrors.cloud.tencent.com/npm/ \
-  && printenv > /app/.env \
-  && echo VITE_APP_NAME=海宁技师学院面试管理系统 > /app/.env.production
+  && printenv | grep VITE_ > /app/.env \
+  && printenv | grep VITE_ > /app/.env.production \
+  && cat /app/.env \
+  && cat /app/.env.production
 
 COPY . /app
 
