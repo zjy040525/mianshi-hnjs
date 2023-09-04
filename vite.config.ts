@@ -14,6 +14,7 @@ export default defineConfig(({ mode }) => {
   dotenv.config({
     path: `./.env.${mode}`,
   });
+  console.log('process.env', process.env);
   return {
     // 载入dotenv后，映射到import.meta.env
     define: {
