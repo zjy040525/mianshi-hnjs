@@ -14,7 +14,7 @@ RUN npm install --registry=https://mirrors.cloud.tencent.com/npm/
 
 COPY . /app
 
-RUN printkey > /app/.env \
+RUN printenv > /app/.env \
   && npm run build
 
 FROM nginx:alpine
