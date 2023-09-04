@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { defineConfig } from 'vite';
 
+console.log('outer process.env', process.env);
+
 export default defineConfig(({ mode }) => {
   // 因为云环境中没有.env/.env.production这样的文件
   // 需要适配在云环境中运行build能通过import.meta.env正常获取到process.env的变量
@@ -14,7 +16,6 @@ export default defineConfig(({ mode }) => {
   dotenv.config({
     path: `./.env.${mode}`,
   });
-  console.log('process.env', process.env);
   return {
     // 载入dotenv后，映射到import.meta.env
     define: {
