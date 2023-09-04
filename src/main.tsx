@@ -36,3 +36,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </RecoilRoot>
   </React.StrictMode>,
 );
+
+// TODO: checkout
+console.log(import.meta.env);
