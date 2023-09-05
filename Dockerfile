@@ -1,4 +1,4 @@
-FROM node:18-alpine as builder
+FROM node:18 as builder
 
 RUN apk add tzdata \
   && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
@@ -17,7 +17,7 @@ COPY . /app
 RUN env \
     && npm run build
 
-FROM nginx:alpine
+FROM nginx:1.25.2
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 
