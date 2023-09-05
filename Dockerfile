@@ -1,4 +1,4 @@
-FROM node:18-alpine as builder
+FROM node:18 as builder
 
 RUN apk add tzdata \
   && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
@@ -10,16 +10,14 @@ WORKDIR /app
 
 COPY package*.json /app/
 
-RUN npm install --registry=https://mirrors.cloud.tencent.com/npm/ \
-  && printenv \
-  && printenv > /app/.env \
-  && cat /app/.env
+RUN npm install --registry=https://mirrors.cloud.tencent.com/npm/
 
 COPY . /app
 
-RUN npm run build
+RUN env \
+    && npm run build
 
-FROM nginx:alpine
+FROM nginx:1.25.2
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 
