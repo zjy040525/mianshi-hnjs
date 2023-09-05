@@ -14,15 +14,10 @@ RUN npm install --registry=https://mirrors.cloud.tencent.com/npm/
 
 COPY . /app
 
-# TODO:
-RUN env \
-    && npm run build
+RUN npm run build
 
 FROM nginx:alpine
 
 COPY --from=builder /app/dist /usr/share/nginx/html
-
-# TODO:
-RUN env
 
 CMD ["nginx", "-g", "daemon off;"]
