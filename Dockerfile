@@ -10,13 +10,13 @@ WORKDIR /app
 
 COPY package*.json /app/
 
-RUN npm install --registry=https://mirrors.cloud.tencent.com/npm/ \
-  && printenv | grep VITE_ > /app/.env \
-  && printenv | grep VITE_ > /app/.env.production
+RUN env | grep VITE_ > ./.env \
+  && npm install --registry=https://mirrors.cloud.tencent.com/npm/
 
 COPY . /app
 
 RUN ls -al /app \
+  && cat ./.env \
   && npm run build
 
 FROM nginx:alpine
