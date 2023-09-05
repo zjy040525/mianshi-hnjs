@@ -17,6 +17,7 @@ jobs:
   deploy:
     env:
       WXCLOUD_SERVICE_NAME: ${{ secrets.WXCLOUD_PROD_SERVICE_NAME }}
+      WXCLOUD_ENV_PARAMS: ${{ secrets.WXCLOUD_PROD_ENV_PARAMS }}
       WXCLOUD_APPID: ${{ secrets.WXCLOUD_APPID }}
       WXCLOUD_CLI_SECRET: ${{ secrets.WXCLOUD_CLI_SECRET }}
       WXCLOUD_ENVID: ${{ secrets.WXCLOUD_ENVID }}
@@ -38,4 +39,4 @@ jobs:
         run: wxcloud login --appId="$WXCLOUD_APPID" --privateKey="$WXCLOUD_CLI_SECRET"
 
       - name: Deploy to WeChat Cloud Run
-        run: wxcloud run:deploy --targetDir=. --dockerfile=Dockerfile --containerPort=80 --envId="$WXCLOUD_ENVID" --serviceName="$WXCLOUD_SERVICE_NAME" --noConfirm --releaseType=FULL --override --remark="${{ github.event.head_commit.message || github.actor }}"
+        run: wxcloud run:deploy --targetDir=. --dockerfile=Dockerfile --containerPort=80 --envId="$WXCLOUD_ENVID" --serviceName="$WXCLOUD_SERVICE_NAME" --envParamsJson="$WXCLOUD_ENV_PARAMS" --noConfirm --releaseType=FULL --remark="${{ github.event.head_commit.message || github.actor }}"
