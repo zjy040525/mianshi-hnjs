@@ -11,12 +11,10 @@
   "scripts": {
     "build:prod": "tsc && vite build --mode=production",
     "build:test": "tsc && vite build --mode=test",
+    "dev": "vite",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prepare": "husky install",
-    "preview": "vite preview",
-    "start:dev": "vite --mode=development",
-    "start:prod": "vite --mode=production",
-    "start:test": "vite --mode=test"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.5",
