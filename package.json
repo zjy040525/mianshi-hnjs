@@ -9,11 +9,14 @@
   },
   "type": "module",
   "scripts": {
-    "build": "tsc && vite build",
-    "dev": "vite",
+    "build:prod": "tsc && vite build --mode=production",
+    "build:test": "tsc && vite build --mode=test",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "prepare": "husky install",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:dev": "vite --mode=development",
+    "start:prod": "vite --mode=production",
+    "start:test": "vite --mode=test"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.5",
