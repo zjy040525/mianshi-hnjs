@@ -14,7 +14,7 @@ RUN npm install --registry=https://mirrors.cloud.tencent.com/npm/
 
 COPY . /app
 
-ENTRYPOINT ["sh", "-l", "env | grep VITE_ > .env && npm run build"]
+RUN npm run build
 
 FROM nginx:alpine
 
