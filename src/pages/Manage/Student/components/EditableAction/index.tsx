@@ -210,9 +210,8 @@ export const EditableAction: FC<{ student: Student }> = ({ student }) => {
           </Space>
         }
       >
-        {signUserListServiceLoading || interviewUserListServiceLoading ? (
-          <Skeleton active />
-        ) : null}
+        {signUserListServiceLoading ||
+          (interviewUserListServiceLoading && <Skeleton active />)}
         <Form
           layout="vertical"
           autoComplete="off"
@@ -325,13 +324,15 @@ export const EditableAction: FC<{ student: Student }> = ({ student }) => {
                 />
               </Form.Item>
             </>
-          ) : student.signedDate || student.interviewedDate ? (
-            <Result
-              status="warning"
-              title="该学生有过签到或面试的记录"
-              subTitle="如果仍然提交，则该学生的签到记录（签到状态、签到时间、签到执行人）和面试记录（面试时间、面试进度、面试执行人）将重置为默认值"
-            />
-          ) : null}
+          ) : (
+            (!!student.signedDate || !!student.interviewedDate) && (
+              <Result
+                status="warning"
+                title="该学生有过签到或面试的记录"
+                subTitle="如果仍然提交，则该学生的签到记录（签到状态、签到时间、签到执行人）和面试记录（面试时间、面试进度、面试执行人）将重置为默认值"
+              />
+            )
+          )}
         </Form>
       </Drawer>
     </>

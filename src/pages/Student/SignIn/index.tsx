@@ -189,7 +189,7 @@ const StudentSignIn: FC = () => {
           style={{ marginBlockEnd: 50 }}
         />
         <Row justify="center">
-          {currentStep === STEP_1 ? (
+          {currentStep === STEP_1 && (
             <Col xxl={8} xl={12} lg={16} md={20} sm={24} xs={24}>
               <Select
                 style={{ width: '100%' }}
@@ -274,26 +274,26 @@ const StudentSignIn: FC = () => {
                 })}
               />
             </Col>
-          ) : null}
-          {chosenStudent && currentStep > STEP_3 ? (
+          )}
+          {chosenStudent && currentStep > STEP_3 && (
             <Col>
               <StudentPrintDescription student={chosenStudent} />
             </Col>
-          ) : null}
+          )}
           {chosenStudent &&
-          (currentStep === STEP_2 || currentStep === STEP_3) ? (
-            <Col>
-              <StudentDescription
-                student={chosenStudent}
-                signStatus={
-                  <Badge
-                    status={currentStep === STEP_3 ? 'processing' : 'default'}
-                    text="未签到"
-                  />
-                }
-              />
-            </Col>
-          ) : null}
+            (currentStep === STEP_2 || currentStep === STEP_3) && (
+              <Col>
+                <StudentDescription
+                  student={chosenStudent}
+                  signStatus={
+                    <Badge
+                      status={currentStep === STEP_3 ? 'processing' : 'default'}
+                      text="未签到"
+                    />
+                  }
+                />
+              </Col>
+            )}
           <Col
             span={24}
             style={{
@@ -302,16 +302,18 @@ const StudentSignIn: FC = () => {
             }}
           >
             <Space size={16}>
-              {chosenStudent && currentStep > STEP_1 && currentStep < STEP_4 ? (
-                <Button
-                  disabled={signing}
-                  onClick={() => setCurrentStep(currentStep - 1)}
-                >
-                  上一步
-                </Button>
-              ) : null}
-              {currentStep < STEP_4 ? (
-                currentStep === STEP_3 ? (
+              {chosenStudent &&
+                currentStep > STEP_1 &&
+                currentStep < STEP_4 && (
+                  <Button
+                    disabled={signing}
+                    onClick={() => setCurrentStep(currentStep - 1)}
+                  >
+                    上一步
+                  </Button>
+                )}
+              {currentStep < STEP_4 &&
+                (currentStep === STEP_3 ? (
                   <Button
                     type="primary"
                     loading={signing}
@@ -339,9 +341,8 @@ const StudentSignIn: FC = () => {
                   >
                     下一步
                   </Button>
-                )
-              ) : null}
-              {currentStep === STEP_4 ? (
+                ))}
+              {currentStep === STEP_4 && (
                 <Button
                   type="primary"
                   disabled={signing}
@@ -355,8 +356,8 @@ const StudentSignIn: FC = () => {
                 >
                   打印
                 </Button>
-              ) : null}
-              {currentStep > STEP_4 ? (
+              )}
+              {currentStep > STEP_4 && (
                 <>
                   <Button
                     disabled={signing}
@@ -383,7 +384,7 @@ const StudentSignIn: FC = () => {
                     继续
                   </Button>
                 </>
-              ) : null}
+              )}
             </Space>
           </Col>
         </Row>

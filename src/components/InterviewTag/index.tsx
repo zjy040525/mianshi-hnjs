@@ -16,6 +16,6 @@ export const InterviewTag: FC<{
     case 'Failed':
       return <Tag color="error">{text}</Tag>;
     case null:
-      return showNull ? <Tag icon={<StopOutlined />}>{text}</Tag> : null;
+      return showNull && <Tag icon={<StopOutlined />}>{text}</Tag>;
   }
 };

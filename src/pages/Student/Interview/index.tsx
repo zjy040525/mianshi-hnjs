@@ -140,7 +140,7 @@ const Interview: FC = () => {
           style={{ marginBlockEnd: 50 }}
         />
         <Row gutter={[16, 24]} justify="center">
-          {currentStep === STEP_1 ? (
+          {currentStep === STEP_1 && (
             <Col xxl={8} xl={12} lg={16} md={20} sm={24} xs={24}>
               <Select
                 style={{ width: '100%' }}
@@ -210,28 +210,28 @@ const Interview: FC = () => {
                           </>
                         )}
                         {student.interviewedUserId &&
-                        student.interviewedUser ? (
-                          <Tag
-                            style={{
-                              marginInlineEnd: 0,
-                            }}
-                            icon={
-                              student.interviewedUserId === idState ? (
-                                <UserOutlined />
-                              ) : (
-                                <StopOutlined />
-                              )
-                            }
-                            color={
-                              student.interviewedUserId === idState
-                                ? 'green'
-                                : 'red'
-                            }
-                          >
-                            {student.interviewedUser.nickname ||
-                              student.interviewedUser.username}
-                          </Tag>
-                        ) : null}
+                          !!student.interviewedUser && (
+                            <Tag
+                              style={{
+                                marginInlineEnd: 0,
+                              }}
+                              icon={
+                                student.interviewedUserId === idState ? (
+                                  <UserOutlined />
+                                ) : (
+                                  <StopOutlined />
+                                )
+                              }
+                              color={
+                                student.interviewedUserId === idState
+                                  ? 'green'
+                                  : 'red'
+                              }
+                            >
+                              {student.interviewedUser.nickname ||
+                                student.interviewedUser.username}
+                            </Tag>
+                          )}
                       </span>
                     ),
                     student,
@@ -239,8 +239,8 @@ const Interview: FC = () => {
                 })}
               />
             </Col>
-          ) : null}
-          {chosenStudent && currentStep > STEP_1 ? (
+          )}
+          {chosenStudent && currentStep > STEP_1 && (
             <>
               <Col span={24}>
                 <StudentDescription
@@ -302,17 +302,19 @@ const Interview: FC = () => {
                   }
                 })}
             </>
-          ) : null}
+          )}
           <Col span={24} style={{ textAlign: 'center' }}>
             <Space size={16}>
-              {chosenStudent && currentStep > STEP_1 && currentStep < STEP_4 ? (
-                <Button
-                  onClick={() => setCurrentStep(currentStep - 1)}
-                  disabled={interviewing}
-                >
-                  上一步
-                </Button>
-              ) : null}
+              {chosenStudent &&
+                currentStep > STEP_1 &&
+                currentStep < STEP_4 && (
+                  <Button
+                    onClick={() => setCurrentStep(currentStep - 1)}
+                    disabled={interviewing}
+                  >
+                    上一步
+                  </Button>
+                )}
               {chosenStudent && currentStep === STEP_3 ? (
                 <Button
                   type="primary"
