@@ -4,6 +4,8 @@ import axios from 'axios';
 // 基础配置
 const myAxios = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
+  // 120sec
+  timeout: 120 * 1000,
 });
 
 // 拦截器

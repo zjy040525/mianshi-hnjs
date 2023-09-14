@@ -325,7 +325,7 @@ const ManageStudent: FC = () => {
                       (counts.signedCount + counts.noSignedCount)) *
                       100 || 0
                   }
-                  precision={3}
+                  precision={counts.noSignedCount ? 3 : 0}
                   suffix="%"
                 />
               </Card>
@@ -370,7 +370,7 @@ const ManageStudent: FC = () => {
                       (counts.interviewedCount + counts.noInterviewedCount)) *
                       100 || 0
                   }
-                  precision={3}
+                  precision={counts.noInterviewedCount ? 3 : 0}
                   suffix="%"
                 />
               </Card>

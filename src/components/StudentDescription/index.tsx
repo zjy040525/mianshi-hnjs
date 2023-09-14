@@ -9,6 +9,7 @@ export const StudentDescription: FC<{
 }> = ({ student, signStatus }) => {
   return (
     <Descriptions
+      column={3}
       title="学生信息"
       items={[
         {

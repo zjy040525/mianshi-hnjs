@@ -17,36 +17,32 @@ export const DetailAction: FC<{ student: Student }> = ({ student }) => {
         open={open}
       >
         <Descriptions
+          column={1}
           items={[
             {
               label: '序号',
               children: student.id,
-              span: 3,
             },
             {
               label: '姓名',
               children: student.name,
-              span: 3,
             },
             {
               label: '性别',
               children: student.gender,
-              span: 3,
             },
             {
               label: '身份证号码',
               children: student.idCard,
-              span: 3,
             },
             {
               label: '初中学校',
               children: student.graduatedSchool,
-              span: 3,
             },
             {
               label: '中考报名序号',
               children: student.registrationNumber,
-              span: 3,
+
               style: {
                 paddingBlockEnd: 0,
               },
@@ -55,6 +51,7 @@ export const DetailAction: FC<{ student: Student }> = ({ student }) => {
         />
         <Divider />
         <Descriptions
+          column={1}
           items={[
             {
               label: '签到状态',
@@ -63,7 +60,6 @@ export const DetailAction: FC<{ student: Student }> = ({ student }) => {
               ) : (
                 <Badge status="error" text="未签到" />
               ),
-              span: 3,
             },
             {
               label: '签到时间',
@@ -72,19 +68,17 @@ export const DetailAction: FC<{ student: Student }> = ({ student }) => {
                     student.signedDate,
                   ).fromNow()}）`
                 : '-',
-              span: 3,
             },
             {
               label: '执行人',
               children: student.signedUserId
                 ? student.signedUser?.nickname || student.signedUser?.username
                 : '-',
-              span: 3,
             },
             {
               label: '执行人编号',
               children: student.signedUserId || '-',
-              span: 3,
+
               style: {
                 paddingBlockEnd: 0,
               },
@@ -93,6 +87,7 @@ export const DetailAction: FC<{ student: Student }> = ({ student }) => {
         />
         <Divider />
         <Descriptions
+          column={1}
           items={[
             {
               label: '面试专业',
@@ -115,7 +110,6 @@ export const DetailAction: FC<{ student: Student }> = ({ student }) => {
                   />
                 </>
               ),
-              span: 3,
             },
             {
               label: '面试时间',
@@ -124,7 +118,6 @@ export const DetailAction: FC<{ student: Student }> = ({ student }) => {
                     student.interviewedDate,
                   ).fromNow()}）`
                 : '-',
-              span: 3,
             },
             {
               label: '执行人',
@@ -132,12 +125,11 @@ export const DetailAction: FC<{ student: Student }> = ({ student }) => {
                 ? student.interviewedUser?.nickname ||
                   student.interviewedUser?.username
                 : '-',
-              span: 3,
             },
             {
               label: '执行人编号',
               children: student.interviewedUserId || '-',
-              span: 3,
+
               style: {
                 paddingBlockEnd: 0,
               },
