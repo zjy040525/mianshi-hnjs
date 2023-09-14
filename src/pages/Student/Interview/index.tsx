@@ -209,7 +209,7 @@ const Interview: FC = () => {
                             />
                           </>
                         )}
-                        {student.interviewedUserId &&
+                        {!!student.interviewedUserId &&
                           !!student.interviewedUser && (
                             <Tag
                               style={{

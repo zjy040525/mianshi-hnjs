@@ -210,8 +210,9 @@ export const EditableAction: FC<{ student: Student }> = ({ student }) => {
           </Space>
         }
       >
-        {signUserListServiceLoading ||
-          (interviewUserListServiceLoading && <Skeleton active />)}
+        {(signUserListServiceLoading || interviewUserListServiceLoading) && (
+          <Skeleton active />
+        )}
         <Form
           layout="vertical"
           autoComplete="off"
