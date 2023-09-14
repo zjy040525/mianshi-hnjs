@@ -20,7 +20,7 @@ $ npm install
 
 ## Usage
 
-配置环境变量，新建`.env` `.env.development` `.env.production`三个文件
+配置环境变量，新建`.env` `.env.development` `.env.production` `.env.test`四个文件
 
 `.env`
 
@@ -34,7 +34,7 @@ VITE_DOCUMENT_NAME=打印预览组件的标题
 `.env.development`
 
 ```dotenv
-# 开发环境下的变量（仅在开发环境下有效）
+# 开发环境下的变量（仅在开发环境下有效 `npm run dev`）
 
 VITE_API_URL=http://开发环境后端地址
 VITE_WS_URL=ws://开发环境后端地址
@@ -43,10 +43,19 @@ VITE_WS_URL=ws://开发环境后端地址
 `.env.production`
 
 ```dotenv
-# 正式环境下的变量（仅在正式环境下有效）
+# 正式环境下的变量（仅在构建正式环境下有效 `npm run build:prod`）
 
 VITE_API_URL=https://正式环境后端地址
 VITE_WS_URL=wss://正式环境后端地址
+```
+
+`.env.test`
+
+```dotenv
+# 测试环境下的变量（仅在构建测试环境下有效 `npm run build:test`）
+
+VITE_API_URL=https://测试环境后端地址
+VITE_WS_URL=wss://测试环境后端地址
 ```
 
 环境变量配置完成后，启动服务
@@ -55,19 +64,25 @@ VITE_WS_URL=wss://正式环境后端地址
 $ npm run dev
 ```
 
-用于开发，支持热重载
+启动开发服务，该环境下，可进行新功能的开发（对应分支：所有）
 
 ```shell
-$ npm run build
+$ npm run build:test
 ```
 
-构建正式环境资源，构建完成将后得到`dist`文件夹，可以部署到服务器上
+构建测试环境资源。构建完成将后得到`dist`文件夹，可以部署到服务器上（对应分支：test）
+
+```shell
+$ npm run build:prod
+```
+
+构建正式环境资源。该环境下的所有功能永远是可用的，稳定的。构建完成将后得到`dist`文件夹，可以部署到服务器上（对应分支：main）
 
 ```shell
 $ npm run preview
 ```
 
-预览正式环境，可以测试正式环境下是否有bug
+以当前构建好的`dist`文件夹为准，启动一个本地服务，模拟通过地址去访问构建好的Web服务
 
 ### Deployment
 
@@ -103,7 +118,7 @@ location / {
 
 ## Contributing
 
-非常欢迎你的加入！[提一个 Issue](https://github.com/zjy040525/interview-management-system/issues/new)或者提交一个Pull Request
+非常欢迎你的加入！[提一个 Issue](https://github.com/zjy040525/mianshi-hnjs/issues/new)或者提交一个Pull Request
 
 标准Readme遵循[Contributor Covenant](http://contributor-covenant.org/version/1/3/0/)行为规范
 
