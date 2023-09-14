@@ -9,6 +9,7 @@ export const StudentPrintDescription: FC<{
 }> = ({ student }) => {
   return (
     <Descriptions
+      column={3}
       title={import.meta.env.VITE_DOCUMENT_NAME}
       items={[
         {
