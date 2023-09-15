@@ -21,6 +21,7 @@ jobs:
       WXCLOUD_ENVID: ${{ secrets.WXCLOUD_ENVID }}
       WXCLOUD_SERVICE_NAME: ${{ secrets.WXCLOUD_PROD_SERVICE_NAME }}
       ENV: ${{ secrets.ENV_PROD }}
+      NGINX_CONF: ${{ vars.NGINX_CONF }}
     runs-on: ${{ fromJSON('["ubuntu-latest", "self-hosted"]')[github.repository == 'github/docs-internal'] }}
     steps:
       - name: Checkout
@@ -28,6 +29,9 @@ jobs:
 
       - name: Inject environment variables
         run: echo "$ENV" > .env
+
+      - name: Inject nginx conf
+        run: echo "$NGINX_CONF" > nginx.conf
 
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
