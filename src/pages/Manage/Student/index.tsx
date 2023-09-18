@@ -209,8 +209,6 @@ const ManageStudent: FC = () => {
   const userWs = useWebSocket(userSocket(), {
     // 需要手动连接
     manual: true,
-    // 关闭重连
-    reconnectLimit: 0,
     onOpen(_event, instance) {
       // 连接成功后发送token进行验证
       instance.send(JSON.stringify({ token }));
@@ -235,8 +233,6 @@ const ManageStudent: FC = () => {
   });
   // 统计信息socket
   const studentWs = useWebSocket(studentSocket(), {
-    // 关闭重连
-    reconnectLimit: 0,
     onOpen(_event, instance) {
       const msg = { token };
       // 连接成功后发送token进行验证

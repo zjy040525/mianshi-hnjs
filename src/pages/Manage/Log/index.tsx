@@ -24,9 +24,10 @@ const ManageLog: FC = () => {
   const { notification, message } = AntdApp.useApp();
   const token = useRecoilValue(tokenStateAtom);
   const logWs = useWebSocket(logSocket(), {
-    reconnectLimit: 0,
     onOpen(_event, instance) {
-      instance.send(JSON.stringify({ token }));
+      const msg = { token };
+      // 连接成功后发送token进行验证
+      instance.send(JSON.stringify(msg));
     },
     onMessage(msg) {
       const data = JSON.parse(msg.data);
