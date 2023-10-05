@@ -230,7 +230,7 @@ const StudentSignIn: FC = () => {
                       !!student.signedUserId &&
                       student.signedUserId !== idState,
                     label: (
-                      <span className={classes.selectItem}>
+                      <span className={classes.tagLabel}>
                         <span style={{ marginInlineEnd: 8 }}>
                           {student.name}（{student.idCard}）
                         </span>
